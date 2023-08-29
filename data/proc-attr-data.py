@@ -40,7 +40,7 @@ for attr in attr_list:
 
 	# save to DB
 	try:
-		cursor.execute("INSERT INTO attraction(rate, direction, name, date, longitude, REF_WP, avBegin, langinfo, MRT, SERIAL_NO, RowNumber, CAT, MEMO_TIME, POI, ImageFile, idpt, latitude, description,_id, avEnd, address) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+		cursor.execute("INSERT INTO attraction(rate, transport, name, date, lng, REF_WP, avBegin, langinfo, mrt, SERIAL_NO, RowNumber, category, MEMO_TIME, POI, images, idpt, lat, description, id, avEnd, address) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
 			(attr["rate"], attr["direction"], attr["name"], date, attr["longitude"], attr["REF_WP"], avBegin, attr["langinfo"], attr["MRT"], attr["SERIAL_NO"],
 			attr["RowNumber"], attr["CAT"], attr["MEMO_TIME"], attr["POI"], image_urls, attr["idpt"], attr["latitude"], attr["description"], attr["_id"], avEnd,
 			attr["address"]))
