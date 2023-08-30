@@ -126,4 +126,23 @@ def attraction_id(attractionId):
 		con.close()
 	return json.dumps(rsp, ensure_ascii = False)
 
+@app.route("/api/mrts")
+def mrt_list():
+	rsp = {}
+	try:
+		con = connection_pool.get_connection()
+		cursor = con.cursor()
+		cursor.execute("SELECT mrt FROM attraction WHERE mrt IS NOT NULL GROUP BY mrt ORDER BY count(*) DESC LIMIT 40 OFFSET 0;")
+		data = cursor.fetchall()
+		rsp["data"] = [data_item[0] for data_item in data ]
+	except Exception as e:
+		rsp = {}
+		rsp["error"] = True
+		rsp["message"] = str(e)
+		return jsonify(rsp), 500
+	finally:
+		cursor.close()
+		con.close()
+	return json.dumps(rsp, ensure_ascii = False)
+
 app.run(host="0.0.0.0", port=3000)
