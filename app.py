@@ -96,4 +96,34 @@ def attraction_list():
 
 	return json.dumps(rsp, ensure_ascii = False)
 
+@app.route("/api/attractions/<int:attractionId>")
+def attraction_id(attractionId):
+	rsp = {}
+	try:
+		con = connection_pool.get_connection()
+		cursor = con.cursor(dictionary = True)
+		select_content = "SELECT id, name, category, description, address, transport, mrt, lat, lng, images FROM attraction"
+		compare_content = "WHERE id = %s"
+		keyword_arg = (attractionId, )
+		cursor.execute(select_content + " " + compare_content + ";", keyword_arg)
+		data = cursor.fetchone()
+		if data == None:
+			rsp = {}
+			rsp["error"] = True
+			rsp["message"] = "wrong attraction id"
+			return jsonify(rsp), 400
+		else:
+			rsp["data"] = data
+			# transform datatype from json data to list
+			rsp["data"]["images"] = json.loads(rsp["data"]["images"])
+	except Exception as e:
+		rsp = {}
+		rsp["error"] = True
+		rsp["message"] = str(e)
+		return jsonify(rsp), 500
+	finally:
+		cursor.close()
+		con.close()
+	return json.dumps(rsp, ensure_ascii = False)
+
 app.run(host="0.0.0.0", port=3000)
