@@ -96,7 +96,7 @@ def attraction_list():
 
 	return json.dumps(rsp, ensure_ascii = False)
 
-@app.route("/api/attractions/<int:attractionId>")
+@app.route("/api/attraction/<int:attractionId>")
 def attraction_id(attractionId):
 	rsp = {}
 	try:
