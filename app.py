@@ -63,7 +63,6 @@ def attraction_list():
 
 		if keyword == "":
 			compare_content = ""
-			execute_arg = show_range
 			keyword_arg = ()
 		else:
 			compare_content = "WHERE mrt = %s or name LIKE %s"
@@ -134,7 +133,7 @@ def mrt_list():
 		cursor = con.cursor()
 		cursor.execute("SELECT mrt FROM attraction WHERE mrt IS NOT NULL GROUP BY mrt ORDER BY count(*) DESC LIMIT 40 OFFSET 0;")
 		data = cursor.fetchall()
-		rsp["data"] = [data_item[0] for data_item in data ]
+		rsp["data"] = [data_item[0] for data_item in data]
 	except Exception as e:
 		rsp = {}
 		rsp["error"] = True
