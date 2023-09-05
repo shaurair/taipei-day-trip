@@ -59,7 +59,7 @@ def attraction_list():
 		cursor = con.cursor(dictionary = True)
 		select_content = "SELECT id, name, category, description, address, transport, mrt, lat, lng, images FROM attraction"
 		range_content = "LIMIT %s OFFSET %s"
-		show_range = (items_in_page, page * items_in_page)
+		show_range = (items_in_page + 1, page * items_in_page)
 
 		if keyword == "":
 			compare_content = ""
@@ -71,15 +71,11 @@ def attraction_list():
 		cursor.execute(select_content + " " + compare_content + " " + range_content + ";", keyword_arg + show_range)
 		data = cursor.fetchall()
 
-		select_content = "SELECT count(*) FROM attraction"
-		cursor.execute(select_content+ " " + compare_content + ";",keyword_arg)
-		total_result = cursor.fetchone()
-
-		if total_result["count(*)"] > (page + 1) * items_in_page:
+		if len(data) == items_in_page + 1:
 			rsp["nextPage"] = page + 1
 
 		if data != None:
-			rsp["data"] = data
+			rsp["data"] = data[0:12]
 
 			# transform datatype from json data to list
 			for rsp_data in rsp["data"]:
