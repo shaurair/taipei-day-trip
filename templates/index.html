@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale = 1.0" />
+		<meta charset="utf-8" />
+		<title>台北一日遊</title>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}"/>
+	</head>
+	<body>
+		<div id="navigation">
+			<div id="nav-content">
+				<div id="headline">台北一日遊</div>
+				<div id="opt-menu">
+					<div id="opt-sche">預定行程</div>
+					<div id="opt-sign">登入/註冊</div>
+				</div>
+			</div>
+		</div>
+		<div id="hero">
+			<div id="slogan-area">
+				<div id="slogan">
+					<div id="slogan-titles">
+						<div id="title">輕鬆享受台北一日悠閒</div>
+						<div id="subtitle">探索每個角落，體驗城市的深度旅遊行程</div>
+					</div>
+					<div id="search">
+						<div id="search-bar">
+							<span id="input">
+								<input type="text" id="keyword" placeholder="輸入景點名稱查詢"/>
+							</span>
+							<span id="btn">
+								<div id="icon-search"></div>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="main">
+			<div id="list-bar">
+				<div id="left-container">
+					<div id="left-button"></div>
+				</div>
+				<div id="container">
+					<div id="listItems">
+						<div id="listItemAll"></div>
+					</div>
+				</div>
+				<div id="right-container">
+					<div id="right-button"></div>
+				</div>
+			</div>
+			<div id="attractions">
+				<div id="attractions-group"></div>
+			</div>
+		</div>
+		<div id="footer">
+			<div id="footer-content">
+				<div id="footer-text">COPYRIGHT © 2021 台北一日遊</div>
+			</div>
+		</div>
+		<script>
+				// variables
+				const listItemAll = document.querySelector('#listItemAll')
+				const previousBtn = document.querySelector('#left-button');
+				const nextBtn = document.querySelector('#right-button');
+				const BarSlideBuffer = 50;
+				let scrollPosition = 0;
+				let listItemAllWidth = 0;
+
+				// functions
+				function CreateMrtElement(MrtName, MrtIdx){
+					let NewMrtDiv = document.createElement('div');
+					NewMrtDiv.className = 'item';
+					NewMrtDiv.id = "MRT" + MrtIdx;
+
+					let MrtContainer = document.getElementById("listItemAll");
+					MrtContainer.appendChild(NewMrtDiv);
+
+					let NewMrtTxtDiv = document.createElement('div');
+					NewMrtTxtDiv.className = 'item-text';
+					NewMrtTxtDiv.textContent = MrtName;
+					let txtLength = MrtName.length * 16;
+					NewMrtTxtDiv.width = txtLength + "px";
+					listItemAllWidth = listItemAllWidth + txtLength + 30;
+
+					MrtContainer = document.getElementById(NewMrtDiv.id);
+					MrtContainer.appendChild(NewMrtTxtDiv);
+				}
+
+				function CreateAttrElement(AttrData, AttrIdx){
+					let NewAttrDiv = document.createElement('div');
+					NewAttrDiv.className = 'attraction';
+					NewAttrDiv.id = "Attr" + AttrIdx;
+
+					let AttrContainer = document.getElementById("attractions-group");
+					AttrContainer.appendChild(NewAttrDiv);
+
+					let NewPicDiv = document.createElement('div');
+					NewPicDiv.className = 'attr-pic';
+					NewAttrDiv.appendChild(NewPicDiv);
+
+					let NewAttrImg = document.createElement('img');
+					NewAttrImg.className = 'attr-Img';
+					NewAttrImg.src = AttrData["images"][0];
+					NewPicDiv.appendChild(NewAttrImg);
+
+					let NewNamePlaceDiv = document.createElement('div');
+					NewNamePlaceDiv.className = 'attr-name-place';
+					NewPicDiv.appendChild(NewNamePlaceDiv);
+
+					let NewTxtNameDiv = document.createElement('div');
+					NewTxtNameDiv.className= 'txt-name';
+					NewTxtNameDiv.textContent = AttrData["name"];
+					NewNamePlaceDiv.appendChild(NewTxtNameDiv);
+
+					let NewNoteDiv = document.createElement('div');
+					NewNoteDiv.className = 'attr-note';
+					NewAttrDiv.appendChild(NewNoteDiv)
+
+					let NewInfosDiv = document.createElement('div');
+					NewInfosDiv.className= 'infos';
+					NewNoteDiv.appendChild(NewInfosDiv);
+
+					let NewTxtMrtDiv = document.createElement('div');
+					NewTxtMrtDiv.className= 'txt-mrt';
+					NewTxtMrtDiv.textContent = AttrData["mrt"];
+					NewInfosDiv.appendChild(NewTxtMrtDiv);
+
+					let NewTxtCateDiv = document.createElement('div');
+					NewTxtCateDiv.className= 'txt-cate';
+					NewTxtCateDiv.textContent = AttrData["category"];
+					NewInfosDiv.appendChild(NewTxtCateDiv);
+				}
+
+				// init default data
+				fetch("api/mrts").then(function(response){
+					return response.json();
+				}).then(function(data){
+					let MrtList = data["data"];
+					let TotalMrt = MrtList.length;
+					listItemAllWidth = 4 * (TotalMrt - 1);
+					for(let MrtIdx = 0; MrtIdx < TotalMrt; MrtIdx++){
+						CreateMrtElement(MrtList[MrtIdx], MrtIdx);
+					}
+				});
+
+				fetch("api/attractions?page=0").then(function(response){
+					return response.json();
+				}).then(function(data){
+					let AttrList = data["data"];
+					let TotalAttr = AttrList.length;
+					for(let AttrIdx = 0; AttrIdx < TotalAttr; AttrIdx++){
+						CreateAttrElement(AttrList[AttrIdx], AttrIdx);
+					}
+				});
+
+				// init mrt slide bar
+				nextBtn.addEventListener('click', () => {
+					let BarWidth = document.querySelector('#listItems').clientWidth;
+					scrollPosition += BarWidth - BarSlideBuffer;
+					
+					if(scrollPosition + BarWidth > listItemAllWidth){
+						scrollPosition = listItemAllWidth - BarWidth;
+					}
+					
+					listItemAll.style.transform = `translateX(-${scrollPosition}px)`;
+				});
+
+				previousBtn.addEventListener('click', () => {
+					let BarWidth = document.querySelector('#listItems').clientWidth;
+					scrollPosition -= BarWidth - BarSlideBuffer;
+
+					if(scrollPosition < 0){
+						scrollPosition = 0;
+					}
+					
+					listItemAll.style.transform = `translateX(-${scrollPosition}px)`;
+				});
+		</script>
+    </body>
+</html>
