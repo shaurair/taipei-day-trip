@@ -362,7 +362,7 @@ html,body {
 		width: calc(100% - 20px);
 	}
 	#attractions {
-		width: auto;
+		width: calc(100% - 8px);
 		height: auto;
 
 		padding-left: 4px;
@@ -375,14 +375,14 @@ html,body {
 	}
 	.attraction {
 		width: auto;
-		height: auto;
+		height: 280px;
 	}
 	.attr-pic {
 		margin-bottom: -5px;
 	}
 	.attr-Img {
 		width: 100%;
-		height: auto;
+		height: 235px;
 	}
 	.attr-name-place {
 		width: 100%;
