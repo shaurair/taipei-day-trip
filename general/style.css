@@ -226,7 +226,7 @@ html,body {
 	padding: 15px;
 	display: grid;
 	gap: 30px;
-	grid-template-columns: repeat(4,auto);
+	grid-template-columns: repeat(4,272px);
 }
 .attraction {
 	width: 270px;
