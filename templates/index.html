@@ -28,7 +28,7 @@
 							<span id="input">
 								<input type="text" id="keyword" placeholder="輸入景點名稱查詢"/>
 							</span>
-							<span id="btn">
+							<span id="search-btn">
 								<div id="icon-search"></div>
 							</span>
 						</div>
@@ -43,7 +43,7 @@
 				</div>
 				<div id="container">
 					<div id="listItems">
-						<div id="listItemAll"></div>
+						<div id="list-item-all"></div>
 					</div>
 				</div>
 				<div id="right-container">
@@ -62,14 +62,17 @@
 		</div>
 		<script>
 				// variables
-				const listItemAll = document.querySelector('#listItemAll')
-				const previousBtn = document.querySelector('#left-button');
-				const nextBtn = document.querySelector('#right-button');
+				const ListItemAll = document.querySelector('#list-item-all')
+				const PreviousBtn = document.querySelector('#left-button');
+				const NextBtn = document.querySelector('#right-button');
+				const SearchBtn = document.querySelector('#search-btn')
 				const BarSlideBuffer = 50;
-				let scrollPosition = 0;
-				let listItemAllWidth = 0;
-				let nextPage = null;
+				let ScrollPosition = 0;
+				let ListItemAllWidth = 0;
+				let NextPage = null;
 				let DataReceiveDone = false;
+				let SearchApiPage = "api/attractions?page=";
+				let SearchKeyword = "";
 
 				// functions
 				function CreateMrtElement(MrtName, MrtIdx){
@@ -77,7 +80,7 @@
 					NewMrtDiv.className = 'item';
 					NewMrtDiv.id = "MRT" + MrtIdx;
 
-					let MrtContainer = document.getElementById("listItemAll");
+					let MrtContainer = document.getElementById("list-item-all");
 					MrtContainer.appendChild(NewMrtDiv);
 
 					let NewMrtTxtDiv = document.createElement('div');
@@ -85,7 +88,7 @@
 					NewMrtTxtDiv.textContent = MrtName;
 					let txtLength = MrtName.length * 16;
 					NewMrtTxtDiv.width = txtLength + "px";
-					listItemAllWidth = listItemAllWidth + txtLength + 30;
+					ListItemAllWidth = ListItemAllWidth + txtLength + 30;
 
 					MrtContainer = document.getElementById(NewMrtDiv.id);
 					MrtContainer.appendChild(NewMrtTxtDiv);
@@ -142,10 +145,10 @@
 					}).then(function(data){
 						let AttrList = data["data"];
 						let TotalAttr = AttrList.length;
-						nextPage = data["nextPage"];
+						NextPage = data["nextPage"];
 
 						let footer = document.querySelector('#footer');
-						if(nextPage != null) {
+						if(NextPage != null) {
 							footer.style.display = 'none';
 							observer.observe(targetElement);
 						}
@@ -153,50 +156,59 @@
 							footer.style.display = 'flex';
 							observer.unobserve(targetElement);
 						}
-						
-						for(let AttrIdx = 0; AttrIdx < TotalAttr; AttrIdx++){
-							CreateAttrElement(AttrList[AttrIdx], AttrIdx);
-						}
 
+						if(AttrList == "") {
+							AttrContainer = document.getElementById("attractions-group");
+							AttrContainer.textContent = "No result found.";
+						}
+						else {
+							for(let AttrIdx = 0; AttrIdx < TotalAttr; AttrIdx++){
+								CreateAttrElement(AttrList[AttrIdx], AttrIdx);
+							}
+						}
+						
 						DataReceiveDone = true;
 					});
 				}
 
-				// init default data
-				fetch("api/mrts").then(function(response){
-					return response.json();
-				}).then(function(data){
-					let MrtList = data["data"];
-					let TotalMrt = MrtList.length;
-					listItemAllWidth = 4 * (TotalMrt - 1);
-					for(let MrtIdx = 0; MrtIdx < TotalMrt; MrtIdx++){
-						CreateMrtElement(MrtList[MrtIdx], MrtIdx);
+				function RemoveAttractionGroup() {
+					const GroupElement = document.getElementById("attractions-group");
+
+					while(GroupElement.firstChild){
+						GroupElement.removeChild(GroupElement.firstChild);
 					}
+				}
+
+				// mrt slide bar
+				NextBtn.addEventListener('click', () => {
+					let BarWidth = document.querySelector('#listItems').clientWidth;
+					ScrollPosition += BarWidth - BarSlideBuffer;
+					
+					if(ScrollPosition + BarWidth > ListItemAllWidth){
+						ScrollPosition = ListItemAllWidth - BarWidth;
+					}
+					
+					ListItemAll.style.transform = `translateX(-${ScrollPosition}px)`;
 				});
 
-				LoadAttractions("api/attractions?page=0");
-
-				// init mrt slide bar
-				nextBtn.addEventListener('click', () => {
+				PreviousBtn.addEventListener('click', () => {
 					let BarWidth = document.querySelector('#listItems').clientWidth;
-					scrollPosition += BarWidth - BarSlideBuffer;
-					
-					if(scrollPosition + BarWidth > listItemAllWidth){
-						scrollPosition = listItemAllWidth - BarWidth;
+					ScrollPosition -= BarWidth - BarSlideBuffer;
+
+					if(ScrollPosition < 0){
+						ScrollPosition = 0;
 					}
 					
-					listItemAll.style.transform = `translateX(-${scrollPosition}px)`;
+					ListItemAll.style.transform = `translateX(-${ScrollPosition}px)`;
 				});
 
-				previousBtn.addEventListener('click', () => {
-					let BarWidth = document.querySelector('#listItems').clientWidth;
-					scrollPosition -= BarWidth - BarSlideBuffer;
-
-					if(scrollPosition < 0){
-						scrollPosition = 0;
-					}
-					
-					listItemAll.style.transform = `translateX(-${scrollPosition}px)`;
+				// search keyword
+				SearchBtn.addEventListener('click', () => {
+					const keyword = document.getElementById("keyword")
+					RemoveAttractionGroup();
+					observer.unobserve(targetElement);
+					SearchKeyword = "&keyword=" + keyword.value;
+					LoadAttractions(SearchApiPage + "0" + SearchKeyword);
 				});
 
 				// scroll-to-end detect
@@ -210,15 +222,29 @@
                 const observer = new IntersectionObserver(entries => {
 					entries.forEach(entry => {
 						if(entry.isIntersecting){
-							if(nextPage != null){
+							if(NextPage != null){
 								if(DataReceiveDone){
 									DataReceiveDone = false;
-									LoadAttractions("api/attractions?page=" + nextPage.toString());
+									LoadAttractions(SearchApiPage + NextPage.toString() + SearchKeyword);
 								}
 							}
 						}
 					});
                 }, options);
+
+				// init default data
+				fetch("api/mrts").then(function(response){
+					return response.json();
+				}).then(function(data){
+					let MrtList = data["data"];
+					let TotalMrt = MrtList.length;
+					ListItemAllWidth = 4 * (TotalMrt - 1);
+					for(let MrtIdx = 0; MrtIdx < TotalMrt; MrtIdx++){
+						CreateMrtElement(MrtList[MrtIdx], MrtIdx);
+					}
+				});
+
+				LoadAttractions(SearchApiPage + "0");
 		</script>
     </body>
 </html>
