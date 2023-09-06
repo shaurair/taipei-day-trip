@@ -54,6 +54,7 @@
 				<div id="attractions-group"></div>
 			</div>
 		</div>
+		<div id="main-end"></div>
 		<div id="footer">
 			<div id="footer-content">
 				<div id="footer-text">COPYRIGHT © 2021 台北一日遊</div>
@@ -67,6 +68,8 @@
 				const BarSlideBuffer = 50;
 				let scrollPosition = 0;
 				let listItemAllWidth = 0;
+				let nextPage = null;
+				let DataReceiveDone = false;
 
 				// functions
 				function CreateMrtElement(MrtName, MrtIdx){
@@ -133,6 +136,32 @@
 					NewInfosDiv.appendChild(NewTxtCateDiv);
 				}
 
+				function LoadAttractions(url){
+					fetch(url).then(function(response){
+						return response.json();
+					}).then(function(data){
+						let AttrList = data["data"];
+						let TotalAttr = AttrList.length;
+						nextPage = data["nextPage"];
+
+						let footer = document.querySelector('#footer');
+						if(nextPage != null) {
+							footer.style.display = 'none';
+							observer.observe(targetElement);
+						}
+						else {
+							footer.style.display = 'flex';
+							observer.unobserve(targetElement);
+						}
+						
+						for(let AttrIdx = 0; AttrIdx < TotalAttr; AttrIdx++){
+							CreateAttrElement(AttrList[AttrIdx], AttrIdx);
+						}
+
+						DataReceiveDone = true;
+					});
+				}
+
 				// init default data
 				fetch("api/mrts").then(function(response){
 					return response.json();
@@ -145,15 +174,7 @@
 					}
 				});
 
-				fetch("api/attractions?page=0").then(function(response){
-					return response.json();
-				}).then(function(data){
-					let AttrList = data["data"];
-					let TotalAttr = AttrList.length;
-					for(let AttrIdx = 0; AttrIdx < TotalAttr; AttrIdx++){
-						CreateAttrElement(AttrList[AttrIdx], AttrIdx);
-					}
-				});
+				LoadAttractions("api/attractions?page=0");
 
 				// init mrt slide bar
 				nextBtn.addEventListener('click', () => {
@@ -177,6 +198,27 @@
 					
 					listItemAll.style.transform = `translateX(-${scrollPosition}px)`;
 				});
+
+				// scroll-to-end detect
+                const targetElement = document.querySelector('#main-end');
+				const options = {
+					root: null, // viewport
+					rootMargin: '0px',
+					threshold: [0,1], // any ratio of element
+				};
+
+                const observer = new IntersectionObserver(entries => {
+					entries.forEach(entry => {
+						if(entry.isIntersecting){
+							if(nextPage != null){
+								if(DataReceiveDone){
+									DataReceiveDone = false;
+									LoadAttractions("api/attractions?page=" + nextPage.toString());
+								}
+							}
+						}
+					});
+                }, options);
 		</script>
     </body>
 </html>
