@@ -225,8 +225,10 @@ html,body {
 #attractions-group {
 	padding: 15px;
 	display: grid;
-	gap: 30px;
+	row-gap: 30px;
+	width: 1170px;
 	grid-template-columns: repeat(4,272px);
+	justify-content: space-between;
 }
 .attraction {
 	width: 270px;
@@ -331,7 +333,7 @@ html,body {
 	white-space: pre;
 }
 
-/* <= 1200 */
+/* 600 < screen size <= 1200 */
 @media (max-width: 1200px) {
 	#nav-content {
 		width: 100%;
@@ -371,7 +373,8 @@ html,body {
 	}
 	#attractions-group {
 		gap: 15px;
-		grid-template-columns: repeat(1,auto);
+		grid-template-columns: repeat(2,calc(50% - 7.5px));
+		width: auto;
 	}
 	.attraction {
 		width: auto;
@@ -398,5 +401,13 @@ html,body {
 	}
 	.txt-cate {
 		width: 50%;
+	}
+}
+
+/* <= 600 */
+@media (max-width: 600px) {
+	#attractions-group {
+		gap: 15px;
+		grid-template-columns: repeat(1,100%);
 	}
 }
