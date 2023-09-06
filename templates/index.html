@@ -65,7 +65,8 @@
 				const ListItemAll = document.querySelector('#list-item-all')
 				const PreviousBtn = document.querySelector('#left-button');
 				const NextBtn = document.querySelector('#right-button');
-				const SearchBtn = document.querySelector('#search-btn')
+				const SearchBtn = document.querySelector('#search-btn');
+				const Keyword = document.getElementById("keyword");
 				const BarSlideBuffer = 50;
 				let ScrollPosition = 0;
 				let ListItemAllWidth = 0;
@@ -79,6 +80,9 @@
 					let NewMrtDiv = document.createElement('div');
 					NewMrtDiv.className = 'item';
 					NewMrtDiv.id = "MRT" + MrtIdx;
+					NewMrtDiv.onclick = function(){
+						SearchMRT(MrtName);
+					};
 
 					let MrtContainer = document.getElementById("list-item-all");
 					MrtContainer.appendChild(NewMrtDiv);
@@ -86,6 +90,7 @@
 					let NewMrtTxtDiv = document.createElement('div');
 					NewMrtTxtDiv.className = 'item-text';
 					NewMrtTxtDiv.textContent = MrtName;
+					
 					let txtLength = MrtName.length * 16;
 					NewMrtTxtDiv.width = txtLength + "px";
 					ListItemAllWidth = ListItemAllWidth + txtLength + 30;
@@ -171,12 +176,24 @@
 					});
 				}
 
-				function RemoveAttractionGroup() {
+				function RemoveAttractionGroup(){
 					const GroupElement = document.getElementById("attractions-group");
 
 					while(GroupElement.firstChild){
 						GroupElement.removeChild(GroupElement.firstChild);
 					}
+				}
+
+				function FreshSearchKeyword(){
+					RemoveAttractionGroup();
+					observer.unobserve(targetElement);
+					SearchKeyword = "&keyword=" + Keyword.value;
+					LoadAttractions(SearchApiPage + "0" + SearchKeyword);
+				}
+
+				function SearchMRT(MrtName){
+					Keyword.value = MrtName;
+					FreshSearchKeyword();
 				}
 
 				// mrt slide bar
@@ -204,11 +221,7 @@
 
 				// search keyword
 				SearchBtn.addEventListener('click', () => {
-					const keyword = document.getElementById("keyword")
-					RemoveAttractionGroup();
-					observer.unobserve(targetElement);
-					SearchKeyword = "&keyword=" + keyword.value;
-					LoadAttractions(SearchApiPage + "0" + SearchKeyword);
+					FreshSearchKeyword();
 				});
 
 				// scroll-to-end detect

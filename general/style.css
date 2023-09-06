@@ -208,6 +208,8 @@ html,body {
 }
 .item-text {
 	height: 14px;
+	cursor: pointer;
+
 	font-family: Noto Sans TC;
 	font-size: 16px;
 	font-weight: 500;
