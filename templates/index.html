@@ -79,7 +79,7 @@
 				function createMrtElement(mrtName, mrtIdx){
 					let newMrtDiv = document.createElement('div');
 					newMrtDiv.className = 'item';
-					newMrtDiv.id = "MRT" + mrtIdx;
+					newMrtDiv.id = "mrt" + mrtIdx;
 					newMrtDiv.onclick = function(){
 						searchMRT(mrtName);
 					};
@@ -102,7 +102,7 @@
 				function createAttrElement(attrData, attrIdx){
 					let newAttrDiv = document.createElement('div');
 					newAttrDiv.className = 'attraction';
-					newAttrDiv.id = "Attr" + attrIdx;
+					newAttrDiv.id = "attr" + attrIdx;
 
 					let attrContainer = document.getElementById("attractions-group");
 					attrContainer.appendChild(newAttrDiv);
