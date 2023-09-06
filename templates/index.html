@@ -188,6 +188,7 @@
 					RemoveAttractionGroup();
 					observer.unobserve(targetElement);
 					SearchKeyword = "&keyword=" + Keyword.value;
+					DataReceiveDone = false;
 					LoadAttractions(SearchApiPage + "0" + SearchKeyword);
 				}
 
