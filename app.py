@@ -3,7 +3,7 @@ import mysql.connector
 from mysql.connector import pooling
 import json
 
-app=Flask(__name__)
+app=Flask(__name__, static_folder = "general", static_url_path = "/")
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
@@ -59,11 +59,10 @@ def attraction_list():
 		cursor = con.cursor(dictionary = True)
 		select_content = "SELECT id, name, category, description, address, transport, mrt, lat, lng, images FROM attraction"
 		range_content = "LIMIT %s OFFSET %s"
-		show_range = (items_in_page, page * items_in_page)
+		show_range = (items_in_page + 1, page * items_in_page)
 
 		if keyword == "":
 			compare_content = ""
-			execute_arg = show_range
 			keyword_arg = ()
 		else:
 			compare_content = "WHERE mrt = %s or name LIKE %s"
@@ -72,15 +71,11 @@ def attraction_list():
 		cursor.execute(select_content + " " + compare_content + " " + range_content + ";", keyword_arg + show_range)
 		data = cursor.fetchall()
 
-		select_content = "SELECT count(*) FROM attraction"
-		cursor.execute(select_content+ " " + compare_content + ";",keyword_arg)
-		total_result = cursor.fetchone()
-
-		if total_result["count(*)"] > (page + 1) * items_in_page:
+		if len(data) == items_in_page + 1:
 			rsp["nextPage"] = page + 1
 
 		if data != None:
-			rsp["data"] = data
+			rsp["data"] = data[0:12]
 
 			# transform datatype from json data to list
 			for rsp_data in rsp["data"]:
@@ -134,7 +129,7 @@ def mrt_list():
 		cursor = con.cursor()
 		cursor.execute("SELECT mrt FROM attraction WHERE mrt IS NOT NULL GROUP BY mrt ORDER BY count(*) DESC LIMIT 40 OFFSET 0;")
 		data = cursor.fetchall()
-		rsp["data"] = [data_item[0] for data_item in data ]
+		rsp["data"] = [data_item[0] for data_item in data]
 	except Exception as e:
 		rsp = {}
 		rsp["error"] = True
