@@ -62,98 +62,98 @@
 		</div>
 		<script>
 				// variables
-				const ListItemAll = document.querySelector('#list-item-all')
-				const PreviousBtn = document.querySelector('#left-button');
-				const NextBtn = document.querySelector('#right-button');
-				const SearchBtn = document.querySelector('#search-btn');
-				const Keyword = document.getElementById("keyword");
-				const BarSlideBuffer = 50;
-				let ScrollPosition = 0;
-				let ListItemAllWidth = 0;
-				let NextPage = null;
-				let DataReceiveDone = false;
-				let SearchApiPage = "api/attractions?page=";
-				let SearchKeyword = "";
+				const listItemAll = document.querySelector('#list-item-all')
+				const previousBtn = document.querySelector('#left-button');
+				const nextBtn = document.querySelector('#right-button');
+				const searchBtn = document.querySelector('#search-btn');
+				const keyword = document.getElementById("keyword");
+				const barSlideBuffer = 50;
+				let scrollPosition = 0;
+				let listItemAllWidth = 0;
+				let nextPage = null;
+				let dataReceiveDone = false;
+				let searchApiPage = "api/attractions?page=";
+				let searchKeyword = "";
 
 				// functions
-				function CreateMrtElement(MrtName, MrtIdx){
-					let NewMrtDiv = document.createElement('div');
-					NewMrtDiv.className = 'item';
-					NewMrtDiv.id = "MRT" + MrtIdx;
-					NewMrtDiv.onclick = function(){
-						SearchMRT(MrtName);
+				function createMrtElement(mrtName, mrtIdx){
+					let newMrtDiv = document.createElement('div');
+					newMrtDiv.className = 'item';
+					newMrtDiv.id = "MRT" + mrtIdx;
+					newMrtDiv.onclick = function(){
+						searchMRT(mrtName);
 					};
 
-					let MrtContainer = document.getElementById("list-item-all");
-					MrtContainer.appendChild(NewMrtDiv);
+					let mrtContainer = document.getElementById("list-item-all");
+					mrtContainer.appendChild(newMrtDiv);
 
-					let NewMrtTxtDiv = document.createElement('div');
-					NewMrtTxtDiv.className = 'item-text';
-					NewMrtTxtDiv.textContent = MrtName;
+					let newMrtTxtDiv = document.createElement('div');
+					newMrtTxtDiv.className = 'item-text';
+					newMrtTxtDiv.textContent = mrtName;
 					
-					let txtLength = MrtName.length * 16;
-					NewMrtTxtDiv.width = txtLength + "px";
-					ListItemAllWidth = ListItemAllWidth + txtLength + 30;
+					let txtLength = mrtName.length * 16;
+					newMrtTxtDiv.width = txtLength + "px";
+					listItemAllWidth = listItemAllWidth + txtLength + 30;
 
-					MrtContainer = document.getElementById(NewMrtDiv.id);
-					MrtContainer.appendChild(NewMrtTxtDiv);
+					mrtContainer = document.getElementById(newMrtDiv.id);
+					mrtContainer.appendChild(newMrtTxtDiv);
 				}
 
-				function CreateAttrElement(AttrData, AttrIdx){
-					let NewAttrDiv = document.createElement('div');
-					NewAttrDiv.className = 'attraction';
-					NewAttrDiv.id = "Attr" + AttrIdx;
+				function createAttrElement(attrData, attrIdx){
+					let newAttrDiv = document.createElement('div');
+					newAttrDiv.className = 'attraction';
+					newAttrDiv.id = "Attr" + attrIdx;
 
-					let AttrContainer = document.getElementById("attractions-group");
-					AttrContainer.appendChild(NewAttrDiv);
+					let attrContainer = document.getElementById("attractions-group");
+					attrContainer.appendChild(newAttrDiv);
 
-					let NewPicDiv = document.createElement('div');
-					NewPicDiv.className = 'attr-pic';
-					NewAttrDiv.appendChild(NewPicDiv);
+					let newPicDiv = document.createElement('div');
+					newPicDiv.className = 'attr-pic';
+					newAttrDiv.appendChild(newPicDiv);
 
-					let NewAttrImg = document.createElement('img');
-					NewAttrImg.className = 'attr-Img';
-					NewAttrImg.src = AttrData["images"][0];
-					NewPicDiv.appendChild(NewAttrImg);
+					let newAttrImg = document.createElement('img');
+					newAttrImg.className = 'attr-Img';
+					newAttrImg.src = attrData["images"][0];
+					newPicDiv.appendChild(newAttrImg);
 
-					let NewNamePlaceDiv = document.createElement('div');
-					NewNamePlaceDiv.className = 'attr-name-place';
-					NewPicDiv.appendChild(NewNamePlaceDiv);
+					let newNamePlaceDiv = document.createElement('div');
+					newNamePlaceDiv.className = 'attr-name-place';
+					newPicDiv.appendChild(newNamePlaceDiv);
 
-					let NewTxtNameDiv = document.createElement('div');
-					NewTxtNameDiv.className= 'txt-name';
-					NewTxtNameDiv.textContent = AttrData["name"];
-					NewNamePlaceDiv.appendChild(NewTxtNameDiv);
+					let newTxtNameDiv = document.createElement('div');
+					newTxtNameDiv.className= 'txt-name';
+					newTxtNameDiv.textContent = attrData["name"];
+					newNamePlaceDiv.appendChild(newTxtNameDiv);
 
-					let NewNoteDiv = document.createElement('div');
-					NewNoteDiv.className = 'attr-note';
-					NewAttrDiv.appendChild(NewNoteDiv)
+					let newNoteDiv = document.createElement('div');
+					newNoteDiv.className = 'attr-note';
+					newAttrDiv.appendChild(newNoteDiv)
 
-					let NewInfosDiv = document.createElement('div');
-					NewInfosDiv.className= 'infos';
-					NewNoteDiv.appendChild(NewInfosDiv);
+					let newInfosDiv = document.createElement('div');
+					newInfosDiv.className= 'infos';
+					newNoteDiv.appendChild(newInfosDiv);
 
-					let NewTxtMrtDiv = document.createElement('div');
-					NewTxtMrtDiv.className= 'txt-mrt';
-					NewTxtMrtDiv.textContent = AttrData["mrt"];
-					NewInfosDiv.appendChild(NewTxtMrtDiv);
+					let newTxtMrtDiv = document.createElement('div');
+					newTxtMrtDiv.className= 'txt-mrt';
+					newTxtMrtDiv.textContent = attrData["mrt"];
+					newInfosDiv.appendChild(newTxtMrtDiv);
 
-					let NewTxtCateDiv = document.createElement('div');
-					NewTxtCateDiv.className= 'txt-cate';
-					NewTxtCateDiv.textContent = AttrData["category"];
-					NewInfosDiv.appendChild(NewTxtCateDiv);
+					let newTxtCateDiv = document.createElement('div');
+					newTxtCateDiv.className= 'txt-cate';
+					newTxtCateDiv.textContent = attrData["category"];
+					newInfosDiv.appendChild(newTxtCateDiv);
 				}
 
-				function LoadAttractions(url){
+				function loadAttractions(url){
 					fetch(url).then(function(response){
 						return response.json();
 					}).then(function(data){
-						let AttrList = data["data"];
-						let TotalAttr = AttrList.length;
-						NextPage = data["nextPage"];
+						let attrList = data["data"];
+						let totalAttr = attrList.length;
+						nextPage = data["nextPage"];
 
 						let footer = document.querySelector('#footer');
-						if(NextPage != null) {
+						if(nextPage != null) {
 							footer.style.display = 'none';
 							observer.observe(targetElement);
 						}
@@ -162,67 +162,67 @@
 							observer.unobserve(targetElement);
 						}
 
-						if(AttrList == "") {
-							AttrContainer = document.getElementById("attractions-group");
-							AttrContainer.textContent = "No result found.";
+						if(attrList == "") {
+							let attrContainer = document.getElementById("attractions-group");
+							attrContainer.textContent = "No result found.";
 						}
 						else {
-							for(let AttrIdx = 0; AttrIdx < TotalAttr; AttrIdx++){
-								CreateAttrElement(AttrList[AttrIdx], AttrIdx);
+							for(let attrIdx = 0; attrIdx < totalAttr; attrIdx++){
+								createAttrElement(attrList[attrIdx], attrIdx);
 							}
 						}
 						
-						DataReceiveDone = true;
+						dataReceiveDone = true;
 					});
 				}
 
-				function RemoveAttractionGroup(){
-					const GroupElement = document.getElementById("attractions-group");
+				function removeAttractionGroup(){
+					const groupElement = document.getElementById("attractions-group");
 
-					while(GroupElement.firstChild){
-						GroupElement.removeChild(GroupElement.firstChild);
+					while(groupElement.firstChild){
+						groupElement.removeChild(groupElement.firstChild);
 					}
 				}
 
-				function FreshSearchKeyword(){
-					RemoveAttractionGroup();
+				function freshSearchKeyword(){
+					removeAttractionGroup();
 					observer.unobserve(targetElement);
-					SearchKeyword = "&keyword=" + Keyword.value;
-					DataReceiveDone = false;
-					LoadAttractions(SearchApiPage + "0" + SearchKeyword);
+					searchKeyword = "&keyword=" + keyword.value;
+					dataReceiveDone = false;
+					loadAttractions(searchApiPage + "0" + searchKeyword);
 				}
 
-				function SearchMRT(MrtName){
-					Keyword.value = MrtName;
-					FreshSearchKeyword();
+				function searchMRT(mrtName){
+					keyword.value = mrtName;
+					freshSearchKeyword();
 				}
 
 				// mrt slide bar
-				NextBtn.addEventListener('click', () => {
-					let BarWidth = document.querySelector('#listItems').clientWidth;
-					ScrollPosition += BarWidth - BarSlideBuffer;
+				nextBtn.addEventListener('click', () => {
+					let barWidth = document.querySelector('#listItems').clientWidth;
+					scrollPosition += barWidth - barSlideBuffer;
 					
-					if(ScrollPosition + BarWidth > ListItemAllWidth){
-						ScrollPosition = ListItemAllWidth - BarWidth;
+					if(scrollPosition + barWidth > listItemAllWidth){
+						scrollPosition = listItemAllWidth - barWidth;
 					}
 					
-					ListItemAll.style.transform = `translateX(-${ScrollPosition}px)`;
+					listItemAll.style.transform = `translateX(-${scrollPosition}px)`;
 				});
 
-				PreviousBtn.addEventListener('click', () => {
-					let BarWidth = document.querySelector('#listItems').clientWidth;
-					ScrollPosition -= BarWidth - BarSlideBuffer;
+				previousBtn.addEventListener('click', () => {
+					let barWidth = document.querySelector('#listItems').clientWidth;
+					scrollPosition -= barWidth - barSlideBuffer;
 
-					if(ScrollPosition < 0){
-						ScrollPosition = 0;
+					if(scrollPosition < 0){
+						scrollPosition = 0;
 					}
 					
-					ListItemAll.style.transform = `translateX(-${ScrollPosition}px)`;
+					listItemAll.style.transform = `translateX(-${scrollPosition}px)`;
 				});
 
 				// search keyword
-				SearchBtn.addEventListener('click', () => {
-					FreshSearchKeyword();
+				searchBtn.addEventListener('click', () => {
+					freshSearchKeyword();
 				});
 
 				// scroll-to-end detect
@@ -236,10 +236,10 @@
                 const observer = new IntersectionObserver(entries => {
 					entries.forEach(entry => {
 						if(entry.isIntersecting){
-							if(NextPage != null){
-								if(DataReceiveDone){
-									DataReceiveDone = false;
-									LoadAttractions(SearchApiPage + NextPage.toString() + SearchKeyword);
+							if(nextPage != null){
+								if(dataReceiveDone){
+									dataReceiveDone = false;
+									loadAttractions(searchApiPage + nextPage.toString() + searchKeyword);
 								}
 							}
 						}
@@ -250,15 +250,15 @@
 				fetch("api/mrts").then(function(response){
 					return response.json();
 				}).then(function(data){
-					let MrtList = data["data"];
-					let TotalMrt = MrtList.length;
-					ListItemAllWidth = 4 * (TotalMrt - 1);
-					for(let MrtIdx = 0; MrtIdx < TotalMrt; MrtIdx++){
-						CreateMrtElement(MrtList[MrtIdx], MrtIdx);
+					let mrtList = data["data"];
+					let totalMrt = mrtList.length;
+					listItemAllWidth = 4 * (totalMrt - 1);
+					for(let mrtIdx = 0; mrtIdx < totalMrt; mrtIdx++){
+						createMrtElement(mrtList[mrtIdx], mrtIdx);
 					}
 				});
 
-				LoadAttractions(SearchApiPage + "0");
+				loadAttractions(searchApiPage + "0");
 		</script>
     </body>
 </html>
