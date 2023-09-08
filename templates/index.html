@@ -68,6 +68,13 @@
 				const searchBtn = document.querySelector('#search-btn');
 				const keyword = document.getElementById("keyword");
 				const barSlideBuffer = 50;
+				// scroll-to-end detect
+				const endTargetElement = document.querySelector('#main-end');
+				const endTargetDetectOptions = {
+					root: null, // viewport
+					rootMargin: '0px',
+					threshold: [0,1], // any ratio of element
+				};
 				let scrollPosition = 0;
 				let listItemAllWidth = 0;
 				let nextPage = null;
@@ -155,11 +162,11 @@
 						let footer = document.querySelector('#footer');
 						if(nextPage != null) {
 							footer.style.display = 'none';
-							observer.observe(targetElement);
+							endReachedObserver.observe(endTargetElement);
 						}
 						else {
 							footer.style.display = 'flex';
-							observer.unobserve(targetElement);
+							endReachedObserver.unobserve(endTargetElement);
 						}
 
 						if(attrList == "") {
@@ -186,7 +193,7 @@
 
 				function freshSearchKeyword(){
 					removeAttractionGroup();
-					observer.unobserve(targetElement);
+					endReachedObserver.unobserve(endTargetElement);
 					searchKeyword = "&keyword=" + keyword.value;
 					dataReceiveDone = false;
 					loadAttractions(searchApiPage + "0" + searchKeyword);
@@ -225,15 +232,7 @@
 					freshSearchKeyword();
 				});
 
-				// scroll-to-end detect
-                const targetElement = document.querySelector('#main-end');
-				const options = {
-					root: null, // viewport
-					rootMargin: '0px',
-					threshold: [0,1], // any ratio of element
-				};
-
-                const observer = new IntersectionObserver(entries => {
+				const endReachedObserver = new IntersectionObserver(entries => {
 					entries.forEach(entry => {
 						if(entry.isIntersecting){
 							if(nextPage != null){
@@ -244,7 +243,7 @@
 							}
 						}
 					});
-                }, options);
+				}, endTargetDetectOptions);
 
 				// init default data
 				fetch("api/mrts").then(function(response){
@@ -260,5 +259,5 @@
 
 				loadAttractions(searchApiPage + "0");
 		</script>
-    </body>
+	</body>
 </html>
