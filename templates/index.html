@@ -62,9 +62,9 @@
 		</div>
 		<script>
 				// variables
-				const listItemAll = document.querySelector('#list-item-all')
 				const previousBtn = document.querySelector('#left-button');
 				const nextBtn = document.querySelector('#right-button');
+				const listFrame = document.getElementById("listItems");
 				const searchBtn = document.querySelector('#search-btn');
 				const keyword = document.getElementById("keyword");
 				const barSlideBuffer = 50;
@@ -75,8 +75,6 @@
 					rootMargin: '0px',
 					threshold: [0,1], // any ratio of element
 				};
-				let scrollPosition = 0;
-				let listItemAllWidth = 0;
 				let nextPage = null;
 				let dataReceiveDone = false;
 				let searchApiPage = "api/attractions?page=";
@@ -100,7 +98,6 @@
 					
 					let txtLength = mrtName.length * 16;
 					newMrtTxtDiv.width = txtLength + "px";
-					listItemAllWidth = listItemAllWidth + txtLength + 30;
 
 					mrtContainer = document.getElementById(newMrtDiv.id);
 					mrtContainer.appendChild(newMrtTxtDiv);
@@ -206,25 +203,11 @@
 
 				// mrt slide bar
 				nextBtn.addEventListener('click', () => {
-					let barWidth = document.querySelector('#listItems').clientWidth;
-					scrollPosition += barWidth - barSlideBuffer;
-					
-					if(scrollPosition + barWidth > listItemAllWidth){
-						scrollPosition = listItemAllWidth - barWidth;
-					}
-					
-					listItemAll.style.transform = `translateX(-${scrollPosition}px)`;
+					listFrame.scrollLeft += (listFrame.clientWidth - barSlideBuffer);
 				});
 
 				previousBtn.addEventListener('click', () => {
-					let barWidth = document.querySelector('#listItems').clientWidth;
-					scrollPosition -= barWidth - barSlideBuffer;
-
-					if(scrollPosition < 0){
-						scrollPosition = 0;
-					}
-					
-					listItemAll.style.transform = `translateX(-${scrollPosition}px)`;
+					listFrame.scrollLeft -= (listFrame.clientWidth - barSlideBuffer);
 				});
 
 				// search keyword
@@ -251,7 +234,6 @@
 				}).then(function(data){
 					let mrtList = data["data"];
 					let totalMrt = mrtList.length;
-					listItemAllWidth = 4 * (totalMrt - 1);
 					for(let mrtIdx = 0; mrtIdx < totalMrt; mrtIdx++){
 						createMrtElement(mrtList[mrtIdx], mrtIdx);
 					}

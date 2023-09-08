@@ -191,6 +191,7 @@ html,body {
 	grid-template-rows: 24px;
 	overflow-x: hidden;
 	position: relative;
+	scroll-behavior: smooth;
 }
 #list-item-all {
 	display: grid;
