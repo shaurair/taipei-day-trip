@@ -67,6 +67,7 @@
 				const listFrame = document.getElementById("listItems");
 				const searchBtn = document.querySelector('#search-btn');
 				const keyword = document.getElementById("keyword");
+				const attrGroupElement = document.getElementById("attractions-group");
 				const barSlideBuffer = 50;
 				// scroll-to-end detect
 				const endTargetElement = document.querySelector('#main-end');
@@ -167,8 +168,7 @@
 						}
 
 						if(attrList == "") {
-							let attrContainer = document.getElementById("attractions-group");
-							attrContainer.textContent = "No result found.";
+							attrGroupElement.textContent = "No result found.";
 						}
 						else {
 							for(let attrIdx = 0; attrIdx < totalAttr; attrIdx++){
@@ -181,10 +181,10 @@
 				}
 
 				function removeAttractionGroup(){
-					const groupElement = document.getElementById("attractions-group");
+					footer.style.display = 'none';
 
-					while(groupElement.firstChild){
-						groupElement.removeChild(groupElement.firstChild);
+					while(attrGroupElement.firstChild){
+						attrGroupElement.removeChild(attrGroupElement.firstChild);
 					}
 				}
 
