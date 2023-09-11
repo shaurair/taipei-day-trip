@@ -14,10 +14,14 @@ html,body {
 	display: flex;
 	width: 1200px;
 }
+.hyperlink {
+	text-decoration: none;
+}
 #headline {
 	text-align: left;
 	width: 150px;
 	height: 34px;
+	cursor: pointer;
 
 	color: var(--primary-color-cyan-70, #489);
 	/* Header 2 - Bold 30(34) */
