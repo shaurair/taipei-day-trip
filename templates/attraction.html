@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale = 1.0" />
+		<meta charset="utf-8" />
+		<title>景點介紹</title>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}"/>
+	</head>
+	<body>
+		<div id="navigation">
+			<div id="nav-content">
+				<a href="/" class="hyperlink"><div id="headline">台北一日遊</div></a>
+				<div id="opt-menu">
+					<div id="opt-sche">預定行程</div>
+					<div id="opt-sign">登入/註冊</div>
+				</div>
+			</div>
+		</div>
+		<div id="section-area">
+			<div id="section">
+				<div id="picture-current">
+					<img id="attr-page-left-button" src="/left_arrow_noBack.png" onclick="pushImageSlide(-1)"/>
+					<img id="attr-page-right-button" src="/right_arrow_noBack.png" onclick="pushImageSlide(1)"/>
+					<div id="circle-set-area">
+						<div id="circle-set"></div>
+					</div>
+				</div>
+				<div id="profile"></div>
+			</div>
+		</div>
+		<div id="footer">
+			<div id="footer-content">
+				<div id="footer-text">COPYRIGHT © 2021 台北一日遊</div>
+			</div>
+		</div>
+		<script>
+			let attractionIdUrl = "../api/attraction/" + window.location.href.match(/\/attraction\/(\d+)/)[1];
+			let imageSet = document.getElementsByClassName("picture-slide");
+			let circleSet =  document.getElementsByClassName("circle");
+			let currentImageIdx = 0;
+
+			// functions
+			function initAllData(url){
+				fetch(url).then((response)=>{
+					return response.json();
+				}).then((data)=>{
+					createImgSet(data["data"]["images"]);
+				})
+			}
+
+			function createImgSet(imgSources) {
+				let imgSetIdx;
+				let pictureContainer = document.getElementById("picture-current");
+				let newImage;
+				let newCircle;
+				let circleContainer = document.getElementById("circle-set");
+
+				for(imgSetIdx = 0; imgSetIdx < imgSources.length; imgSetIdx++) {
+					newImage = document.createElement("img");
+					newImage.src = imgSources[imgSetIdx];
+					newImage.className = "picture-slide";
+					pictureContainer.appendChild(newImage);
+
+					// current pictures indicate
+					newCircle = document.createElement("img");
+					newCircle.className = "circle";
+					if(imgSetIdx == currentImageIdx) {
+						newCircle.src = "../circle_current.png";
+					}
+					else {
+						newImage.style.display = 'none';
+						newCircle.src = "../circle.png";
+					}
+
+					(function (index) {
+						newCircle.onclick = function () {
+							setCurrentImageSlide(index);
+						};
+					})(imgSetIdx);
+
+					circleContainer.appendChild(newCircle);
+				}
+			}
+			
+			function pushImageSlide(deltaIdx) {
+				let tmpImageIdx = currentImageIdx + deltaIdx;
+				if(tmpImageIdx >= imageSet.length) {
+					tmpImageIdx = 0;
+				}
+				else if(tmpImageIdx < 0 ) {
+					tmpImageIdx = imageSet.length - 1;
+				}
+				setCurrentImageSlide(tmpImageIdx);
+			}
+
+			function setCurrentImageSlide(imageIdx) {
+				if(imageIdx != currentImageIdx) {
+					imageSet[currentImageIdx].style.display = 'none';
+					circleSet[currentImageIdx].src = "../circle.png";
+					currentImageIdx = imageIdx;
+					imageSet[currentImageIdx].style.display = 'block';
+					circleSet[currentImageIdx].src = "../circle_current.png";
+				}
+			}
+
+			// init
+			initAllData(attractionIdUrl);
+		</script>
+	</body>
+</html>

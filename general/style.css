@@ -338,6 +338,63 @@ html,body {
 	color: #FFFFFF;
 	white-space: pre;
 }
+/* for attraction.html */
+#section-area {
+	display: flex;
+	justify-content: center;
+}
+#section {
+	margin-top: 40px;
+	margin-bottom: 40px;
+	width: 1200px;
+	height: 400px;
+	box-sizing: border-box;
+	padding-left: 15px;
+	padding-right: 15px;
+	display: inline-flex;
+	align-items: center;
+}
+#picture-current {
+	width: 540px;
+	height: 406px;
+	border-radius: 5px;
+	position: relative;
+}
+.picture-slide {
+	border-radius: 5px;
+	width: 540px;
+	height: 406px;
+	background: lightgray 50% / cover no-repeat;
+}
+#attr-page-left-button, #attr-page-right-button {
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	opacity: 0.75;
+}
+#attr-page-left-button {
+	top: 185px;
+	left: 10px;
+}
+#attr-page-right-button {
+    top: 185px;
+	right: 10px;
+}
+#circle-set-area {
+	position: absolute;
+    bottom: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+#circle-set {
+	display: grid;
+}
+.circle {
+	opacity: 0.75;
+	grid-row: 1;
+}
 
 /* 600 < screen size <= 1200 */
 @media (max-width: 1200px) {
