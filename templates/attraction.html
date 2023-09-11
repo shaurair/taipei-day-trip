@@ -16,6 +16,7 @@
 				</div>
 			</div>
 		</div>
+		<hr class="separater"/>
 		<div id="section-area">
 			<div id="section">
 				<div id="picture-current">
@@ -25,9 +26,27 @@
 						<div id="circle-set"></div>
 					</div>
 				</div>
-				<div id="profile"></div>
+				<div id="profile">
+					<div id="name"></div>
+					<div id="cate-mrt"></div>
+					<div id="booking-form">
+						<div id="order-headline">訂購導覽行程</div>
+						<div id="order-description">以此景點為中心的一日行程，帶您探索城市角落故事</div>
+						<div id="date-field"></div>
+						<div id="time-field"></div>
+						<div id="price-field"></div>
+						<div id="booking-field">
+							<div id="booking-button">
+								<div id="booking-text">開始預約行程</div>
+							</div>
+							<div id="booking-button-remain"></div>
+						</div>
+
+					</div>
+				</div>
 			</div>
 		</div>
+		<hr class="separater"/>
 		<div id="footer">
 			<div id="footer-content">
 				<div id="footer-text">COPYRIGHT © 2021 台北一日遊</div>
@@ -45,6 +64,7 @@
 					return response.json();
 				}).then((data)=>{
 					createImgSet(data["data"]["images"]);
+					createNameAndDescription(data["data"]["name"], data["data"]["category"], data["data"]["mrt"])
 				})
 			}
 
@@ -79,6 +99,18 @@
 					})(imgSetIdx);
 
 					circleContainer.appendChild(newCircle);
+				}
+			}
+
+			function createNameAndDescription(name, category, mrt) {
+				let nameElement = document.getElementById("name");
+				let descriptionElement = document.getElementById("cate-mrt");
+				nameElement.textContent = name;
+				if(mrt != null) {
+					descriptionElement.textContent = category + " at " + mrt;
+				}
+				else {
+					descriptionElement.textContent = category;
 				}
 			}
 			

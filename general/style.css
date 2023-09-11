@@ -339,6 +339,9 @@ html,body {
 	white-space: pre;
 }
 /* for attraction.html */
+.separater {
+	margin-block: 0;
+}
 #section-area {
 	display: flex;
 	justify-content: center;
@@ -351,7 +354,8 @@ html,body {
 	box-sizing: border-box;
 	padding-left: 15px;
 	padding-right: 15px;
-	display: inline-flex;
+	display: flex;
+	justify-content: space-between;
 	align-items: center;
 }
 #picture-current {
@@ -394,6 +398,90 @@ html,body {
 .circle {
 	opacity: 0.75;
 	grid-row: 1;
+}
+#profile {
+	width: 600px;
+	height: 400px;
+}
+#name {
+	height: 33px;
+	color: var(--secondary-color-gray-70, #666);
+	/* Header 3 - Blod 24(24) */
+	font-family: Noto Sans TC;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 700;
+}
+#cate-mrt {
+	margin-top: 15px;
+	height: 22px;
+	color: var(--secondary-color-gray-70, #666);
+	/* Body - Med 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 13.3px; /* 83.125% */
+}
+#booking-form {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	padding: 15px 20px 0 20px;
+	margin-top: 20px;
+	height: 302px;
+	border-radius: 5px;
+	background: var(--secondary-color-gray-20, #E8E8E8);
+}
+#order-headline {
+	height: 22px;
+	color: var(--secondary-color-gray-70, #666);
+	/* Body - Bold 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+}
+#order-description {
+	margin-top: 15px;
+    height: 24px;
+	color: var(--secondary-color-gray-70, #666);
+	/* Body - Med 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+}
+#date-field {
+	margin-top: 15px;
+    height: 35px;
+}
+#time-field {
+	margin-top: 15px;
+    height: 22px;
+}
+#price-field {
+	margin-top: 15px;
+    height: 22px;
+}
+#booking-field {
+	display: flex;
+}
+#booking-button {
+	margin-top: 25px;
+	padding: 10px 20px 10px 20px;
+	border-radius: 5px;
+	background: var(--primary-color-cyan-70, #489);
+}
+#booking-text {
+	color: var(--additional-color-white, #FFF);
+	text-align: center;
+	/* Button - Reg 19(16) */
+	font-family: Noto Sans TC;
+	font-size: 19px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 16px; /* 84.211% */
 }
 
 /* 600 < screen size <= 1200 */
