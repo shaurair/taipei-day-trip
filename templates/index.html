@@ -108,6 +108,7 @@
 					let newAttrDiv = document.createElement('div');
 					newAttrDiv.className = 'attraction';
 					newAttrDiv.id = "attr" + attrIdx;
+					addMouseActionEffect(newAttrDiv);
 
 					let attrContainer = document.getElementById("attractions-group");
 					attrContainer.appendChild(newAttrDiv);
@@ -205,6 +206,16 @@
 				function searchMRT(mrtName){
 					keyword.value = mrtName;
 					freshSearchKeyword();
+				}
+
+				function addMouseActionEffect(element) {
+					element.addEventListener('mouseover', () => {
+						element.style.opacity = 0.75;
+					});
+
+					element.addEventListener('mouseout', () => {
+						element.style.opacity = 1;
+					});
 				}
 
 				// mrt slide bar
