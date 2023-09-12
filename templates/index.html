@@ -112,6 +112,12 @@
 					let attrContainer = document.getElementById("attractions-group");
 					attrContainer.appendChild(newAttrDiv);
 
+					let newAttrLink = document.createElement('a');
+					newAttrLink.href = "/attraction/" + attrData["id"];
+					newAttrLink.className = "hyperlink";
+					newAttrLink.appendChild(newAttrDiv);
+					attrContainer.appendChild(newAttrLink);
+
 					let newPicDiv = document.createElement('div');
 					newPicDiv.className = 'attr-pic';
 					newAttrDiv.appendChild(newPicDiv);
