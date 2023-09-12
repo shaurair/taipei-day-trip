@@ -342,6 +342,8 @@ html,body {
 /* for attraction.html */
 .separater {
 	margin-block: 0;
+	stroke-width: 1px;
+    stroke: var(--Gray-300, #E8E8E8);
 }
 #section-area {
 	display: flex;
