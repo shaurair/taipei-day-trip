@@ -421,7 +421,6 @@ html,body {
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 500;
-	line-height: 13.3px; /* 83.125% */
 }
 #booking-form {
 	display: flex;
@@ -433,8 +432,7 @@ html,body {
 	border-radius: 5px;
 	background: var(--secondary-color-gray-20, #E8E8E8);
 }
-#order-headline {
-	height: 22px;
+.form-headline {
 	color: var(--secondary-color-gray-70, #666);
 	/* Body - Bold 16(13.3) */
 	font-family: Noto Sans TC;
@@ -442,9 +440,7 @@ html,body {
 	font-style: normal;
 	font-weight: 700;
 }
-#order-description {
-	margin-top: 15px;
-    height: 24px;
+.form-description {
 	color: var(--secondary-color-gray-70, #666);
 	/* Body - Med 16(13.3) */
 	font-family: Noto Sans TC;
@@ -452,17 +448,80 @@ html,body {
 	font-style: normal;
 	font-weight: 500;
 }
+#order-headline {
+	height: 22px;
+}
+
+#order-description {
+	margin-top: 15px;
+    height: 24px;
+}
 #date-field {
 	margin-top: 15px;
     height: 35px;
+	display: flex;
+    align-items: center;
+    gap: 5px;
+}
+#date-headline {
+    width: 81px;
+}
+#date-input-area {
+	height: 35px;
+	width: 193px;
+	display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 5px 10px 5px 10px;
+    background: var(--White, #FFF);
+}
+#calendar {
+	height: 25px;
+	width: 173px;
+	border-width: 0px;
+    border: none;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+	display: block;
+	background: url("/calendar.png") no-repeat center;
+	width: 24px;
+	height: 24px;
 }
 #time-field {
 	margin-top: 15px;
     height: 22px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+#time-headline {
+	width: 81px;
+}
+.radio-select-area {
+	width: 87px;
+	height: 22px;
+	box-sizing: border-box;
+	padding: 0px 8px 0px 5px;
+	display: flex;
+    align-items: center;
+	gap: 4px;
+}
+.time-button {
+	display: flex;
+    align-items: center;
+}
+#afternoon-select {
+	display: none;
 }
 #price-field {
 	margin-top: 15px;
     height: 22px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+#price-headline {
+	width: 81px;
 }
 #booking-field {
 	display: flex;
@@ -482,6 +541,46 @@ html,body {
 	font-style: normal;
 	font-weight: 400;
 	line-height: 16px; /* 84.211% */
+}
+#infors-area {
+	display: flex;
+    justify-content: center;
+}
+#infors {
+	margin-top: 40px;
+	margin-bottom: 40px;
+	width: 1200px;
+	box-sizing: border-box;
+    padding: 10px;
+}
+.infor-headline {
+	color: var(--secondary-color-gray-70, #666);
+	/* Body - Bold 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 32px;
+}
+.infors-description {
+	color: var(--secondary-color-gray-70, #666);
+	/* Content - Reg 16(Auto) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+#address {
+	margin-top: 20px;
+    height: 32px;
+}
+#transport {
+	margin-top: 20px;
+    height: 32px;
+}
+#transport-content {
+	margin-bottom: 80px;
 }
 
 /* 600 < screen size <= 1200 */

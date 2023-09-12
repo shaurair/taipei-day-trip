@@ -30,11 +30,53 @@
 					<div id="name"></div>
 					<div id="cate-mrt"></div>
 					<div id="booking-form">
-						<div id="order-headline">訂購導覽行程</div>
-						<div id="order-description">以此景點為中心的一日行程，帶您探索城市角落故事</div>
-						<div id="date-field"></div>
-						<div id="time-field"></div>
-						<div id="price-field"></div>
+						<div id="order-headline" class="form-headline">訂購導覽行程</div>
+						<div id="order-description" class="form-description">以此景點為中心的一日行程，帶您探索城市角落故事</div>
+						<div id="date-field">
+							<div id="date-headline" class="form-headline">選擇日期：</div>
+							<div id="date-input-area">
+								<input type="date" id="calendar" name="date">
+							</div>
+						</div>
+						<div id="time-field">
+							<div id="time-headline" class="form-headline">選擇時間：</div>
+							<div id="morning" class="radio-select-area">
+								<div id="morning-button" class="time-button">
+									<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+										<g clip-path="url(#clip0_3_336)">
+											<circle cx="11" cy="11" r="11" fill="white"/>
+											<circle id="morning-select" cx="11" cy="11" r="9" fill="#448899"/>
+										</g>
+										<defs>
+											<clipPath id="clip0_3_336">
+											<rect width="22" height="22" fill="white"/>
+											</clipPath>
+										</defs>
+									</svg>
+								</div>
+								<div class="form-headline">上半天</div>
+							</div>
+							<div id="afternoon" class="radio-select-area">
+								<div id="afternoon-button" class="time-button">
+									<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+										<g clip-path="url(#clip0_3_336)">
+											<circle cx="11" cy="11" r="11" fill="white"/>
+											<circle id="afternoon-select" cx="11" cy="11" r="9" fill="#448899"/>
+										</g>
+										<defs>
+											<clipPath id="clip0_3_336">
+											<rect width="22" height="22" fill="white"/>
+											</clipPath>
+										</defs>
+									</svg>
+								</div>
+								<div class="form-headline">下半天</div>
+							</div>
+						</div>
+						<div id="price-field">
+							<div id="price-headline" class="form-headline">導覽費用：</div>
+							<div id="price-description" class="form-description">新台幣 2000 元</div>
+						</div>
 						<div id="booking-field">
 							<div id="booking-button">
 								<div id="booking-text">開始預約行程</div>
@@ -47,6 +89,15 @@
 			</div>
 		</div>
 		<hr class="separater"/>
+		<div id="infors-area">
+			<div id="infors">
+				<div id="description" class="infors-description"></div>
+				<div id="address" class="infor-headline">景點地址：</div>
+				<div id="address-content" class="infors-description"></div>
+				<div id="transport">交通方式：</div>
+				<div id="transport-content" class="infors-description"></div>
+			</div>
+		</div>
 		<div id="footer">
 			<div id="footer-content">
 				<div id="footer-text">COPYRIGHT © 2021 台北一日遊</div>
@@ -57,6 +108,13 @@
 			let imageSet = document.getElementsByClassName("picture-slide");
 			let circleSet =  document.getElementsByClassName("circle");
 			let currentImageIdx = 0;
+			const morningButton = document.getElementById("morning-button");
+			const afternoonButton = document.getElementById("afternoon-button");
+			const morningSelect = document.getElementById("morning-select");
+			const afternoonSelect = document.getElementById("afternoon-select");
+			const priceContent = document.getElementById("price-description");
+			const morningFee = "新台幣 2000 元";
+			const afternoonFee = "新台幣 2500 元";
 
 			// functions
 			function initAllData(url){
@@ -64,7 +122,7 @@
 					return response.json();
 				}).then((data)=>{
 					createImgSet(data["data"]["images"]);
-					createNameAndDescription(data["data"]["name"], data["data"]["category"], data["data"]["mrt"])
+					createNameAndInformation(data["data"]);
 				})
 			}
 
@@ -102,16 +160,21 @@
 				}
 			}
 
-			function createNameAndDescription(name, category, mrt) {
-				let nameElement = document.getElementById("name");
-				let descriptionElement = document.getElementById("cate-mrt");
-				nameElement.textContent = name;
-				if(mrt != null) {
-					descriptionElement.textContent = category + " at " + mrt;
-				}
-				else {
-					descriptionElement.textContent = category;
-				}
+			function createNameAndInformation(data) {
+				let element = document.getElementById("name");
+				element.textContent = data["name"];
+
+				element = document.getElementById("cate-mrt");
+				element.textContent = data["category"] + ((data["mrt"] != null) ? " at " + data["mrt"] : "")
+
+				element = document.getElementById("description");
+				element.textContent = data["description"];
+
+				element = document.getElementById("address-content");
+				element.textContent = data["address"];
+
+				element = document.getElementById("transport-content");
+				element.textContent = data["transport"];
 			}
 			
 			function pushImageSlide(deltaIdx) {
@@ -134,6 +197,19 @@
 					circleSet[currentImageIdx].src = "../circle_current.png";
 				}
 			}
+
+			// button actions
+			morningButton.addEventListener('click', ()=>{
+				morningSelect.style.display = 'block';
+				afternoonSelect.style.display = 'none';
+				priceContent.textContent = morningFee;
+			});
+
+			afternoonButton.addEventListener('click', ()=>{
+				morningSelect.style.display = 'none';
+				afternoonSelect.style.display = 'block';
+				priceContent.textContent = afternoonFee;
+			});
 
 			// init
 			initAllData(attractionIdUrl);
