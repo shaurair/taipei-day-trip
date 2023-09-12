@@ -397,11 +397,11 @@ html,body {
     width: 100%;
 }
 #circle-set {
-	display: grid;
+	display: flex;
+    gap: 12px;
 }
 .circle {
 	opacity: 0.75;
-	grid-row: 1;
 }
 #profile {
 	width: 600px;

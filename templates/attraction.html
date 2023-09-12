@@ -130,6 +130,7 @@
 				let imgSetIdx;
 				let pictureContainer = document.getElementById("picture-current");
 				let newImage;
+				let newSvgForCircle;
 				let newCircle;
 				let circleContainer = document.getElementById("circle-set");
 
@@ -140,23 +141,34 @@
 					pictureContainer.appendChild(newImage);
 
 					// current pictures indicate
-					newCircle = document.createElement("img");
-					newCircle.className = "circle";
+					newSvgForCircle = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+					newSvgForCircle.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+					newSvgForCircle.setAttribute("width", "12");
+					newSvgForCircle.setAttribute("height", "12");
+					newSvgForCircle.setAttribute("viewBox", "0 0 12 12");
+					newSvgForCircle.setAttribute("fill", "none");
+
+					// Create a circle element
+					newCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+					newCircle.setAttribute("class", "circle");
+					newCircle.setAttribute("cx", "6");
+					newCircle.setAttribute("cy", "6");
+
 					if(imgSetIdx == currentImageIdx) {
-						newCircle.src = "../circle_current.png";
+						setAsCurrentCircle(newCircle);
 					}
 					else {
 						newImage.style.display = 'none';
-						newCircle.src = "../circle.png";
+						setAsOtherCircle(newCircle);
 					}
+					newSvgForCircle.appendChild(newCircle);
+					circleContainer.appendChild(newSvgForCircle);
 
 					(function (index) {
-						newCircle.onclick = function () {
+						newSvgForCircle.onclick = function () {
 							setCurrentImageSlide(index);
 						};
 					})(imgSetIdx);
-
-					circleContainer.appendChild(newCircle);
 				}
 			}
 
@@ -191,11 +203,24 @@
 			function setCurrentImageSlide(imageIdx) {
 				if(imageIdx != currentImageIdx) {
 					imageSet[currentImageIdx].style.display = 'none';
-					circleSet[currentImageIdx].src = "../circle.png";
+					setAsOtherCircle(circleSet[currentImageIdx]);
+
 					currentImageIdx = imageIdx;
 					imageSet[currentImageIdx].style.display = 'block';
-					circleSet[currentImageIdx].src = "../circle_current.png";
+					setAsCurrentCircle(circleSet[currentImageIdx]);
 				}
+			}
+
+			function setAsCurrentCircle(circle) {
+				circle.setAttribute("r", "5.5");
+				circle.setAttribute("fill", "black");
+				circle.setAttribute("stroke", "white");
+			}
+
+			function setAsOtherCircle(circle) {
+				circle.setAttribute("r","6");
+				circle.setAttribute("fill", "white");
+				circle.setAttribute("stroke", "none");
 			}
 
 			// button actions
