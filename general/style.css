@@ -698,6 +698,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	}
 	.picture-slide {
 		height: 350px;
+		border-radius: 0;
 	}
 	#attr-page-left-button, #attr-page-right-button {
 		top: 157px;
