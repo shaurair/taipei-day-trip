@@ -340,10 +340,11 @@ html,body {
 	white-space: pre;
 }
 /* for attraction.html */
-.separater {
+.separator {
 	margin-block: 0;
-	stroke-width: 1px;
-    stroke: var(--Gray-300, #E8E8E8);
+	height: 1px;
+	border: none;
+	background-color: var(--Gray-300, #E8E8E8);
 }
 #section-area {
 	display: flex;
@@ -547,6 +548,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	font-weight: 400;
 	line-height: 16px; /* 84.211% */
 }
+#section-separator {
+	width: 1200px;
+}
 #infors-area {
 	display: flex;
     justify-content: center;
@@ -670,6 +674,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	#profile {
 		width: 50%;
 	}
+	#section-separator {
+		width: 100%;
+	}
 	#infors {
 		width: 100%;
 	}
@@ -683,6 +690,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 		height: auto;
 		gap: 20px;
 		padding: 0;
+		margin-top: 0;
 	}
 	#picture-current {
 		width: 100%;
