@@ -75,7 +75,7 @@ def attraction_list():
 			rsp["nextPage"] = page + 1
 
 		if data != None:
-			rsp["data"] = data[0:12]
+			rsp["data"] = data[0:items_in_page]
 
 			# transform datatype from json data to list
 			for rsp_data in rsp["data"]:
