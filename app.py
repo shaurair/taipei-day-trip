@@ -140,4 +140,49 @@ def mrt_list():
 		con.close()
 	return json.dumps(rsp, ensure_ascii = False)
 
+@app.route("/api/user", methods = ["POST"])
+def signup():
+	rsp={}
+	request_data = request.get_json()
+	try:
+		name = request_data["name"]
+		email = request_data["email"]
+		password = request_data["password"]
+		(rsp, rsp_code) = signup_to_db(name, email, password)
+		return jsonify(rsp), rsp_code
+
+	except Exception as e:
+		rsp["error"] = True
+		rsp["message"] = "Please check request data: " + str(e)
+		return jsonify(rsp), 400
+		
+def signup_to_db(name, email, password):
+	rsp = {}
+	try:
+		con = connection_pool.get_connection()
+		cursor = con.cursor()
+		cursor.execute("SELECT * FROM member WHERE email = %s COLLATE utf8mb4_bin",(email, ))
+		existed_emails = cursor.fetchone()
+		if existed_emails is None:
+			try:
+				cursor.execute("INSERT INTO member(name, email, password) VALUES(%s, %s, %s)",(name, email, password))
+				con.commit()
+				rsp["ok"] = True
+				return rsp, 200
+			except Exception as e:
+				rsp["error"] = True
+				rsp["message"] = str(e)
+				return rsp, 500
+		else:
+			rsp["error"] = True
+			rsp["message"] = "The email has been used."
+			return rsp, 400
+	except Exception as e:
+		rsp["error"] = True
+		rsp["message"] = str(e)
+		return rsp, 500
+	finally:
+		cursor.close()
+		con.close()
+	
 app.run(host="0.0.0.0", port=3000)
