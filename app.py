@@ -2,6 +2,8 @@ from flask import *
 import mysql.connector
 from mysql.connector import pooling
 import json
+import jwt
+import datetime
 
 app=Flask(__name__, static_folder = "general", static_url_path = "/")
 app.config["JSON_AS_ASCII"]=False
@@ -15,6 +17,8 @@ MysqlConnectInfo = {
 }
 
 connection_pool = pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **MysqlConnectInfo)
+
+jwt_secret_key = 'my_taipei_trip'
 
 # Pages
 @app.route("/")
@@ -148,15 +152,46 @@ def signup():
 		name = request_data["name"]
 		email = request_data["email"]
 		password = request_data["password"]
-		(rsp, rsp_code) = signup_to_db(name, email, password)
-		return jsonify(rsp), rsp_code
 
 	except Exception as e:
 		rsp["error"] = True
 		rsp["message"] = "Please check request data: " + str(e)
 		return jsonify(rsp), 400
+
+	(rsp, rsp_code) = signup_on_db(name, email, password)
+	return jsonify(rsp), rsp_code
 		
-def signup_to_db(name, email, password):
+@app.route("/api/user/auth", methods = ["GET", "PUT"])
+def authenticate():
+	rsp={}
+	if request.method == "GET":
+		rsp["data"] = None
+		bearer_token = request.headers.get("Authorization")
+		if bearer_token.startswith('Bearer '):
+			token = bearer_token.split(' ')[1]
+			try:
+				rsp["data"] = decoded_data = jwt.decode(token, jwt_secret_key, algorithms="HS256")
+				del rsp["data"]["exp"]
+			except Exception as e:
+				print(e)
+				pass
+			
+		return jsonify(rsp), 200
+	elif request.method == "PUT":
+		try:
+			request_data = request.get_json()
+			email = request_data["email"]
+			password = request_data["password"]
+
+		except Exception as e:
+			rsp["error"] = True
+			rsp["message"] = "Please check request data: " + str(e)
+			return jsonify(rsp), 400
+
+		(rsp, rsp_code) = check_member_on_db(email, password)
+		return jsonify(rsp), rsp_code
+
+def signup_on_db(name, email, password):
 	rsp = {}
 	try:
 		con = connection_pool.get_connection()
@@ -185,4 +220,29 @@ def signup_to_db(name, email, password):
 		cursor.close()
 		con.close()
 	
+def check_member_on_db(email, password):
+	rsp = {}
+	try:
+		con = connection_pool.get_connection()
+		cursor = con.cursor(dictionary = True)
+		cursor.execute("SELECT * FROM member WHERE email = %s and password = %s COLLATE utf8mb4_bin",(email, password))
+		user_result = cursor.fetchone()
+		if user_result is None:
+			rsp["error"] = True
+			rsp["message"] = "Email or password is wrong."
+			return rsp, 400
+		else:
+			expiration_time = datetime.datetime.utcnow() + datetime.timedelta(days = 7)
+			payload = {"id":user_result["id"], "name": user_result["name"] , "email": email, 'exp': expiration_time}
+			token = jwt.encode(payload, jwt_secret_key, algorithm='HS256')
+			rsp["token"] = token
+			return rsp, 200
+	except Exception as e:
+		rsp["error"] = True
+		rsp["message"] = str(e)
+		return rsp, 500
+	finally:
+		cursor.close()
+		con.close()
+
 app.run(host="0.0.0.0", port=3000)
