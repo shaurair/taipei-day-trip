@@ -1,5 +1,6 @@
 // variables
 const signOptElement = document.getElementById("opt-sign");
+const signOutElement = document.getElementById("opt-sign-out");
 const signAreaElement = document.querySelector(".sign-area");
 const signMaskElement = document.querySelector(".sign-mask");
 const signCloseElement = document.querySelector(".close-icon");
@@ -80,11 +81,31 @@ async function signUp(name, email, password){
 	}
 }
 
+async function getUser() {
+	let token = localStorage.getItem('token');
+	let response = await fetch("../api/user/auth", {
+			headers: {'Authorization':`Bearer ${token}`}
+		});
+	let result = await response.json();
+	if(result["data"] != null) {
+		signOutElement.style.display = 'block';
+		signOptElement.style.display = 'none';
+	}
+	else {
+		signOptElement.style.opacity = 1;
+	}
+}
+
 // button actions
 signOptElement.addEventListener('click',()=>{
 	signAreaElement.style.display = 'grid';
 	signMaskElement.style.display = 'block';
 	
+});
+
+signOutElement.addEventListener('click',()=>{
+	localStorage.removeItem('token');
+	location.reload();
 });
 
 signCloseElement.addEventListener('click',()=>{
@@ -116,3 +137,6 @@ goSignInElement.addEventListener('click',()=>{
 	signInMain.style.display = 'flex';
 	signUpMain.style.display = 'none';
 });
+
+// init
+getUser();

@@ -173,7 +173,6 @@ def authenticate():
 				rsp["data"] = decoded_data = jwt.decode(token, jwt_secret_key, algorithms="HS256")
 				del rsp["data"]["exp"]
 			except Exception as e:
-				print(e)
 				pass
 			
 		return jsonify(rsp), 200

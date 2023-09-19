@@ -59,6 +59,16 @@ html,body {
 	text-align: center;
 	white-space: pre;
 	cursor: pointer;
+	opacity: 0;
+}
+#opt-sign-out {
+	width: 71px;
+	height: 14px;
+	padding: 10px;
+	text-align: center;
+	white-space: pre;
+	cursor: pointer;
+	display: none;
 }
 #hero {
 	height: 320px;
