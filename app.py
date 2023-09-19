@@ -155,7 +155,7 @@ def signup():
 
 	except Exception as e:
 		rsp["error"] = True
-		rsp["message"] = "Please check request data: " + str(e)
+		rsp["message"] = "請確認request內容: " + str(e)
 		return jsonify(rsp), 400
 
 	(rsp, rsp_code) = signup_on_db(name, email, password)
@@ -185,10 +185,10 @@ def authenticate():
 
 		except Exception as e:
 			rsp["error"] = True
-			rsp["message"] = "Please check request data: " + str(e)
+			rsp["message"] = "請確認request內容: " + str(e)
 			return jsonify(rsp), 400
 
-		(rsp, rsp_code) = check_member_on_db(email, password)
+		(rsp, rsp_code) = check_sign_on_db(email, password)
 		return jsonify(rsp), rsp_code
 
 def signup_on_db(name, email, password):
@@ -210,7 +210,7 @@ def signup_on_db(name, email, password):
 				return rsp, 500
 		else:
 			rsp["error"] = True
-			rsp["message"] = "The email has been used."
+			rsp["message"] = "輸入的 Email 已被使用"
 			return rsp, 400
 	except Exception as e:
 		rsp["error"] = True
@@ -220,7 +220,7 @@ def signup_on_db(name, email, password):
 		cursor.close()
 		con.close()
 	
-def check_member_on_db(email, password):
+def check_sign_on_db(email, password):
 	rsp = {}
 	try:
 		con = connection_pool.get_connection()
@@ -229,7 +229,7 @@ def check_member_on_db(email, password):
 		user_result = cursor.fetchone()
 		if user_result is None:
 			rsp["error"] = True
-			rsp["message"] = "Email or password is wrong."
+			rsp["message"] = "輸入的 Email 或密碼錯誤"
 			return rsp, 400
 		else:
 			expiration_time = datetime.datetime.utcnow() + datetime.timedelta(days = 7)

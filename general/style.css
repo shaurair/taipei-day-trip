@@ -6,8 +6,8 @@ html,body {
 	flex-direction: column;
 	align-items: center;
 	height: 34px;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	padding-top: 10px;
+    padding-bottom: 10px;
 	background-color: #FFFFFF;
 }
 #nav-content {
@@ -58,6 +58,7 @@ html,body {
 	padding: 10px;
 	text-align: center;
 	white-space: pre;
+	cursor: pointer;
 }
 #hero {
 	height: 320px;
@@ -590,6 +591,153 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 #transport-content {
 	margin-bottom: 80px;
+}
+/* for sign dialog */
+.sign-area {
+	display: none;
+	position: fixed;
+	z-index: 2;
+	left: calc(50% - 170px);
+	width: 340px;
+	min-height: 275px;
+	border-radius: 6px;
+	background: var(--White, #FFF);
+	box-shadow: 0px 4px 60px 0px #AAA;
+	animation: slide 0.5s forwards;
+}
+@keyframes slide {
+	from {
+		top: -10px;
+	}
+	to {
+		top: 80px;
+	}
+}
+.sign-area-position {
+	position: relative;
+	display: flex;
+    flex-direction: column;
+}
+.sign-mask {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	opacity: 0.25;
+	background: var(--Black, #000);
+}
+.sign-decorator {
+	border-radius: 6px 6px 0 0;
+	width: 100%;
+	height: 10px;
+	background: var(--additional-color-dark-cyan-gradient-0-deg, linear-gradient(270deg, #378 0%, #6AB 100%));
+}
+.sign-in-main {
+	min-height: 235px;
+	box-sizing: border-box;
+	margin: 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.sign-up-main {
+	min-height: 292px;
+	box-sizing: border-box;
+	margin: 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	display: none;
+}
+.sign-main-title {
+	width: 100%;
+	height: 27px;
+	margin-bottom: 15px;
+	color: var(--secondary-color-gray-70, #666);
+	text-align: center;
+	/* Header 3 - Blod 24(24) */
+	font-family: Noto Sans TC;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 700;
+}
+.sign-box {
+	display: flex;
+	width: 100%;
+	height: 47px;
+	background: var(--White, #FFF);
+	margin-bottom: 10px;
+}
+.sign-input-text {
+	width: 100%;
+	border: none;
+	padding: 15px;
+	color: var(--secondary-color-gray-50, #757575);
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	border: 1px solid var(--Gray-500, #CCC);
+	border-radius: 5px;
+}
+.sign-btn {
+	display: flex;
+	width: 100%;
+	height: 47px;
+    box-sizing: border-box;
+	padding: 10px 20px 10px 20px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+	background: var(--primary-color-cyan-70, #489);
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+.sign-btn-text {
+	color: var(--additional-color-white, #FFF);
+	text-align: center;
+	/* Button - Reg 19(16) */
+	font-family: Noto Sans TC;
+	font-size: 19px;
+	font-style: normal;
+	font-weight: 400;
+}
+.sign-message {
+	color: rgb(150, 30, 30);
+	text-align: center;
+	/* Body - Med 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	margin-bottom: 10px;
+	display: none;
+}
+.sign-switch {
+	height: 22px;
+	color: var(--secondary-color-gray-70, #666);
+	text-align: center;
+	/* Body - Med 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	cursor: pointer;
+}
+.sign-close {
+	position: absolute;
+	width: 16px;
+    height: 16px;
+    right: 10px;
+    top: 20px;
+    padding: 7px;
+}
+.close-icon {
+	width: 100%;
+	height: 100%;
+    background: url(/icon_close.svg);
+	cursor: pointer;
 }
 
 /* 600 < screen size <= 1200 */
