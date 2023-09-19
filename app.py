@@ -152,7 +152,6 @@ def signup():
 		name = request_data["name"]
 		email = request_data["email"]
 		password = request_data["password"]
-
 	except Exception as e:
 		rsp["error"] = True
 		rsp["message"] = "請確認request內容: " + str(e)
@@ -164,6 +163,7 @@ def signup():
 @app.route("/api/user/auth", methods = ["GET", "PUT"])
 def authenticate():
 	rsp={}
+	# Check user log status
 	if request.method == "GET":
 		rsp["data"] = None
 		bearer_token = request.headers.get("Authorization")
@@ -176,18 +176,18 @@ def authenticate():
 				pass
 			
 		return jsonify(rsp), 200
+	# Check user log in data
 	elif request.method == "PUT":
 		try:
 			request_data = request.get_json()
 			email = request_data["email"]
 			password = request_data["password"]
-
 		except Exception as e:
 			rsp["error"] = True
 			rsp["message"] = "請確認request內容: " + str(e)
 			return jsonify(rsp), 400
 
-		(rsp, rsp_code) = check_sign_on_db(email, password)
+		(rsp, rsp_code) = check_signin_on_db(email, password)
 		return jsonify(rsp), rsp_code
 
 def signup_on_db(name, email, password):
@@ -219,7 +219,7 @@ def signup_on_db(name, email, password):
 		cursor.close()
 		con.close()
 	
-def check_sign_on_db(email, password):
+def check_signin_on_db(email, password):
 	rsp = {}
 	try:
 		con = connection_pool.get_connection()
