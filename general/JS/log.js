@@ -12,24 +12,34 @@ const signInMain = document.querySelector(".sign-in-main");
 const signUpMain = document.querySelector(".sign-up-main");
 
 // functions
-function checkEmpty(...itemList) {
-	for(let item of itemList) {
-		if(item == "") {
-			return true;
-		}
+function checkInputFormat(name, email, password) {
+	let emailRule = /^[A-Za-z0-9_.-]+\@[A-Za-z0-9_.-]+$/;
+
+	if(name == "") {
+		return "姓名未輸入";
 	}
-	return false;
+	
+	if(email == "") {
+		return "Email未輸入";
+	}
+	else if(emailRule.test(email) == false) {
+		return "Email格式不正確";
+	}
+
+	if(password == "") {
+		return "密碼未輸入";
+	}
+
+	return true;
 }
 
 async function signIn(email, password){
 	let messageElement = document.getElementById("sign-in-message");
-	
+	let checkInputResult = checkInputFormat(null, email, password);
+
 	messageElement.style.display = 'block';
 
-	if(checkEmpty(email,password)) {
-		messageElement.textContent = "請確認Email和密碼均已輸入";
-	}
-	else {
+	if(checkInputResult == true) {
 		let response = await fetch("../api/user/auth", {
 				method: "PUT",
 				body: JSON.stringify({"email":email,
@@ -47,20 +57,21 @@ async function signIn(email, password){
 			messageElement.textContent = (response.status >= 500) ? "伺服器錯誤，請重新整理再試一次。" : result["message"];
 		}
 	}
+	else {
+		messageElement.textContent = checkInputResult;
+	}
 }
 
 async function signUp(name, email, password){
 	let messageElement = document.getElementById("sign-up-message");
+	let checkInputResult = checkInputFormat(name, email, password);
 	let alertColor = "rgb(150, 30, 30)";
 	let confirmedColor = "rgb(30, 150, 30)";
 
 	messageElement.style.display = 'block';
 	messageElement.style.color = alertColor;
 
-	if(checkEmpty(name, email, password)) {
-		messageElement.textContent = "請確認姓名、Email和密碼均已輸入";
-	}
-	else {
+	if(checkInputResult == true) {
 		let response = await fetch("../api/user", {
 				method:"POST",
 				body:JSON.stringify({"name":name,
@@ -78,6 +89,9 @@ async function signUp(name, email, password){
 		else {
 			messageElement.textContent = (response.status >= 500) ? "伺服器錯誤，請重新整理再試一次。" : result["message"];
 		}
+	}
+	else {
+		messageElement.textContent = checkInputResult;
 	}
 }
 
