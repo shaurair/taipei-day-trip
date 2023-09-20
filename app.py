@@ -176,7 +176,7 @@ def authenticate():
 				pass
 			
 		return jsonify(rsp), 200
-	# Check user log in data
+	# Check user log in info
 	elif request.method == "PUT":
 		try:
 			request_data = request.get_json()
