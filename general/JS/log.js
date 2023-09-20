@@ -114,7 +114,6 @@ async function getUser() {
 signOptElement.addEventListener('click',()=>{
 	signAreaElement.style.display = 'grid';
 	signMaskElement.style.display = 'block';
-	
 });
 
 signOutElement.addEventListener('click',()=>{
