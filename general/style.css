@@ -285,6 +285,9 @@ html,body {
 	font-weight: 700;
 	text-align: left;
 	color: #FFFFFF;
+	white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .attr-note {
 	display: flex;
