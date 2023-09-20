@@ -15,8 +15,13 @@ function initAllData(url){
 	fetch(url).then((response)=>{
 		return response.json();
 	}).then((data)=>{
-		createImgSet(data["data"]["images"]);
-		createNameAndInformation(data["data"]);
+		if(data["data"]) {
+			createImgSet(data["data"]["images"]);
+			createNameAndInformation(data["data"]);
+		}
+		else {
+			cleanMainPage();
+		}
 	})
 }
 
@@ -81,6 +86,18 @@ function createNameAndInformation(data) {
 
 	element = document.getElementById("transport-content");
 	element.textContent = data["transport"];
+}
+
+function cleanMainPage() {
+	let mainElement = document.getElementById("section-area");
+	let sectionElement = document.getElementById("section");
+	let sectionSeparatorElement = document.getElementById("section-separator");
+	let infoElement = document.getElementById("infors-area");
+	mainElement.textContent = '\n無此景點頁面\n';
+	mainElement.style.height = "100px";
+	sectionElement.style.display = 'none';
+	sectionSeparatorElement.style.display = 'none';
+	infoElement.style.display = "none";
 }
 
 function pushImageSlide(deltaIdx) {
