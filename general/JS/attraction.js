@@ -101,13 +101,8 @@ function cleanMainPage() {
 }
 
 function pushImageSlide(deltaIdx) {
-	let tmpImageIdx = currentImageIdx + deltaIdx;
-	if(tmpImageIdx >= imageSet.length) {
-		tmpImageIdx = 0;
-	}
-	else if(tmpImageIdx < 0 ) {
-		tmpImageIdx = imageSet.length - 1;
-	}
+	let tmpImageIdx = (currentImageIdx + deltaIdx + imageSet.length) % imageSet.length;
+
 	setCurrentImageSlide(tmpImageIdx);
 }
 
