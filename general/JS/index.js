@@ -41,6 +41,18 @@ function createMrtElement(mrtName, mrtIdx){
 	mrtContainer.appendChild(newMrtTxtDiv);
 }
 
+function loadMrtList(){
+	fetch("api/mrts").then(function(response){
+		return response.json();
+	}).then(function(data){
+		let mrtList = data["data"];
+		let totalMrt = mrtList.length;
+		for(let mrtIdx = 0; mrtIdx < totalMrt; mrtIdx++){
+			createMrtElement(mrtList[mrtIdx], mrtIdx);
+		}
+	});
+}
+
 function createAttrElement(attrData, attrIdx){
 	let newAttrDiv = document.createElement('div');
 	newAttrDiv.className = 'attraction';
@@ -126,10 +138,7 @@ function loadAttractions(url){
 
 function removeAttractionGroup(){
 	footer.style.display = 'none';
-
-	while(attrGroupElement.firstChild){
-		attrGroupElement.removeChild(attrGroupElement.firstChild);
-	}
+	attrGroupElement.innerHTML = "";
 }
 
 function freshSearchKeyword(){
@@ -169,6 +178,12 @@ searchBtn.addEventListener('click', () => {
 	freshSearchKeyword();
 });
 
+keyword.addEventListener('keypress', (event) => {
+	if(event.key === 'Enter') {
+		searchBtn.click();
+	}
+})
+
 const endReachedObserver = new IntersectionObserver(entries => {
 	entries.forEach(entry => {
 		if(entry.isIntersecting){
@@ -183,14 +198,5 @@ const endReachedObserver = new IntersectionObserver(entries => {
 }, endTargetDetectOptions);
 
 // init default data
-fetch("api/mrts").then(function(response){
-	return response.json();
-}).then(function(data){
-	let mrtList = data["data"];
-	let totalMrt = mrtList.length;
-	for(let mrtIdx = 0; mrtIdx < totalMrt; mrtIdx++){
-		createMrtElement(mrtList[mrtIdx], mrtIdx);
-	}
-});
-
+loadMrtList();
 loadAttractions(searchApiPage + "0");
