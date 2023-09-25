@@ -244,4 +244,49 @@ def check_signin_on_db(email, password):
 		cursor.close()
 		con.close()
 
+@app.route("/api/booking")
+def get_booking_info():
+	rsp = {}
+	bearer_token = request.headers.get("Authorization")
+	if bearer_token.startswith('Bearer '):
+		token = bearer_token.split(' ')[1]
+		try:
+			decoded_data = jwt.decode(token, jwt_secret_key, algorithms="HS256")
+			member_id = decoded_data["id"]
+		except Exception as e:
+			rsp["error"] = True
+			rsp["message"] = "未登入系統，拒絕存取"
+			return jsonify(rsp), 403
+		
+	rsp = check_booking_on_db(member_id)
+	return jsonify(rsp), 200
+
+def check_booking_on_db(member_id):
+	rsp = {}
+	rsp["data"] = None
+	try:
+		con = connection_pool.get_connection()
+		cursor = con.cursor(dictionary = True)
+		cursor.execute("SELECT booking.date, booking.time, booking.price, attractionId, attraction.name, attraction.address, JSON_UNQUOTE(JSON_EXTRACT(attraction.images, '$[0]')) AS image \
+						FROM booking INNER JOIN attraction ON booking.attractionId = attraction.id  WHERE member_id = %s;", (member_id,))
+		booking_results = cursor.fetchone()
+		if booking_results is not None:
+			attraction = {}
+			attraction["id"] = booking_results["attractionId"]
+			attraction["name"] = booking_results["name"]
+			attraction["address"] = booking_results["address"]
+			attraction["image"] = booking_results["image"]
+			booking_results["attraction"] = attraction
+			del booking_results["attractionId"], booking_results["name"], booking_results["address"], booking_results["image"]
+			booking_results["date"] = booking_results["date"].strftime("%Y-%m-%d")
+			rsp["data"] = booking_results
+
+		return rsp
+	except Exception as e:
+		print(e)
+		return rsp
+	finally:
+		cursor.close()
+		con.close()
+
 app.run(host="0.0.0.0", port=3000)
