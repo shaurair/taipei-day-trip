@@ -96,7 +96,7 @@ def attraction_list():
 	return json.dumps(rsp, ensure_ascii = False)
 
 @app.route("/api/attraction/<int:attractionId>")
-def attraction_id(attractionId):
+def attraction_id_info(attractionId):
 	rsp = {}
 	try:
 		con = connection_pool.get_connection()
@@ -244,7 +244,7 @@ def check_signin_on_db(email, password):
 		cursor.close()
 		con.close()
 
-@app.route("/api/booking")
+@app.route("/api/booking", methods = ["GET", "POST", "DELETE"])
 def get_booking_info():
 	rsp = {}
 	bearer_token = request.headers.get("Authorization")
@@ -258,8 +258,24 @@ def get_booking_info():
 			rsp["message"] = "未登入系統，拒絕存取"
 			return jsonify(rsp), 403
 		
-	rsp = check_booking_on_db(member_id)
-	return jsonify(rsp), 200
+	if request.method == "GET":
+		rsp = check_booking_on_db(member_id)
+		return jsonify(rsp), 200
+
+	elif request.method == "POST":
+		request_data = request.get_json()
+		try:
+			attraction_id = request_data["attractionId"]
+			date = request_data["date"]
+			time = request_data["time"]
+			price = request_data["price"]
+		except Exception as e:
+			rsp["error"] = True
+			rsp["message"] = "請確認request內容: " + str(e)
+			return jsonify(rsp), 400
+
+		(rsp, rsp_code) = add_booking_on_db(member_id, attraction_id, date, time, price)
+		return rsp, rsp_code
 
 def check_booking_on_db(member_id):
 	rsp = {}
@@ -289,4 +305,23 @@ def check_booking_on_db(member_id):
 		cursor.close()
 		con.close()
 
+def add_booking_on_db(member_id, attraction_id, date, time, price):
+	rsp = {}
+	try:
+		con = connection_pool.get_connection()
+		cursor = con.cursor()
+		cursor.execute("INSERT INTO booking (member_id, attractionId, date, time, price, id) VALUES (%s, %s, %s, %s, %s, id) AS new_booking \
+						ON DUPLICATE KEY UPDATE attractionId = new_booking.attractionId, date = new_booking.date, time = new_booking.time, price = new_booking.price;",
+						(member_id, attraction_id, date, time, price))
+		con.commit()
+		rsp["ok"] = True
+		return rsp, 200
+	except Exception as e:
+		rsp["error"] = True
+		rsp["message"] = str(e)
+		return rsp, 500
+	finally:
+		cursor.close()
+		con.close()
+	
 app.run(host="0.0.0.0", port=3000)
