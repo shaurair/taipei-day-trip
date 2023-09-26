@@ -276,6 +276,10 @@ def get_booking_info():
 
 		(rsp, rsp_code) = add_booking_on_db(member_id, attraction_id, date, time, price)
 		return rsp, rsp_code
+	
+	elif request.method == "DELETE":
+		(rsp, rsp_code) = delete_booking_on_db(member_id)
+		return rsp, rsp_code
 
 def check_booking_on_db(member_id):
 	rsp = {}
@@ -313,6 +317,23 @@ def add_booking_on_db(member_id, attraction_id, date, time, price):
 		cursor.execute("INSERT INTO booking (member_id, attractionId, date, time, price, id) VALUES (%s, %s, %s, %s, %s, id) AS new_booking \
 						ON DUPLICATE KEY UPDATE attractionId = new_booking.attractionId, date = new_booking.date, time = new_booking.time, price = new_booking.price;",
 						(member_id, attraction_id, date, time, price))
+		con.commit()
+		rsp["ok"] = True
+		return rsp, 200
+	except Exception as e:
+		rsp["error"] = True
+		rsp["message"] = str(e)
+		return rsp, 500
+	finally:
+		cursor.close()
+		con.close()
+	
+def delete_booking_on_db(member_id):
+	rsp = {}
+	try:
+		con = connection_pool.get_connection()
+		cursor = con.cursor()
+		cursor.execute("DELETE FROM booking WHERE member_id = %s;", (member_id, ))
 		con.commit()
 		rsp["ok"] = True
 		return rsp, 200
