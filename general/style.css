@@ -760,6 +760,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .book-headline {
 	margin-top: 40px;
 	width: 1000px;
+	height: 27px;
+    box-sizing: border-box;
 	padding: 6px 0 5px 0;
 }
 .greeting {
