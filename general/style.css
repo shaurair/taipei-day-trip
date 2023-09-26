@@ -552,7 +552,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	border-radius: 5px;
 	background: var(--primary-color-cyan-70, #489);
 }
-#booking-text {
+.button-text {
 	color: var(--additional-color-white, #FFF);
 	text-align: center;
 	/* Button - Reg 19(16) */
@@ -752,7 +752,210 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: url(/icon_close.svg);
 	cursor: pointer;
 }
-
+/* for booking html */
+.booking-section-area {
+	display: flex;
+	flex-direction: column;
+}
+.book-headline {
+	margin-top: 40px;
+	width: 1000px;
+	padding: 6px 0 5px 0;
+}
+.greeting {
+	color: var(--secondary-color-gray-70, #666);
+	/* Button - Bold 19(16) */
+	font-family: Noto Sans TC;
+	font-size: 19px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 16px; /* 84.211% */
+}
+.booking-section {
+	width: 1000px;
+	height: 200px;
+	box-sizing: border-box;
+	padding: 0 10px 0 10px;
+	margin-top: 30px;
+    margin-bottom: 40px;
+	display: flex;
+	position: relative;
+}
+.booking-picture {
+	width: 250px;
+    height: 200px;
+	display: flex;
+	justify-content: center;
+}
+.booking-image {
+	width: 266px;
+	height: auto;
+	object-fit: cover;
+	overflow: hidden;
+}
+.booking-infor {
+	display: flex;
+	justify-content: end;
+	flex: auto;
+}
+.booking-content {
+	width: 700px;
+    height: 170px;
+}
+.content-frame {
+	box-sizing: border-box;
+	height: 24px;
+	padding: 5px 0px 5px 0px;
+	margin-bottom: 20px;
+	color: var(--primary-color-cyan-70, #489);
+	/* Body - Bold 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 13.3px; /* 83.125% */
+}
+.sub-frame {
+	box-sizing: border-box;
+    height: 24px;
+    padding: 5px 0px 5px 0px;
+	margin-bottom: 10px;
+	display: flex;
+    gap: 5px;
+}
+.sub-item {
+	color: var(--secondary-color-gray-70, #666);
+	/* Body - Bold 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 13.3px; /* 83.125% */
+}
+.sub-content {
+	color: var(--secondary-color-gray-70, #666);
+	/* Body - Med 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 13.3px; /* 83.125% */
+}
+.booking-delete-icon {
+	position: absolute;
+    right: 10px;
+	width: 30px;
+	height: 30px;
+	background: url("/delete.svg") no-repeat center;
+	cursor: pointer;
+}
+.contact-pay-area {
+	display: flex;
+	justify-content: center;
+}
+.contact-pay-form {
+	display: flex;
+	flex-direction: column;
+	width: 980px;
+	height: 227px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+.contact-pay-frame {
+	padding: 4px 0 4px 0;
+	margin-bottom: 20px;
+	color: var(--secondary-color-gray-70, #666);
+	/* Button - Bold 19(16) */
+	font-family: Noto Sans TC;
+	font-size: 19px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 16px; /* 84.211% */
+}
+.contact-pay-field {
+	display: flex;
+	margin-bottom: 15px;
+}
+.field-item-area {
+	display: flex;
+	align-items: center;
+}
+.field-item {
+	width: 81px;
+	height: 24px;
+	color: var(--secondary-color-gray-70, #666);
+	/* Body - Med 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+}
+.booking-input-text {
+	height: 18px;
+    width: 180px;
+    padding: 9px;
+	color: var(--additional-color-black, #000);
+	/* Body - Med 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	border: 1px solid var(--Gray-500, #CCC);
+    border-radius: 5px;
+}
+.contact-notice {
+	height: 24px;
+	box-sizing: border-box;
+	padding: 5px 0 5px 0 ;
+}
+.notice-text {
+	height: 14px;
+	color: var(--secondary-color-gray-70, #666);
+	/* Body - Bold 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 13.3px; /* 83.125% */
+}
+.payment-form {
+	display: flex;
+	flex-direction: column;
+	width: 980px;
+	height: 188px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+.pay-area {
+	display: flex;
+	justify-content: center;
+}
+.pay-content {
+	display: flex;
+    flex-direction: column;
+    align-items: end;
+	width: 980px;
+	height: 100px;
+	margin-top: 40px;
+    margin-bottom: 40px;
+}
+.confirm-price {
+	height: 20px;
+	color: var(--Gray-800, #666);
+	text-align: right;
+	/* Body - Bold 16(13.3) */
+	font-family: Noto Sans TC;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+}
+#pay-button {
+	margin-top: 22px;
+	padding: 10px 20px 10px 20px;
+	cursor: pointer;
+	border-radius: 5px;
+	background: var(--primary-color-cyan-70, #489);
+}
 /* 600 < screen size <= 1200 */
 @media (max-width: 1200px) {
 	#nav-content {
