@@ -7,7 +7,7 @@ html,body {
 	align-items: center;
 	height: 34px;
 	padding-top: 10px;
-    padding-bottom: 10px;
+	padding-bottom: 10px;
 	background-color: #FFFFFF;
 }
 #nav-content {
@@ -286,8 +286,8 @@ html,body {
 	text-align: left;
 	color: #FFFFFF;
 	white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 .attr-note {
 	display: flex;
@@ -400,20 +400,20 @@ html,body {
 	left: 10px;
 }
 #attr-page-right-button {
-    top: 185px;
+	top: 185px;
 	right: 10px;
 }
 #circle-set-area {
 	position: absolute;
-    bottom: 13px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+	bottom: 13px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
 }
 #circle-set {
 	display: flex;
-    gap: 12px;
+	gap: 12px;
 }
 .circle {
 	opacity: 0.75;
@@ -473,33 +473,33 @@ html,body {
 
 #order-description {
 	margin-top: 15px;
-    height: auto;
+	height: auto;
 	line-height: 1.5;
 }
 #date-field {
 	margin-top: 15px;
-    height: 35px;
+	height: 35px;
 	display: flex;
-    align-items: center;
-    gap: 5px;
+	align-items: center;
+	gap: 5px;
 }
 #date-headline {
-    width: 81px;
+	width: 81px;
 }
 #date-input-area {
 	height: 35px;
 	width: 193px;
 	display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 5px 10px 5px 10px;
-    background: var(--White, #FFF);
+	align-items: center;
+	box-sizing: border-box;
+	padding: 5px 10px 5px 10px;
+	background: var(--White, #FFF);
 }
 #calendar {
 	height: 25px;
 	width: 173px;
 	border-width: 0px;
-    border: none;
+	border: none;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
 	display: block;
@@ -509,7 +509,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 #time-field {
 	margin-top: 15px;
-    height: 22px;
+	height: 22px;
 	display: flex;
 	align-items: center;
 	gap: 5px;
@@ -523,19 +523,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	box-sizing: border-box;
 	padding: 0px 8px 0px 5px;
 	display: flex;
-    align-items: center;
+	align-items: center;
 	gap: 4px;
 }
 .time-button {
 	display: flex;
-    align-items: center;
+	align-items: center;
 }
 #afternoon-select {
 	display: none;
 }
 #price-field {
 	margin-top: 15px;
-    height: 22px;
+	height: 22px;
 	display: flex;
 	align-items: center;
 	gap: 5px;
@@ -567,14 +567,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 #infors-area {
 	display: flex;
-    justify-content: center;
+	justify-content: center;
 }
 #infors {
 	margin-top: 40px;
 	margin-bottom: 40px;
 	width: 1200px;
 	box-sizing: border-box;
-    padding: 10px 10px 0 10px;
+	padding: 10px 10px 0 10px;
 }
 .infor-headline {
 	color: var(--secondary-color-gray-70, #666);
@@ -596,11 +596,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 #address {
 	margin-top: 20px;
-    height: 32px;
+	height: 32px;
 }
 #transport {
 	margin-top: 20px;
-    height: 32px;
+	height: 32px;
 }
 #transport-content {
 	margin-bottom: 80px;
@@ -629,7 +629,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .sign-area-position {
 	position: relative;
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 }
 .sign-mask {
 	display: none;
@@ -698,7 +698,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	display: flex;
 	width: 100%;
 	height: 47px;
-    box-sizing: border-box;
+	box-sizing: border-box;
 	padding: 10px 20px 10px 20px;
 	justify-content: center;
 	align-items: center;
@@ -741,15 +741,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .sign-close {
 	position: absolute;
 	width: 16px;
-    height: 16px;
-    right: 10px;
-    top: 20px;
-    padding: 7px;
+	height: 16px;
+	right: 10px;
+	top: 20px;
+	padding: 7px;
 }
 .close-icon {
 	width: 100%;
 	height: 100%;
-    background: url(/icon_close.svg);
+	background: url(/icon_close.svg);
 	cursor: pointer;
 }
 /* for booking html */
@@ -761,7 +761,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	margin-top: 40px;
 	width: 1000px;
 	height: 27px;
-    box-sizing: border-box;
+	box-sizing: border-box;
 	padding: 6px 0 5px 0;
 }
 .greeting {
@@ -779,13 +779,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	box-sizing: border-box;
 	padding: 0 10px 0 10px;
 	margin-top: 30px;
-    margin-bottom: 40px;
+	margin-bottom: 40px;
 	display: flex;
 	position: relative;
 }
 .booking-picture {
 	width: 250px;
-    height: 200px;
+	height: 200px;
 	display: flex;
 	justify-content: center;
 }
@@ -802,12 +802,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .booking-content {
 	width: 700px;
-    height: 170px;
+	height: 170px;
 }
 .content-frame {
-	box-sizing: border-box;
-	height: 24px;
-	padding: 5px 0px 5px 0px;
+	height: auto;
+	line-height: 1.5;
 	margin-bottom: 20px;
 	color: var(--primary-color-cyan-70, #489);
 	/* Body - Bold 16(13.3) */
@@ -815,37 +814,35 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 700;
-	line-height: 13.3px; /* 83.125% */
 }
 .sub-frame {
-	box-sizing: border-box;
-    height: 24px;
-    padding: 5px 0px 5px 0px;
 	margin-bottom: 10px;
 	display: flex;
-    gap: 5px;
+	gap: 5px;
 }
 .sub-item {
+	height: auto;
+    line-height: 1.5;
 	color: var(--secondary-color-gray-70, #666);
 	/* Body - Bold 16(13.3) */
 	font-family: Noto Sans TC;
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 700;
-	line-height: 13.3px; /* 83.125% */
 }
 .sub-content {
+	height: auto;
+    line-height: 1.5;
 	color: var(--secondary-color-gray-70, #666);
 	/* Body - Med 16(13.3) */
 	font-family: Noto Sans TC;
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 500;
-	line-height: 13.3px; /* 83.125% */
 }
 .booking-delete-icon {
 	position: absolute;
-    right: 10px;
+	right: 10px;
 	width: 30px;
 	height: 30px;
 	background: url("/delete.svg") no-repeat center;
@@ -859,7 +856,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	display: flex;
 	flex-direction: column;
 	width: 980px;
-	height: 227px;
+	height: fit-content;
 	margin-top: 40px;
 	margin-bottom: 40px;
 }
@@ -894,8 +891,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .booking-input-text {
 	height: 18px;
-    width: 180px;
-    padding: 9px;
+	width: 180px;
+	padding: 9px;
 	color: var(--additional-color-black, #000);
 	/* Body - Med 16(13.3) */
 	font-family: Noto Sans TC;
@@ -903,22 +900,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	font-style: normal;
 	font-weight: 500;
 	border: 1px solid var(--Gray-500, #CCC);
-    border-radius: 5px;
-}
-.contact-notice {
-	height: 24px;
-	box-sizing: border-box;
-	padding: 5px 0 5px 0 ;
+	border-radius: 5px;
 }
 .notice-text {
-	height: 14px;
+	height: auto;
+	line-height: 1.5;
 	color: var(--secondary-color-gray-70, #666);
 	/* Body - Bold 16(13.3) */
 	font-family: Noto Sans TC;
 	font-size: 16px;
 	font-style: normal;
 	font-weight: 700;
-	line-height: 13.3px; /* 83.125% */
 }
 .payment-form {
 	display: flex;
@@ -934,12 +926,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .pay-content {
 	display: flex;
-    flex-direction: column;
-    align-items: end;
+	flex-direction: column;
+	align-items: end;
 	width: 980px;
 	height: 100px;
 	margin-top: 40px;
-    margin-bottom: 40px;
+	margin-bottom: 40px;
 }
 .confirm-price {
 	height: 20px;
@@ -1041,10 +1033,37 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 		width: 50%;
 	}
 	#section-separator {
-		width: 100%;
+		width: calc(100% - 20px);
 	}
 	#infors {
 		width: 100%;
+	}
+}
+
+/* for booking.html */
+/* screen size <= 1000 */
+@media (max-width: 1000px) {
+	.booking-section-area {
+		width: 100%;
+	}
+	.book-headline {
+		width: 100%;
+		padding: 6px 10px 5px 10px;
+	}
+	.booking-section {
+		width: 100%;
+	}
+	.booking-content {
+		width: calc(100% - 30px);
+	}
+	.contact-pay-area {
+		padding: 0 10px 0 10px;
+	}
+	.notice-text {
+		margin-top: 5px;
+	}
+	.pay-area {
+		padding: 0 10px 0 10px;
 	}
 }
 
@@ -1060,7 +1079,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	}
 	#picture-current {
 		width: 100%;
-    	height: 350px;
+		height: 350px;
 	}
 	.picture-slide {
 		height: 350px;
@@ -1091,5 +1110,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	#attractions-group {
 		gap: 15px;
 		grid-template-columns: repeat(1,100%);
+	}
+	/* for booking.html */
+	.booking-section {
+		flex-wrap: wrap;
+		height: auto;
+		margin-bottom: 30px;
+	}
+	.booking-picture {
+		width: 100%;
+	}
+	.booking-image {
+		width: 100%;
+	}
+	.booking-infor {
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+	.booking-delete-icon {
+		bottom: 0;
+	}
+	.booking-content {
+		width: 100%;
+	}
+	.notice-text {
+		margin-top: 5px;
 	}
 }
