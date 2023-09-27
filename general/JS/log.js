@@ -10,7 +10,6 @@ const goSignUpElement = document.getElementById("go-sign-up-btn");
 const goSignInElement = document.getElementById("go-sign-in-btn");
 const signInMain = document.querySelector(".sign-in-main");
 const signUpMain = document.querySelector(".sign-up-main");
-const bookingSchedule = document.getElementById("opt-sche");
 let signInMember = null;
 
 // functions
@@ -157,15 +156,6 @@ goSignUpElement.addEventListener('click',()=>{
 goSignInElement.addEventListener('click',()=>{
 	signInMain.style.display = 'flex';
 	signUpMain.style.display = 'none';
-});
-
-bookingSchedule.addEventListener('click', ()=>{
-	if(signInMember == null) {
-		signOptElement.click();
-	}
-	else {
-		window.location.pathname = "/booking";
-	}
 });
 
 // init

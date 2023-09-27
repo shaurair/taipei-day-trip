@@ -1,4 +1,5 @@
-let attractionIdUrl = "../api/attraction/" + window.location.href.match(/\/attraction\/(\d+)/)[1];
+let attractionId = window.location.href.match(/\/attraction\/(\d+)/)[1];
+let attractionIdUrl = "../api/attraction/" + attractionId;
 let imageSet = document.getElementsByClassName("picture-slide");
 let circleSet =  document.getElementsByClassName("circle");
 let currentImageIdx = 0;
@@ -7,6 +8,7 @@ const afternoonButton = document.getElementById("afternoon-button");
 const morningSelect = document.getElementById("morning-select");
 const afternoonSelect = document.getElementById("afternoon-select");
 const priceContent = document.getElementById("price-description");
+const bookingButton = document.getElementById("booking-button");
 const morningFee = "新台幣 2000 元";
 const afternoonFee = "新台幣 2500 元";
 
@@ -76,7 +78,9 @@ function createNameAndInformation(data) {
 	element.textContent = data["name"];
 
 	element = document.getElementById("cate-mrt");
-	element.textContent = data["category"] + ((data["mrt"] != null) ? " at " + data["mrt"] : "")
+	element.textContent = data["category"] + ((data["mrt"] != null) ? " at " + data["mrt"] : "");
+
+	priceContent.textContent = morningFee;
 
 	element = document.getElementById("description");
 	element.textContent = data["description"];
@@ -129,6 +133,51 @@ function setAsOtherCircle(circle) {
 	circle.setAttribute("stroke", "none");
 }
 
+// function bookSchedule() {
+async function bookSchedule() {
+	let date = document.getElementById("calendar").value;
+	let priceSelect = priceContent.textContent;
+	let time;
+	let price;
+
+	if(date == "") {
+		alert("請選擇日期");
+		return;
+	}
+
+	if(priceSelect == morningFee) {
+		time = "morning";
+		price = 2000;
+	}
+	else {
+		time = "afternoon";
+		price = 2500;
+	}
+
+	let token = localStorage.getItem('token');
+	let response = await fetch("../api/booking", {
+			method: "POST",
+			body: JSON.stringify({
+				"attractionId": attractionId,
+				"date": date,
+				"time": time,
+				"price": price
+			}),
+			headers: {
+				'Authorization':`Bearer ${token}`,
+				'Content-Type':'application/json'
+			}
+	});
+	let result = await response.json();
+
+	if(result["ok"]) {
+		window.location.pathname = "/booking";
+	}
+	else {
+		console.log(result);
+	}
+}
+
 // button actions
 morningButton.addEventListener('click', ()=>{
 	morningSelect.style.display = 'block';
@@ -140,6 +189,15 @@ afternoonButton.addEventListener('click', ()=>{
 	morningSelect.style.display = 'none';
 	afternoonSelect.style.display = 'block';
 	priceContent.textContent = afternoonFee;
+});
+
+bookingButton.addEventListener('click',()=>{
+	if(signInMember == null) {
+		signOptElement.click();
+	}
+	else {
+		bookSchedule();
+	}
 });
 
 // init

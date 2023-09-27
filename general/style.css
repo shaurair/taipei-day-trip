@@ -552,6 +552,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	padding: 10px 20px 10px 20px;
 	border-radius: 5px;
 	background: var(--primary-color-cyan-70, #489);
+	cursor: pointer;
 }
 .button-text {
 	color: var(--additional-color-white, #FFF);
