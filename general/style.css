@@ -336,15 +336,12 @@ html,body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-}
-#footer-extend {
-	background-color: #757575;
 	flex-grow: 1;
 }
 #footer-content {
 	width: 234px;
 	height: 24px;
+	padding-top: 40px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
