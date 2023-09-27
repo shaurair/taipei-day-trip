@@ -1,4 +1,4 @@
-let attractionId = window.location.href.match(/\/attraction\/(\d+)/)[1];
+let attractionId = location.href.match(/\/attraction\/(\d+)/)[1];
 let attractionIdUrl = "../api/attraction/" + attractionId;
 let imageSet = document.getElementsByClassName("picture-slide");
 let circleSet =  document.getElementsByClassName("circle");
@@ -13,8 +13,8 @@ const morningFee = "新台幣 2000 元";
 const afternoonFee = "新台幣 2500 元";
 
 // functions
-function initAllData(url){
-	fetch(url).then((response)=>{
+function initAllData(){
+	fetch(attractionIdUrl).then((response)=>{
 		return response.json();
 	}).then((data)=>{
 		if(data["data"]) {
@@ -133,7 +133,6 @@ function setAsOtherCircle(circle) {
 	circle.setAttribute("stroke", "none");
 }
 
-// function bookSchedule() {
 async function bookSchedule() {
 	let date = document.getElementById("calendar").value;
 	let priceSelect = priceContent.textContent;
@@ -171,11 +170,16 @@ async function bookSchedule() {
 	let result = await response.json();
 
 	if(result["ok"]) {
-		window.location.pathname = "/booking";
+		location.pathname = "/booking";
 	}
 	else {
 		console.log(result);
 	}
+}
+
+function initAttraction() {
+	getUser();
+	initAllData();
 }
 
 // button actions
@@ -199,6 +203,3 @@ bookingButton.addEventListener('click',()=>{
 		bookSchedule();
 	}
 });
-
-// init
-initAllData(attractionIdUrl);
