@@ -164,6 +164,12 @@ function addMouseActionEffect(element) {
 	});
 }
 
+function initIndex() {
+	getUser();
+	loadMrtList();
+	loadAttractions(searchApiPage + "0");
+}
+
 // mrt slide bar
 nextBtn.addEventListener('click', () => {
 	listFrame.scrollLeft += (listFrame.clientWidth - barSlideBuffer);
@@ -196,7 +202,3 @@ const endReachedObserver = new IntersectionObserver(entries => {
 		}
 	});
 }, endTargetDetectOptions);
-
-// init default data
-loadMrtList();
-loadAttractions(searchApiPage + "0");
