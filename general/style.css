@@ -51,6 +51,7 @@ html,body {
 	height: 14px;
 	padding: 10px;
 	text-align: center;
+	cursor: pointer;
 }
 #opt-sign {
 	width: 71px;
