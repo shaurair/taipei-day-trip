@@ -61,33 +61,31 @@
 		<div id="section-area">
 			<div class="booking-section-area">
 				<div class="book-headline">
-					<!-- TODO -->
-					<span class="greeting">您好，</span><span class="greeting" id="book-name">Yakko</span><span class="greeting">，待預訂的行程如下：</span>
+					<span class="greeting">您好，</span><span class="greeting" id="book-name"></span><span class="greeting">，待預訂的行程如下：</span>
 				</div>
-				<div class="booking-section">
+				<div class="sub-content none-booked-info-part">目前沒有任何待預訂的行程</div>
+				<div class="booking-section booked-info-part">
 					<div class="booking-picture">
-						<!-- TODO -->
-						<img class="booking-image" src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg"></img>
+						<img class="booking-image"></img>
 					</div>
 					<div class="booking-infor">
-						<!-- TODO -->
 						<div class="booking-content">
-								<div class="content-frame">台北一日遊：平安鐘</div>
+								<div class="content-frame"></div>
 								<div class="sub-frame">
 									<div class="sub-item">日期：</div>
-									<div class="sub-content" id="sub-content-date">2021-04-23</div>
+									<div class="sub-content" id="sub-content-date"></div>
 								</div>
 								<div class="sub-frame">
 									<div class="sub-item">時間：</div>
-									<div class="sub-content" id="sub-content-time">早上 9 點到下午 4 點</div>
+									<div class="sub-content" id="sub-content-time"></div>
 								</div>
 								<div class="sub-frame">
 									<div class="sub-item">費用：</div>
-									<div class="sub-content" id="sub-content-price">新台幣 2000 元</div>
+									<div class="sub-content" id="sub-content-price"></div>
 								</div>
 								<div class="sub-frame">
 									<div class="sub-item">地點：</div>
-									<div class="sub-content" id="sub-content-address">臺北市 大安區忠孝東路4段</div>
+									<div class="sub-content" id="sub-content-address"></div>
 								</div>
 						</div>
 					</div>
@@ -95,9 +93,8 @@
 				</div>
 			</div>
 		</div>
-		<hr id="section-separator" class="separator"/>
-		<div class="contact-pay-area">
-			<!-- TODO -->
+		<hr id="section-separator" class="separator booked-info-part"/>
+		<div class="contact-pay-area booked-info-part">
 			<div class="contact-pay-form">
 				<div class="contact-pay-frame">您的聯絡資訊</div>
 				<div class="contact-pay-field">
@@ -127,8 +124,8 @@
 				<div class="notice-text">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
 			</div>
 		</div>
-		<hr id="section-separator" class="separator"/>
-		<div class="contact-pay-area">
+		<hr id="section-separator" class="separator booked-info-part"/>
+		<div class="contact-pay-area booked-info-part">
 			<div class="payment-form">
 				<div class="contact-pay-frame">信用卡付款資訊</div>
 				<div class="contact-pay-field">
@@ -157,11 +154,10 @@
 				</div>
 			</div>
 		</div>
-		<hr id="section-separator" class="separator"/>
-		<div class="pay-area">
-			<!-- TODO -->
+		<hr id="section-separator" class="separator booked-info-part"/>
+		<div class="pay-area booked-info-part">
 			<div class="pay-content">
-				<div class="confirm-price">總價：新台幣 2000 元</div>
+				<div class="confirm-price"></div>
 				<div id="pay-button">
 					<div class="button-text">確認訂購並付款</div>
 				</div>
@@ -174,5 +170,6 @@
 		</div>
 		<script src="/JS/log.js"></script>
 		<script src="/JS/booking.js"></script>
+		<script>initBooking();</script>
 	</body>
 </html>

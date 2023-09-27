@@ -10,6 +10,7 @@ const goSignUpElement = document.getElementById("go-sign-up-btn");
 const goSignInElement = document.getElementById("go-sign-in-btn");
 const signInMain = document.querySelector(".sign-in-main");
 const signUpMain = document.querySelector(".sign-up-main");
+const bookedSchedule = document.getElementById("opt-sche");
 let signInMember = null;
 
 // functions
@@ -102,10 +103,12 @@ async function getUser() {
 			headers: {'Authorization':`Bearer ${token}`}
 		});
 	let result = await response.json();
-	if(result["data"] != null) {
+
+	signInMember = result["data"];
+
+	if(signInMember != null) {
 		signOutElement.style.display = 'block';
 		signOptElement.style.display = 'none';
-		signInMember = result["data"];
 	}
 	else {
 		signOptElement.style.opacity = 1;
@@ -120,12 +123,7 @@ signOptElement.addEventListener('click',()=>{
 
 signOutElement.addEventListener('click',()=>{
 	localStorage.removeItem('token');
-	if(window.location.pathname = "/booking") {
-		window.location.pathname = "/";
-	}
-	else {
-		location.reload();
-	}
+	location.reload();
 });
 
 signCloseElement.addEventListener('click',()=>{
@@ -158,5 +156,11 @@ goSignInElement.addEventListener('click',()=>{
 	signUpMain.style.display = 'none';
 });
 
-// init
-getUser();
+bookedSchedule.addEventListener('click', ()=>{
+	if(signInMember == null) {
+		signOptElement.click();
+	}
+	else {
+		location.pathname = "/booking";
+	}
+});

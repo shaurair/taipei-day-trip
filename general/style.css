@@ -775,6 +775,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	font-weight: 700;
 	line-height: 16px; /* 84.211% */
 }
+.none-booked-info-part {
+	width: 1000px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+	display: none;
+}
 .booking-section {
 	width: 1000px;
 	height: 200px;
@@ -1045,6 +1051,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* for booking.html */
 /* screen size <= 1000 */
 @media (max-width: 1000px) {
+	.none-booked-info-part {
+		width: 100%;
+		padding: 0 10px 0 10px;
+	}
 	.booking-section-area {
 		width: 100%;
 	}
