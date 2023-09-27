@@ -1,4 +1,7 @@
 html,body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 	margin: 0;
 }
 #navigation {
@@ -335,6 +338,10 @@ html,body {
 	align-items: center;
 	justify-content: center;
 }
+#footer-extend {
+	background-color: #757575;
+	flex-grow: 1;
+}
 #footer-content {
 	width: 234px;
 	height: 24px;
@@ -358,6 +365,7 @@ html,body {
 .separator {
 	margin-block: 0;
 	height: 1px;
+	width: 100%;
 	border: none;
 	background-color: var(--Gray-300, #E8E8E8);
 }
