@@ -78,6 +78,7 @@ html,body {
 	height: 320px;
 	background-image: url("/welcome_image.png"), linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
 	background-size: cover;
+	background-position: top;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
