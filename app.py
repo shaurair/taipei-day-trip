@@ -1,31 +1,16 @@
 from flask import *
-import mysql.connector
-from mysql.connector import pooling
-import json
-import jwt
-import datetime
 from api.api_booking import booking
 from api.api_authentication import authentication
+from api.api_attraction import attraction
 
 app=Flask(__name__, static_folder = "general", static_url_path = "/")
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
-# database
-MysqlConnectInfo = {
-	"user" : "root",
-	"password" : "root123",
-	"host" : "localhost",
-	"database" : "TaipeiAttr"
-}
-connection_pool = pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **MysqlConnectInfo)
-
-# jwt
-jwt_secret_key = 'my_taipei_trip'
-
 # Api blueprint
 app.register_blueprint(booking)
 app.register_blueprint(authentication)
+app.register_blueprint(attraction)
 
 # Pages
 @app.route("/")
@@ -40,115 +25,5 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
 	return render_template("thankyou.html")
-
-# Api
-@app.route("/api/attractions/")
-def attraction_list():
-	rsp = {}
-
-	try:
-		page = int(request.args.get("page"))
-	except Exception:
-		rsp["error"] = True
-		rsp["message"] = "please check query string"
-		return jsonify(rsp), 500
-
-	if page < 0:
-		rsp["error"] = True
-		rsp["message"] = "page should not be negative"
-		return jsonify(rsp), 500
-
-	keyword = request.args.get("keyword","")
-	items_in_page = 12
-
-	rsp["nextPage"] = None
-	rsp["data"] = []
-
-	# acquire results		
-	try:
-		con = connection_pool.get_connection()
-		cursor = con.cursor(dictionary = True)
-		select_content = "SELECT id, name, category, description, address, transport, mrt, lat, lng, images FROM attraction"
-		range_content = "LIMIT %s OFFSET %s"
-		show_range = (items_in_page + 1, page * items_in_page)
-
-		if keyword == "":
-			compare_content = ""
-			keyword_arg = ()
-		else:
-			compare_content = "WHERE mrt = %s or name LIKE %s"
-			keyword_arg = (keyword, '%' + keyword + '%')
-
-		cursor.execute(select_content + " " + compare_content + " " + range_content + ";", keyword_arg + show_range)
-		data = cursor.fetchall()
-
-		if len(data) == items_in_page + 1:
-			rsp["nextPage"] = page + 1
-
-		if data != None:
-			rsp["data"] = data[0:items_in_page]
-
-			# transform datatype from json data to list
-			for rsp_data in rsp["data"]:
-				rsp_data["images"] = json.loads(rsp_data["images"])
-	except Exception as e:
-		rsp = {}
-		rsp["error"] = True
-		rsp["message"] = str(e)
-		return jsonify(rsp), 500
-	finally:
-		cursor.close()
-		con.close()
-
-	return json.dumps(rsp, ensure_ascii = False)
-
-@app.route("/api/attraction/<int:attractionId>")
-def attraction_id_info(attractionId):
-	rsp = {}
-	try:
-		con = connection_pool.get_connection()
-		cursor = con.cursor(dictionary = True)
-		select_content = "SELECT id, name, category, description, address, transport, mrt, lat, lng, images FROM attraction"
-		compare_content = "WHERE id = %s"
-		keyword_arg = (attractionId, )
-		cursor.execute(select_content + " " + compare_content + ";", keyword_arg)
-		data = cursor.fetchone()
-		if data == None:
-			rsp = {}
-			rsp["error"] = True
-			rsp["message"] = "wrong attraction id"
-			return jsonify(rsp), 400
-		else:
-			rsp["data"] = data
-			# transform datatype from json data to list
-			rsp["data"]["images"] = json.loads(rsp["data"]["images"])
-	except Exception as e:
-		rsp = {}
-		rsp["error"] = True
-		rsp["message"] = str(e)
-		return jsonify(rsp), 500
-	finally:
-		cursor.close()
-		con.close()
-	return json.dumps(rsp, ensure_ascii = False)
-
-@app.route("/api/mrts")
-def mrt_list():
-	rsp = {}
-	try:
-		con = connection_pool.get_connection()
-		cursor = con.cursor()
-		cursor.execute("SELECT mrt FROM attraction WHERE mrt IS NOT NULL GROUP BY mrt ORDER BY count(*) DESC LIMIT 40 OFFSET 0;")
-		data = cursor.fetchall()
-		rsp["data"] = [data_item[0] for data_item in data]
-	except Exception as e:
-		rsp = {}
-		rsp["error"] = True
-		rsp["message"] = str(e)
-		return jsonify(rsp), 500
-	finally:
-		cursor.close()
-		con.close()
-	return json.dumps(rsp, ensure_ascii = False)
 
 app.run(host="0.0.0.0", port=3000)
