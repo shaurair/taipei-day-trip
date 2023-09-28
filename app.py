@@ -4,21 +4,26 @@ from mysql.connector import pooling
 import json
 import jwt
 import datetime
+from api.api_booking import booking
 
 app=Flask(__name__, static_folder = "general", static_url_path = "/")
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
+# database
 MysqlConnectInfo = {
 	"user" : "root",
 	"password" : "root123",
 	"host" : "localhost",
 	"database" : "TaipeiAttr"
 }
-
 connection_pool = pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **MysqlConnectInfo)
 
+# jwt
 jwt_secret_key = 'my_taipei_trip'
+
+# Api blueprint
+app.register_blueprint(booking)
 
 # Pages
 @app.route("/")
@@ -244,105 +249,4 @@ def check_signin_on_db(email, password):
 		cursor.close()
 		con.close()
 
-@app.route("/api/booking", methods = ["GET", "POST", "DELETE"])
-def get_booking_info():
-	rsp = {}
-	bearer_token = request.headers.get("Authorization")
-	if bearer_token.startswith('Bearer '):
-		token = bearer_token.split(' ')[1]
-		try:
-			decoded_data = jwt.decode(token, jwt_secret_key, algorithms="HS256")
-			member_id = decoded_data["id"]
-		except Exception as e:
-			rsp["error"] = True
-			rsp["message"] = "未登入系統，拒絕存取"
-			return jsonify(rsp), 403
-		
-	if request.method == "GET":
-		rsp = check_booking_on_db(member_id)
-		return jsonify(rsp), 200
-
-	elif request.method == "POST":
-		request_data = request.get_json()
-		try:
-			attraction_id = request_data["attractionId"]
-			date = request_data["date"]
-			time = request_data["time"]
-			price = request_data["price"]
-		except Exception as e:
-			rsp["error"] = True
-			rsp["message"] = "請確認request內容: " + str(e)
-			return jsonify(rsp), 400
-
-		(rsp, rsp_code) = add_booking_on_db(member_id, attraction_id, date, time, price)
-		return rsp, rsp_code
-	
-	elif request.method == "DELETE":
-		(rsp, rsp_code) = delete_booking_on_db(member_id)
-		return rsp, rsp_code
-
-def check_booking_on_db(member_id):
-	rsp = {}
-	rsp["data"] = None
-	try:
-		con = connection_pool.get_connection()
-		cursor = con.cursor(dictionary = True)
-		cursor.execute("SELECT booking.date, booking.time, booking.price, attractionId, attraction.name, attraction.address, JSON_UNQUOTE(JSON_EXTRACT(attraction.images, '$[0]')) AS image \
-						FROM booking INNER JOIN attraction ON booking.attractionId = attraction.id  WHERE member_id = %s;", (member_id,))
-		booking_results = cursor.fetchone()
-		if booking_results is not None:
-			attraction = {}
-			attraction["id"] = booking_results["attractionId"]
-			attraction["name"] = booking_results["name"]
-			attraction["address"] = booking_results["address"]
-			attraction["image"] = booking_results["image"]
-			booking_results["attraction"] = attraction
-			del booking_results["attractionId"], booking_results["name"], booking_results["address"], booking_results["image"]
-			booking_results["date"] = booking_results["date"].strftime("%Y-%m-%d")
-			rsp["data"] = booking_results
-
-		return rsp
-	except Exception as e:
-		print(e)
-		return rsp
-	finally:
-		cursor.close()
-		con.close()
-
-def add_booking_on_db(member_id, attraction_id, date, time, price):
-	rsp = {}
-	try:
-		con = connection_pool.get_connection()
-		cursor = con.cursor()
-		cursor.execute("INSERT INTO booking (member_id, attractionId, date, time, price, id) VALUES (%s, %s, %s, %s, %s, id) AS new_booking \
-						ON DUPLICATE KEY UPDATE attractionId = new_booking.attractionId, date = new_booking.date, time = new_booking.time, price = new_booking.price;",
-						(member_id, attraction_id, date, time, price))
-		con.commit()
-		rsp["ok"] = True
-		return rsp, 200
-	except Exception as e:
-		rsp["error"] = True
-		rsp["message"] = str(e)
-		return rsp, 500
-	finally:
-		cursor.close()
-		con.close()
-	
-def delete_booking_on_db(member_id):
-	rsp = {}
-	try:
-		con = connection_pool.get_connection()
-		cursor = con.cursor()
-		cursor.execute("DELETE FROM booking WHERE member_id = %s;", (member_id, ))
-		con.commit()
-		rsp["ok"] = True
-		return rsp, 200
-	except Exception as e:
-		rsp["error"] = True
-		rsp["message"] = str(e)
-		return rsp, 500
-	finally:
-		cursor.close()
-		con.close()
-	
 app.run(host="0.0.0.0", port=3000)
