@@ -1,5 +1,11 @@
 // variables
 const deleteScheduleIcon = document.querySelector(".booking-delete-icon");
+const submitOrderBtn = document.getElementById("pay-button");
+// Tap Pay infos
+const tapPayAppId = 137096;
+const tapPayKey = "app_Tv7tRFXPSw5jHQTbcISpcmLOOYvDKIPMAMCEr2AtGtoWuYvHaQJfeY8Qkrhc";
+let isOkGetPrime = false;
+let tapPayPrime = null;
 
 function setMemberInfo() {
 	let element = document.getElementById("book-name");
@@ -49,6 +55,73 @@ function setSchedulePage(scheduleData) {
 	element.textContent = "總價：新台幣 " + scheduleData["price"] + " 元";
 }
 
+function setTapPay() {
+	TPDirect.setupSDK(tapPayAppId, tapPayKey, 'sandbox');
+
+	TPDirect.card.setup({
+		fields: {
+			number: {
+				element: '#card-number',
+				placeholder: '**** **** **** ****'
+			},
+			expirationDate: {
+				element: '#exp-date',
+				placeholder: 'MM / YY'
+			},
+			ccv: {
+				element: '#card-verify',
+				placeholder: 'CVV'
+			}
+		},
+		styles: {
+			'input': {
+				'color': 'black'
+			},
+			'.valid': {
+				'color': 'green'
+			},
+			'.invalid': {
+				'color': 'red'
+			}
+		},
+
+		isMaskCreditCardNumber: true,
+		maskCreditCardNumberRange: {
+			beginIndex: 6, 
+			endIndex: 11
+		}
+	});
+
+	TPDirect.card.onUpdate(function (update) {
+		if(update.canGetPrime) {
+			isOkGetPrime = true;
+		}
+		else {
+			isOkGetPrime = false;
+		}
+	})
+}
+
+function getTapPayPrime() {
+	const tappayStatus = TPDirect.card.getTappayFieldsStatus();
+
+	if(tappayStatus.canGetPrime === false) {
+		alert("信用卡確認異常");
+		console.log('can not get prime');
+		return;
+	}
+
+	TPDirect.card.getPrime((result) => {
+		if(result.status !== 0) {
+			alert("信用卡確認異常");
+			console.log('get prime error ' + result.msg);
+			return;
+		}
+		
+		tapPayPrime = result.card.prime;
+	})
+}
+
 async function getBookingInfo() {
 	let token = localStorage.getItem('token');
 	let response = await fetch("../api/booking", {
@@ -75,6 +148,7 @@ async function initBooking() {
 	else {
 		setMemberInfo();
 		getBookingInfo();
+		setTapPay();
 	}
 }
 
@@ -100,3 +174,12 @@ async function deleteSchedule() {
 deleteScheduleIcon.addEventListener('click',()=>{
 	deleteSchedule();
 });
+
+submitOrderBtn.addEventListener('click',()=>{
+	if(isOkGetPrime) {
+		getTapPayPrime();
+	}
+	else {
+		alert("信用卡資訊有誤");
+	}
+})
