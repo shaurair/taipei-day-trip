@@ -1,16 +1,10 @@
 from flask import *
 from model.database_conn import connection_pool
 from model.token import token_decode
-import requests
+from model.tappay import tap_pay_request, TAPPAYSTATUSOK
 import datetime
 
 order = Blueprint("order",__name__)
-
-# Tap Pay infos
-tap_pay_key = "partner_zmeOFYHhh0Lcvxz65XquEeuUSDnIBzXBFhN6FeJUp4kibE96qGmOw9Zu"
-sandbox_url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
-my_mechant_id = "shaurair_TAISHIN"
-TAPPAYSTATUSOK = 0
 
 # api
 @order.route("/api/orders", methods = ["GET", "POST"])
@@ -55,26 +49,7 @@ def pay_by_prime(member_id, prime, price, trip, contact):
 	(add_order_on_db_success, add_order_msg) = add_order_on_db(member_id, trip, contact, price)
 
 	if add_order_on_db_success is True:
-		headers = {
-			"Content-Type": "application/json",
-			"x-api-key": tap_pay_key
-		}
-
-		payload = {
-			"prime": prime,
-			"partner_key": tap_pay_key,
-			"merchant_id": my_mechant_id,
-			"details":"Taipei-day-trip TapPay Test",
-			"amount": price,
-			"cardholder": {
-				"phone_number": contact["phone"],
-				"name": contact["name"],
-				"email": contact["email"]
-			},
-			"remember": True
-		}
-
-		tap_pay_response = requests.post(sandbox_url, json = payload, headers = headers).json()
+		tap_pay_response = tap_pay_request(prime, price, contact)
 	else:
 		rsp["error"] = True
 		rsp["message"] = "尚未付款，發生其他錯誤。" + add_order_msg
