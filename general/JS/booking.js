@@ -1,11 +1,11 @@
 // variables
 const deleteScheduleIcon = document.querySelector(".booking-delete-icon");
 const submitOrderBtn = document.getElementById("pay-button");
+let scheduleData;
 // Tap Pay infos
 const tapPayAppId = 137096;
 const tapPayKey = "app_Tv7tRFXPSw5jHQTbcISpcmLOOYvDKIPMAMCEr2AtGtoWuYvHaQJfeY8Qkrhc";
 let isOkGetPrime = false;
-let tapPayPrime = null;
 
 function setMemberInfo() {
 	let element = document.getElementById("book-name");
@@ -26,7 +26,7 @@ function setNoneSchedulePage() {
 	}
 }
 
-function setSchedulePage(scheduleData) {
+function setSchedulePage() {
 	let element = document.querySelector(".booking-image");
 	element.src = scheduleData["attraction"]["image"];
 
@@ -102,7 +102,7 @@ function setTapPay() {
 	})
 }
 
-function getTapPayPrime() {
+function setOrderByTapPay(contact) {
 	const tappayStatus = TPDirect.card.getTappayFieldsStatus();
 
 	if(tappayStatus.canGetPrime === false) {
@@ -118,8 +118,26 @@ function getTapPayPrime() {
 			return;
 		}
 		
-		tapPayPrime = result.card.prime;
-	})
+		sendOrder(result.card.prime, contact);
+	});
+}
+
+function getContact() {
+	let contact = {};
+	let element = document.getElementById("booking-name");
+	contact["name"] = element.value;
+
+	element = document.getElementById("booking-email");
+	contact["email"] = element.value;
+
+	element = document.getElementById("booking-mobile");
+	contact["phone"] = element.value;
+
+	if(contact["name"] == "" || contact["email"] == "" || contact["phone"] == "" ) {
+		return null;
+	}
+
+	return contact;
 }
 
 async function getBookingInfo() {
@@ -135,7 +153,8 @@ async function getBookingInfo() {
 		setNoneSchedulePage();
 	}
 	else {
-		setSchedulePage(result["data"]);
+		scheduleData = result["data"]
+		setSchedulePage();
 	}
 }
 
@@ -147,7 +166,7 @@ async function initBooking() {
 	}
 	else {
 		setMemberInfo();
-		getBookingInfo();
+		await getBookingInfo();
 		setTapPay();
 	}
 }
@@ -170,14 +189,47 @@ async function deleteSchedule() {
 	}
 }
 
+async function sendOrder(tapPayPrime, contact) {
+	let token = localStorage.getItem('token');
+	let response = await fetch("../api/orders", {
+		method: "POST",
+		body: JSON.stringify({
+			"prime": tapPayPrime,
+			"order": {
+				"price": scheduleData["price"],
+				"trip": {
+					"attraction": scheduleData["attraction"],
+					"date": scheduleData["date"],
+					"time": scheduleData["time"]
+				},
+				"contact": contact
+			}
+		}),
+		headers: {
+			'Authorization':`Bearer ${token}`,
+			'Content-Type':'application/json'
+		}
+	});
+	let result = await response.json();
+
+	// TODO
+	console.log(result);
+}
+
 // button actions
 deleteScheduleIcon.addEventListener('click',()=>{
 	deleteSchedule();
 });
 
 submitOrderBtn.addEventListener('click',()=>{
+	let contact = getContact();
+	if(contact == null) {
+		alert("請確認聯絡資訊均已填入");
+		return;
+	}
+
 	if(isOkGetPrime) {
-		getTapPayPrime();
+		setOrderByTapPay(contact);
 	}
 	else {
 		alert("信用卡資訊有誤");

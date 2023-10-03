@@ -2,6 +2,7 @@ from flask import *
 from api.api_booking import booking
 from api.api_authentication import authentication
 from api.api_attraction import attraction
+from api.api_order import order
 
 app=Flask(__name__, static_folder = "general", static_url_path = "/")
 app.config["JSON_AS_ASCII"]=False
@@ -11,6 +12,7 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.register_blueprint(booking)
 app.register_blueprint(authentication)
 app.register_blueprint(attraction)
+app.register_blueprint(order)
 
 # Pages
 @app.route("/")
