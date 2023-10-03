@@ -56,7 +56,7 @@ def pay_by_prime(member_id, prime, price, trip, contact):
 		return rsp, 500
 
 	if tap_pay_response["status"] == TAPPAYSTATUSOK:
-		update_order_on_db_result = update_order_on_db(add_order_msg, "已付款")
+		update_order_on_db_result = update_order_on_db(add_order_msg, "已付款", member_id)
 
 		if update_order_on_db_result is True:
 			payment["status"] = tap_pay_response["status"]
@@ -100,13 +100,15 @@ def add_order_on_db(member_id, trip, contact, price):
 		cursor.close()
 		con.close()
 
-def update_order_on_db(order_no, status):
+def update_order_on_db(order_no, status, member_id):
 	rsp = {}
 
 	try:
 		con = connection_pool.get_connection()
 		cursor = con.cursor()
 		cursor.execute("UPDATE order_table SET status = %s WHERE order_no = %s;",(status, order_no))
+		con.commit()
+		cursor.execute("DELETE FROM booking WHERE member_id = %s;",(member_id,))
 		con.commit()
 		return True
 	except Exception as e:
