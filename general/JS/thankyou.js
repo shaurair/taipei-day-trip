@@ -9,7 +9,7 @@ async function initThankyou() {
 	await getUser();
 
 	if(signInMember == null) {
-		location.pathname = "/";
+		location.href = "/";
 	}
 	else {
 		setOrderNumber();
