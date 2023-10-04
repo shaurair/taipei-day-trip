@@ -964,6 +964,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	border-radius: 5px;
 	background: var(--primary-color-cyan-70, #489);
 }
+#thankyou-section-area {
+	gap: 20px;
+    align-items: center;
+    margin: 30px;
+}
+#order-number {
+	color: rgb(60, 152, 155);
+}
 /* 600 < screen size <= 1200 */
 @media (max-width: 1200px) {
 	#nav-content {

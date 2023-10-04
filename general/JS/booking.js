@@ -212,8 +212,18 @@ async function sendOrder(tapPayPrime, contact) {
 	});
 	let result = await response.json();
 
-	// TODO
-	console.log(result);
+	if(response.ok) {
+		if(result["data"]["payment"]["message"] == "付款成功") {
+			location.href = "/thankyou?number=" + result["data"]["number"];
+		}
+		else {
+			alert("付款失敗，請確認信用卡")
+		}
+	}
+	else {
+		let alertMessage = (response.status >= 500) ? "伺服器錯誤，請重新整理再試一次。" : result["message"];
+		alert(alertMessage);
+	}
 }
 
 // button actions
