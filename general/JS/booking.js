@@ -162,7 +162,7 @@ async function initBooking() {
 	await getUser();
 	
 	if(signInMember == null) {
-		location.pathname = "/";
+		location.href = "/";
 	}
 	else {
 		setMemberInfo();

@@ -161,6 +161,6 @@ bookedSchedule.addEventListener('click', ()=>{
 		signOptElement.click();
 	}
 	else {
-		location.pathname = "/booking";
+		location.href = "/booking";
 	}
 });
