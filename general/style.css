@@ -78,6 +78,7 @@ html,body {
 	height: 320px;
 	background-image: url("/welcome_image.png"), linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
 	background-size: cover;
+	background-position: top;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -336,15 +337,12 @@ html,body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-}
-#footer-extend {
-	background-color: #757575;
 	flex-grow: 1;
 }
 #footer-content {
 	width: 234px;
 	height: 24px;
+	padding-top: 40px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -965,6 +963,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	cursor: pointer;
 	border-radius: 5px;
 	background: var(--primary-color-cyan-70, #489);
+}
+#thankyou-section-area {
+	gap: 20px;
+    align-items: center;
+    margin: 30px;
+}
+#order-number {
+	color: rgb(60, 152, 155);
 }
 /* 600 < screen size <= 1200 */
 @media (max-width: 1200px) {

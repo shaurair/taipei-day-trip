@@ -170,7 +170,7 @@ async function bookSchedule() {
 	let result = await response.json();
 
 	if(result["ok"]) {
-		location.pathname = "/booking";
+		location.href = "/booking";
 	}
 	else {
 		console.log(result);

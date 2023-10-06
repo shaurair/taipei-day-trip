@@ -133,7 +133,7 @@
 						<div class="field-item">卡片號碼：</div>
 					</div>
 					<div class="field-box">
-						<input type="password" id="card-number" maxlength="19" class="booking-input-text" placeholder="**** **** **** ****"/>
+						<div id="card-number" class="booking-input-text"></div>
 					</div>
 				</div>
 				<div class="contact-pay-field">
@@ -141,7 +141,7 @@
 						<div class="field-item">過期時間：</div>
 					</div>
 					<div class="field-box">
-						<input type="text" id="exp-date" class="booking-input-text" placeholder="MM/YY"/>
+						<div id="exp-date" class="booking-input-text"></div>
 					</div>
 				</div>
 				<div class="contact-pay-field">
@@ -149,7 +149,7 @@
 						<div class="field-item">驗證密碼：</div>
 					</div>
 					<div class="field-box">
-						<input type="text" id="card-verify" class="booking-input-text" placeholder="CVV"/>
+						<div id="card-verify" class="booking-input-text"></div>
 					</div>
 				</div>
 			</div>
@@ -168,7 +168,7 @@
 				<div id="footer-text">COPYRIGHT © 2021 台北一日遊</div>
 			</div>
 		</div>
-		<div id="footer-extend"></div>
+		<script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
 		<script src="/JS/log.js"></script>
 		<script src="/JS/booking.js"></script>
 		<script>initBooking();</script>
