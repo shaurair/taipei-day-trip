@@ -15,7 +15,7 @@ const endTargetDetectOptions = {
 };
 let nextPage = null;
 let dataReceiveDone = false;
-let searchApiPage = "api/attractions?page=";
+let searchApiPage = "api/attractions/?page=";
 let searchKeyword = "";
 
 // functions
