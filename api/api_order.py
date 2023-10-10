@@ -1,7 +1,7 @@
 from flask import *
 from model.database_conn import connection_pool
-from model.token import token_decode
-from model.tappay import tap_pay_request, TAPPAYSTATUSOK
+from utility.token import token_decode
+from utility.tappay import tap_pay_request, TAPPAYSTATUSOK
 import datetime
 
 order = Blueprint("order",__name__)
@@ -23,7 +23,8 @@ def order_info():
 		
 	if request.method == "GET":
 		# TODO
-		return jsonify(rsp), 200
+		(rsp, rsp_code) = get_order_on_db(member_id)
+		return jsonify(rsp), rsp_code
 
 	elif request.method == "POST":
 		request_data = request.get_json()
@@ -115,6 +116,26 @@ def update_order_on_db(order_no, status, member_id):
 		rsp["error"] = True
 		rsp["message"] = str(e)
 		return str(e)
+	finally:
+		cursor.close()
+		con.close()
+
+def get_order_on_db(member_id):
+	rsp = {}
+	rsp["data"] = None
+	try:
+		con = connection_pool.get_connection()
+		cursor = con.cursor(dictionary = True)
+		cursor.execute("SELECT order_no, trip, contact FROM order_table WHERE member_id=%s AND status = \"已付款\";",(member_id,))
+		order_results = cursor.fetchall()
+		if order_results is not None:
+			rsp["data"] = order_results
+		
+		return rsp, 200
+	except Exception as e:
+		rsp["error"] = True
+		rsp["message"] = str(e)
+		return rsp, 500
 	finally:
 		cursor.close()
 		con.close()

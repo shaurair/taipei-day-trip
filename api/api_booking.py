@@ -1,6 +1,6 @@
 from flask import *
 from model.database_conn import connection_pool
-from model.token import token_decode
+from utility.token import token_decode
 
 booking = Blueprint("booking",__name__)
 

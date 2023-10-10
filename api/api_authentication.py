@@ -2,7 +2,7 @@ from flask import *
 import json
 import datetime
 from model.database_conn import connection_pool
-from model.token import token_decode, token_encode
+from utility.token import token_decode, token_encode
 
 authentication = Blueprint("authentication",__name__)
 
