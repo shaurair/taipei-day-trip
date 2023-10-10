@@ -2,6 +2,7 @@
 const deleteScheduleIcon = document.querySelector(".booking-delete-icon");
 const submitOrderBtn = document.getElementById("pay-button");
 let scheduleData;
+let submitOrderNotFinished = false;
 // Tap Pay infos
 const tapPayAppId = 137096;
 const tapPayKey = "app_Tv7tRFXPSw5jHQTbcISpcmLOOYvDKIPMAMCEr2AtGtoWuYvHaQJfeY8Qkrhc";
@@ -140,6 +141,18 @@ function getContact() {
 	return contact;
 }
 
+function disableButton() {
+	submitOrderBtn.style.cursor = "not-allowed";
+	submitOrderBtn.style.opacity = 0.75;
+	submitOrderNotFinished = true;
+}
+
+function enableButton() {
+	submitOrderBtn.style.cursor = "pointer";
+	submitOrderBtn.style.opacity = 1;
+	submitOrderNotFinished = false;
+}
+
 async function getBookingInfo() {
 	let token = localStorage.getItem('token');
 	let response = await fetch("../api/booking", {
@@ -212,12 +225,14 @@ async function sendOrder(tapPayPrime, contact) {
 	});
 	let result = await response.json();
 
+	enableButton();
+
 	if(response.ok) {
 		if(result["data"]["payment"]["message"] == "付款成功") {
 			location.href = "/thankyou?number=" + result["data"]["number"];
 		}
 		else {
-			alert("付款失敗，請確認信用卡")
+			alert("付款失敗，請確認信用卡");
 		}
 	}
 	else {
@@ -232,6 +247,10 @@ deleteScheduleIcon.addEventListener('click',()=>{
 });
 
 submitOrderBtn.addEventListener('click',()=>{
+	if(submitOrderNotFinished == true) {
+		return;
+	}
+
 	let contact = getContact();
 	if(contact == null) {
 		alert("請確認聯絡資訊均已填入");
@@ -239,6 +258,7 @@ submitOrderBtn.addEventListener('click',()=>{
 	}
 
 	if(isOkGetPrime) {
+		disableButton();
 		setOrderByTapPay(contact);
 	}
 	else {
