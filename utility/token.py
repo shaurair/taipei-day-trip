@@ -1,6 +1,9 @@
+import os
+from dotenv import load_dotenv
 import jwt
 
-jwt_secret_key = 'my_taipei_trip'
+load_dotenv()
+jwt_secret_key = os.getenv("JWT_SECRET_KEY")
 
 def token_encode(payload):
     return jwt.encode(payload, jwt_secret_key, algorithm='HS256')

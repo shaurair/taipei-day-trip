@@ -1,9 +1,13 @@
+import os
+from dotenv import load_dotenv
 import requests
 
+load_dotenv()
+
 # Tap Pay infos
-tap_pay_key = "partner_zmeOFYHhh0Lcvxz65XquEeuUSDnIBzXBFhN6FeJUp4kibE96qGmOw9Zu"
+tap_pay_key = os.getenv("TAP_PAY_KEP")
 sandbox_url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
-my_mechant_id = "shaurair_TAISHIN"
+my_mechant_id = os.getenv("MY_MECHANT_ID")
 TAPPAYSTATUSOK = 0
 
 def tap_pay_request(prime, price, contact):
