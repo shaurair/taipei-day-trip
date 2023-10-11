@@ -1,6 +1,9 @@
 // variables
 const signOptElement = document.getElementById("opt-sign");
 const signOutElement = document.getElementById("opt-sign-out");
+const memberElement = document.getElementById("opt-member");
+const memberCenterElement = document.getElementById("opt-member-center");
+const memberSelectionElement = document.querySelector(".member-selection");
 const signLoadingElement = document.getElementById("opt-sign-loading");
 const signAreaElement = document.querySelector(".sign-area");
 const signMaskElement = document.querySelector(".sign-mask");
@@ -108,7 +111,7 @@ async function getUser() {
 	signInMember = result["data"];
 
 	if(signInMember != null) {
-		signOutElement.style.display = 'block';
+		memberElement.style.display = 'block';
 	}
 	else {
 		signOptElement.style.display = 'block';
@@ -121,6 +124,10 @@ async function getUser() {
 signOptElement.addEventListener('click',()=>{
 	signAreaElement.style.display = 'grid';
 	signMaskElement.style.display = 'block';
+});
+
+memberElement.addEventListener('click',()=>{
+	memberSelectionElement.style.display = (memberSelectionElement.style.display == 'flex') ? 'none' : 'flex';
 });
 
 signOutElement.addEventListener('click',()=>{
@@ -165,4 +172,8 @@ bookedSchedule.addEventListener('click', ()=>{
 	else {
 		location.href = "/booking";
 	}
+});
+
+memberCenterElement.addEventListener('click', ()=>{
+	location.href = "/member";
 });

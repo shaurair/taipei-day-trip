@@ -68,7 +68,7 @@ html,body {
 	white-space: pre;
 	display: none;
 }
-#opt-sign-out {
+#opt-member {
 	width: 71px;
 	height: 14px;
 	padding: 10px;
@@ -779,6 +779,49 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	background: url(/icon_close.svg);
 	cursor: pointer;
 }
+.member-selection {
+	display: none;
+	justify-content: center;
+	padding: 10px 0 10px 0;
+    box-sizing: border-box;
+	position: absolute;
+	z-index: 2;
+	top: 54px;
+	right: calc(50% - 600px);
+	width: 91px;
+	min-height: 80px;
+	background: #e1e6e880;
+	border-radius: 0 0 5px 5px;
+	animation: fadeIn 0.3s;
+}
+@keyframes fadeIn {
+	from {
+		opacity: 0.5;
+	}
+	to {
+		opacity: 1;
+	}
+}
+.member-position {
+	width: 90%;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.member-selection-item {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	height: -webkit-fill-available;
+}
+.selection-item-text {
+	text-align: center;
+	color: var(--secondary-color-gray-70, #444);
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+}
 /* for booking html */
 .booking-section-area {
 	display: flex;
@@ -1076,6 +1119,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	}
 	#infors {
 		width: 100%;
+	}
+	/* for sign dialog */
+	.member-selection {
+		right: 0;
 	}
 }
 
