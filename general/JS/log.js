@@ -1,6 +1,7 @@
 // variables
 const signOptElement = document.getElementById("opt-sign");
 const signOutElement = document.getElementById("opt-sign-out");
+const signLoadingElement = document.getElementById("opt-sign-loading");
 const signAreaElement = document.querySelector(".sign-area");
 const signMaskElement = document.querySelector(".sign-mask");
 const signCloseElement = document.querySelector(".close-icon");
@@ -108,11 +109,12 @@ async function getUser() {
 
 	if(signInMember != null) {
 		signOutElement.style.display = 'block';
-		signOptElement.style.display = 'none';
 	}
 	else {
-		signOptElement.style.opacity = 1;
+		signOptElement.style.display = 'block';
 	}
+
+	signLoadingElement.style.display = 'none';
 }
 
 // button actions

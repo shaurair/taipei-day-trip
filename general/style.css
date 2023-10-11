@@ -63,7 +63,7 @@ html,body {
 	text-align: center;
 	white-space: pre;
 	cursor: pointer;
-	opacity: 0;
+	display: none;
 }
 #opt-sign-out {
 	width: 71px;
@@ -73,6 +73,15 @@ html,body {
 	white-space: pre;
 	cursor: pointer;
 	display: none;
+}
+#opt-sign-loading {
+	width: 71px;
+	height: 14px;
+	padding: 10px;
+	background-image: url("./loading.gif");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 #hero {
 	height: 320px;
