@@ -9,6 +9,7 @@ const morningSelect = document.getElementById("morning-select");
 const afternoonSelect = document.getElementById("afternoon-select");
 const priceContent = document.getElementById("price-description");
 const bookingButton = document.getElementById("booking-button");
+const loadingElement = document.getElementById("loading");
 const morningFee = "新台幣 2000 元";
 const afternoonFee = "新台幣 2500 元";
 
@@ -24,6 +25,8 @@ function initAllData(){
 		else {
 			cleanMainPage();
 		}
+
+		loadingElement.style.display = 'none';
 	})
 }
 

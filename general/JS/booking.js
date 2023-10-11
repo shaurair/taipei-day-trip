@@ -1,6 +1,7 @@
 // variables
 const deleteScheduleIcon = document.querySelector(".booking-delete-icon");
 const submitOrderBtn = document.getElementById("pay-button");
+const loadingElement = document.getElementById("loading");
 let scheduleData;
 let submitOrderNotFinished = false;
 // Tap Pay infos
@@ -181,6 +182,7 @@ async function initBooking() {
 		setMemberInfo();
 		await getBookingInfo();
 		setTapPay();
+		loadingElement.style.display = 'none';
 	}
 }
 

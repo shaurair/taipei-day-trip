@@ -1,3 +1,5 @@
+const loadingElement = document.getElementById("loading");
+
 function setOrderNumber() {
 	let orderNumber = location.href.match(/number=(\d+)/)[1];
 	let orderNumberElement = document.getElementById("order-number");
@@ -13,5 +15,6 @@ async function initThankyou() {
 	}
 	else {
 		setOrderNumber();
+		loadingElement.style.display = 'none';
 	}
 }

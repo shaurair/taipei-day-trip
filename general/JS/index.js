@@ -5,6 +5,7 @@ const listFrame = document.getElementById("listItems");
 const searchBtn = document.querySelector('#search-btn');
 const keyword = document.getElementById("keyword");
 const attrGroupElement = document.getElementById("attractions-group");
+const loadingElement = document.getElementById("loading");
 const barSlideBuffer = 50;
 // scroll-to-end detect
 const endTargetElement = document.querySelector('#main-end');
@@ -119,6 +120,7 @@ function loadAttractions(url){
 			endReachedObserver.observe(endTargetElement);
 		}
 		else {
+			loadingElement.style.display = 'none';
 			footer.style.display = 'flex';
 			endReachedObserver.unobserve(endTargetElement);
 		}

@@ -328,6 +328,15 @@ html,body {
 	font-weight: 500;
 	line-height: 13.3px; /* 83.125% */
 }
+#loading{
+	display: flex;
+    justify-content: center;
+}
+#loading-picture {
+	width: 100px;
+	height: 100px;
+	opacity: 0.9;
+}
 #main-end {
 	height: 40px;
 }
