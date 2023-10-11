@@ -1172,3 +1172,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 		margin-top: 5px;
 	}
 }
+/* defult unseen */
+.booked-info-part {
+	display: none;
+}

@@ -15,13 +15,8 @@ function setMemberInfo() {
 }
 
 function setNoneSchedulePage() {
-	let bookedInfoElement = document.getElementsByClassName("booked-info-part");
 	let noneBookedElement = document.getElementsByClassName("none-booked-info-part");
 	let elementIndex;
-
-	for(elementIndex = 0; elementIndex < bookedInfoElement.length; elementIndex++) {
-		bookedInfoElement[elementIndex].style.display = 'none';
-	}
 
 	for(elementIndex = 0; elementIndex < noneBookedElement.length; elementIndex++) {
 		noneBookedElement[elementIndex].style.display = 'block';
@@ -154,6 +149,14 @@ function enableButton() {
 	submitOrderNotFinished = false;
 }
 
+function showDefaultUnseen() {
+	let defaultUnseenElement = document.getElementsByClassName("booked-info-part");
+	
+	for(let elementIndex = 0; elementIndex < defaultUnseenElement.length; elementIndex++) {
+		defaultUnseenElement[elementIndex].classList.remove("booked-info-part");
+	}
+}
+
 async function getBookingInfo() {
 	let token = localStorage.getItem('token');
 	let response = await fetch("../api/booking", {
@@ -167,7 +170,8 @@ async function getBookingInfo() {
 		setNoneSchedulePage();
 	}
 	else {
-		scheduleData = result["data"]
+		scheduleData = result["data"];
+		showDefaultUnseen();
 		setSchedulePage();
 	}
 }
