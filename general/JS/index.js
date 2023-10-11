@@ -22,7 +22,7 @@ let searchKeyword = "";
 // functions
 function createMrtElement(mrtName, mrtIdx){
 	let newMrtDiv = document.createElement('div');
-	newMrtDiv.className = 'item';
+	newMrtDiv.className = 'item mouseover';
 	newMrtDiv.id = "mrt" + mrtIdx;
 	newMrtDiv.onclick = function(){
 		searchMRT(mrtName);
