@@ -20,11 +20,16 @@ html,body {
 .hyperlink {
 	text-decoration: none;
 }
+.mouseover {
+	cursor: pointer;
+}
+.mouseover:hover {
+	opacity: 0.75;
+}
 #headline {
 	text-align: left;
 	width: 150px;
 	height: 34px;
-	cursor: pointer;
 
 	color: var(--primary-color-cyan-70, #489);
 	/* Header 2 - Bold 30(34) */
@@ -54,7 +59,6 @@ html,body {
 	height: 14px;
 	padding: 10px;
 	text-align: center;
-	cursor: pointer;
 }
 #opt-sign {
 	width: 71px;
@@ -62,7 +66,6 @@ html,body {
 	padding: 10px;
 	text-align: center;
 	white-space: pre;
-	cursor: pointer;
 	display: none;
 }
 #opt-sign-out {
@@ -71,7 +74,6 @@ html,body {
 	padding: 10px;
 	text-align: center;
 	white-space: pre;
-	cursor: pointer;
 	display: none;
 }
 #opt-sign-loading {
@@ -576,7 +578,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	padding: 10px 20px 10px 20px;
 	border-radius: 5px;
 	background: var(--primary-color-cyan-70, #489);
-	cursor: pointer;
 }
 .button-text {
 	color: var(--additional-color-white, #FFF);
@@ -878,7 +879,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	width: 30px;
 	height: 30px;
 	background: url("/delete.svg") no-repeat center;
-	cursor: pointer;
 }
 .contact-pay-area {
 	display: flex;
@@ -978,7 +978,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 #pay-button {
 	margin-top: 22px;
 	padding: 10px 20px 10px 20px;
-	cursor: pointer;
 	border-radius: 5px;
 	background: var(--primary-color-cyan-70, #489);
 }
