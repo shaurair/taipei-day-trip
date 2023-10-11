@@ -149,11 +149,11 @@ function enableButton() {
 	submitOrderNotFinished = false;
 }
 
-function showDefaultUnseen() {
-	let defaultUnseenElement = document.getElementsByClassName("booked-info-part");
+function showDefaultUnseen(classname) {
+	let defaultUnseenElement = document.getElementsByClassName(classname);
 	
 	for(let elementIndex = 0; elementIndex < defaultUnseenElement.length; elementIndex++) {
-		defaultUnseenElement[elementIndex].classList.remove("booked-info-part");
+		defaultUnseenElement[elementIndex].classList.remove(classname);
 	}
 }
 
@@ -171,9 +171,11 @@ async function getBookingInfo() {
 	}
 	else {
 		scheduleData = result["data"];
-		showDefaultUnseen();
+		showDefaultUnseen("booked-info-part");
 		setSchedulePage();
 	}
+
+	showDefaultUnseen("common-info-part");
 }
 
 async function initBooking() {

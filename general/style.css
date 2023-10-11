@@ -1184,3 +1184,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .booked-info-part {
 	display: none;
 }
+.common-info-part {
+	display: none;
+}
