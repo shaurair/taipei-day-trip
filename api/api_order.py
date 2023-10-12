@@ -79,6 +79,13 @@ def pay_by_prime(member_id, prime, price, trip, contact):
 		rsp["data"] = data
 		return rsp, 200
 
+def convert_to_json(data):
+	for item in data:
+		item["trip"] = json.loads(item["trip"])
+		item["contact"] = json.loads(item["contact"])
+
+	return data
+
 def add_order_on_db(member_id, trip, contact, price):
 	rsp = {}
 
@@ -126,9 +133,12 @@ def get_order_on_db(member_id):
 	try:
 		con = connection_pool.get_connection()
 		cursor = con.cursor(dictionary = True)
-		cursor.execute("SELECT order_no, trip, contact FROM order_table WHERE member_id=%s AND status = \"已付款\";",(member_id,))
+		cursor.execute("SELECT order_no, trip, contact, price FROM order_table WHERE member_id=%s AND status = \"已付款\";",(member_id,))
 		order_results = cursor.fetchall()
-		if order_results is not None:
+		if len(order_results) == 0:
+			rsp["data"] = None
+		else:
+			order_results = convert_to_json(order_results)
 			rsp["data"] = order_results
 		
 		return rsp, 200

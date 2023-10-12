@@ -14,8 +14,9 @@ const goSignUpElement = document.getElementById("go-sign-up-btn");
 const goSignInElement = document.getElementById("go-sign-in-btn");
 const signInMain = document.querySelector(".sign-in-main");
 const signUpMain = document.querySelector(".sign-up-main");
-const bookedSchedule = document.getElementById("opt-sche");
+const bookedScheduleElement = document.getElementById("opt-sche");
 let signInMember = null;
+let isMemberDialogueShowing = false;
 
 // functions
 function checkInputFormat(name, email, password) {
@@ -117,8 +118,19 @@ async function getUser() {
 		signOptElement.style.display = 'block';
 	}
 
+	bookedScheduleElement.style.display = 'block';
 	signLoadingElement.style.display = 'none';
 }
+
+// click actions
+function clickOutsideMemberDiaglogue(event) {
+	if(isMemberDialogueShowing && (event.target !== memberSelectionElement) && (event.target !== memberElement)) {
+		memberSelectionElement.style.display = 'none';
+		isMemberDialogueShowing = false;
+	}
+}
+
+window.addEventListener('click', clickOutsideMemberDiaglogue);
 
 // button actions
 signOptElement.addEventListener('click',()=>{
@@ -127,7 +139,14 @@ signOptElement.addEventListener('click',()=>{
 });
 
 memberElement.addEventListener('click',()=>{
-	memberSelectionElement.style.display = (memberSelectionElement.style.display == 'flex') ? 'none' : 'flex';
+	if(memberSelectionElement.style.display == 'flex') {
+		memberSelectionElement.style.display = 'none';
+		isMemberDialogueShowing = false;
+	}
+	else {
+		memberSelectionElement.style.display = 'flex';
+		isMemberDialogueShowing = true;
+	}
 });
 
 signOutElement.addEventListener('click',()=>{
@@ -165,7 +184,7 @@ goSignInElement.addEventListener('click',()=>{
 	signUpMain.style.display = 'none';
 });
 
-bookedSchedule.addEventListener('click', ()=>{
+bookedScheduleElement.addEventListener('click', ()=>{
 	if(signInMember == null) {
 		signOptElement.click();
 	}

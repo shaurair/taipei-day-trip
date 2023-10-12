@@ -59,6 +59,7 @@ html,body {
 	height: 14px;
 	padding: 10px;
 	text-align: center;
+	display: none;
 }
 #opt-sign {
 	width: 71px;
@@ -69,17 +70,24 @@ html,body {
 	display: none;
 }
 #opt-member {
-	width: 71px;
+	width: 14px;
 	height: 14px;
 	padding: 10px;
+	border-radius: 100%;
+    margin-right: 5px;
 	text-align: center;
 	white-space: pre;
 	display: none;
+	background-image: url(./user.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 #opt-sign-loading {
-	width: 71px;
+	width: 14px;
 	height: 14px;
 	padding: 10px;
+	margin-right: 5px;
 	background-image: url("./loading.gif");
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -444,12 +452,13 @@ html,body {
 }
 .circle {
 	opacity: 0.75;
+	cursor: pointer;
 }
 #profile {
 	width: 600px;
 	height: 400px;
 }
-#name {
+.head-title {
 	line-height: calc(33/24);
 	color: var(--secondary-color-gray-70, #666);
 	/* Header 3 - Blod 24(24) */
@@ -632,6 +641,48 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 #transport-content {
 	margin-bottom: 80px;
 }
+/* for member.html */
+.member-area {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	gap: 15px;
+}
+.member-data {
+	width: 1200px;
+}
+.order-data {
+	width: 1200px;
+}
+.member-item {
+	display: flex;
+	gap: 10px;
+	padding: 2px 0 2px 0;
+}
+.item-highlight {
+	color: #489;
+}
+.item-lg {
+	font-weight: 800;;
+}
+.item-sm {
+	font-weight: 400;;
+}
+.order-id {
+	background-color: #4aa5;
+	padding: 7px;
+}
+.order-detail {
+	background-color: #1871;
+	padding: 10px;
+}
+.member-order-info {
+	padding: 10px 15px 0 15px;
+}
+.order-info {
+	padding: 10px;
+}
 /* for sign dialog */
 .sign-area {
 	display: none;
@@ -786,12 +837,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     box-sizing: border-box;
 	position: absolute;
 	z-index: 2;
-	top: 54px;
+	top: 60px;
 	right: calc(50% - 600px);
 	width: 91px;
 	min-height: 80px;
 	background: #e1e6e880;
-	border-radius: 0 0 5px 5px;
+	border-radius: 5px;
 	animation: fadeIn 0.3s;
 }
 @keyframes fadeIn {
@@ -1120,9 +1171,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	#infors {
 		width: 100%;
 	}
+	/* for attraction.html */
+	.member-data {
+		width: 100%;
+	}
+	.order-data {
+		width: 100%;
+	}
 	/* for sign dialog */
 	.member-selection {
-		right: 0;
+		right: 6px;
 	}
 }
 
@@ -1232,5 +1290,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	display: none;
 }
 .common-info-part {
+	display: none;
+}
+.unseen {
 	display: none;
 }

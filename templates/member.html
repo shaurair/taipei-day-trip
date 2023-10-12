@@ -2,7 +2,30 @@
 {% block title %}會員中心{% endblock %}
 
 {% block mainbody %}
-<!-- TODO -->
+<hr class="separator"/>
+<div class="member-area">
+    <div class="member-data">
+        <div class="head-title">會員資料</div>
+		<div class="member-order-info">
+			<div class="member-item">
+				<div class="form-headline">姓名：</div>
+				<div id="member-name" class="form-description"></div>
+			</div>
+			<div class="member-item">
+				<div class="form-headline">email：</div>
+				<div id="member-email" class="form-description"></div>
+			</div>
+		</div>
+    </div>
+    <hr id="section-separator" class="separator"/>
+    <div class="order-data">
+        <div class="head-title">歷史訂單</div>
+		<div id="none-order-content" class="member-order-info"></div>
+    </div>
+</div>
+<div id="loading">
+	<img id="loading-picture" src="/loading2.gif" />
+</div>
 {% endblock %}
 
 {% block scripsetting %}
