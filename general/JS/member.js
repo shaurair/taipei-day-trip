@@ -127,6 +127,14 @@ function setContact(newOrderContent, contact) {
 	setDetailInfo(contactContainer, "手機", contact["phone"]);
 }
 
+function showDefaultUnseen(classname) {
+	let defaultUnseenElement = document.getElementsByClassName(classname);
+	
+	for(let elementIndex = 0; elementIndex < defaultUnseenElement.length; elementIndex++) {
+		defaultUnseenElement[elementIndex].classList.remove(classname);
+	}
+}
+
 async function initMember() {
 	await getUser();
 
@@ -136,6 +144,7 @@ async function initMember() {
 	else {
 		setMemberInfo();
 		await getAllBookingInfo();
+		showDefaultUnseen("member-info-part");
 		loadingElement.style.display = 'none';
 	}
 }

@@ -1292,6 +1292,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .common-info-part {
 	display: none;
 }
+.member-info-part {
+	display: none;
+}
 .unseen {
 	display: none;
 }
