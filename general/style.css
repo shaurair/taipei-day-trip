@@ -974,6 +974,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	font-weight: 700;
 }
 .sub-content {
+	box-sizing: border-box;
 	height: auto;
     line-height: 1.5;
 	color: var(--secondary-color-gray-70, #666);
