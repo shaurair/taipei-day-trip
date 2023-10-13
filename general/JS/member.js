@@ -178,8 +178,12 @@ async function getAllBookingInfo() {
 
 expandOrdersElement.addEventListener('click', ()=>{
 	let orderHeadlineList = document.getElementsByClassName("order-id");
+	let expandHintElement;
 
 	for(let orderIndex = 0; orderIndex < orderHeadlineList.length; orderIndex++) {
-		orderHeadlineList[orderIndex].click();
+		expandHintElement = document.getElementById("expand-" + (orderHeadlineList.length - 1 - orderIndex).toString());
+		if(expandHintElement.textContent == "+") {
+			orderHeadlineList[orderIndex].click();
+		}
 	}
 });
