@@ -7,6 +7,7 @@ from api.api_order import order
 app=Flask(__name__, static_folder = "general", static_url_path = "/")
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
+app.config['UPLOAD_FOLDER'] = 'userimage'
 
 # Api blueprint
 app.register_blueprint(booking)
@@ -31,4 +32,9 @@ def thankyou():
 def member():
 	return render_template("member.html")
 
-app.run(host="0.0.0.0", port=3000)
+# File directory
+@app.route('/userimage/<filename>')
+def upload_image(filename):
+	return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+app.run(debug=True,host="0.0.0.0", port=3000)
