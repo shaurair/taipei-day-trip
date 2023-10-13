@@ -8,6 +8,9 @@ function setMemberInfo() {
 
 	element = document.getElementById("member-email");
 	element.textContent = signInMember["email"];
+
+	element = document.getElementById("member-image");
+	updateUserImage(element);
 }
 
 function setDetailInfo(OrderInfoContainer, headline, description) {

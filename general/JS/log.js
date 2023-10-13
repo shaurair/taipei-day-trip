@@ -112,7 +112,7 @@ async function getUser() {
 	signInMember = result["data"];
 
 	if(signInMember != null) {
-		updateUserImage();
+		updateUserImage(memberElement);
 		memberElement.style.display = 'block';
 	}
 	else {
@@ -123,14 +123,14 @@ async function getUser() {
 	signLoadingElement.style.display = 'none';
 }
 
-async function updateUserImage() {
+async function updateUserImage(updateElement) {
 	let imgSrc = "../userimage/" + signInMember["id"] + ".png";
 	let response = await fetch(imgSrc, {
 			method: "HEAD"
 		});
 
 	if (response.ok) { 
-		memberElement.style.backgroundImage = "url(" + imgSrc + ")"
+		updateElement.style.backgroundImage = "url(" + imgSrc + ")"
 	}
 }
 
