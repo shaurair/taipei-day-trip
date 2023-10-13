@@ -655,6 +655,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .order-data {
 	width: 1200px;
 }
+.history-order-headline {
+	display: flex;
+}
+.card-place {
+	display: flex;
+    flex: auto;
+    justify-content: flex-end;
+    color: white;
+}
+.card {
+    text-align: center;
+    padding: 5px;
+	background-color: #6AB;
+	border-radius: 5px;
+}
 .member-item {
 	display: flex;
 	gap: 10px;
@@ -672,6 +687,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .order-id {
 	background-color: #4aa5;
 	padding: 7px;
+	line-height: 2;
 }
 .order-detail {
 	background-color: #1871;

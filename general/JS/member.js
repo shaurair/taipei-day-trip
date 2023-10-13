@@ -1,5 +1,6 @@
 const loadingElement = document.getElementById("loading");
 const noneOrderElement = document.getElementById("none-order-content");
+const expandOrdersElement = document.getElementById("expand-all-order");
 
 function setMemberInfo() {
 	let element = document.getElementById("member-name");
@@ -174,3 +175,11 @@ async function getAllBookingInfo() {
 		alert(alertMessage);
 	}
 }
+
+expandOrdersElement.addEventListener('click', ()=>{
+	let orderHeadlineList = document.getElementsByClassName("order-id");
+
+	for(let orderIndex = 0; orderIndex < orderHeadlineList.length; orderIndex++) {
+		orderHeadlineList[orderIndex].click();
+	}
+});
