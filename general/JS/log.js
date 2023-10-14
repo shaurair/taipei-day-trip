@@ -124,13 +124,16 @@ async function getUser() {
 }
 
 async function updateUserImage(updateElement) {
-	let imgSrc = "../userimage/" + signInMember["id"] + ".png";
+	let imgSrc = "../profile_image/" + signInMember["id"] + ".png";
 	let response = await fetch(imgSrc, {
 			method: "HEAD"
 		});
 
-	if (response.ok) { 
-		updateElement.style.backgroundImage = "url(" + imgSrc + ")"
+	if(response.ok) { 
+		updateElement.style.backgroundImage = "url(" + imgSrc + ")";
+	}
+	else {
+		updateElement.style.backgroundImage = "url(./user.png)";
 	}
 }
 

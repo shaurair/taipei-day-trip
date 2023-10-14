@@ -3,17 +3,22 @@ from api.api_booking import booking
 from api.api_authentication import authentication
 from api.api_attraction import attraction
 from api.api_order import order
+from api.api_update import update
+from utility.file_access import file_access
 
 app=Flask(__name__, static_folder = "general", static_url_path = "/")
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
-app.config['UPLOAD_FOLDER'] = 'userimage'
 
 # Api blueprint
 app.register_blueprint(booking)
 app.register_blueprint(authentication)
 app.register_blueprint(attraction)
 app.register_blueprint(order)
+app.register_blueprint(update)
+
+# Utility function
+app.register_blueprint(file_access)
 
 # Pages
 @app.route("/")
@@ -31,10 +36,5 @@ def thankyou():
 @app.route("/member")
 def member():
 	return render_template("member.html")
-
-# File directory
-@app.route('/userimage/<filename>')
-def upload_image(filename):
-	return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 app.run(debug=True,host="0.0.0.0", port=3000)

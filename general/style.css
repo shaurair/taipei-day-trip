@@ -78,7 +78,6 @@ html,body {
 	text-align: center;
 	white-space: pre;
 	display: none;
-	background-image: url(./user.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -660,6 +659,34 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-size: contain;
     background-repeat: no-repeat;
 }
+#change-image {
+	width: 100px;
+	height: 100px;
+	object-fit: contain;
+}
+.upload-submit {
+	line-height: 2;
+    width: 60px;
+    height: 30px;
+    text-align: center;
+    border-radius: 10px;
+	background-color: #378;
+	color: white;
+}
+.submit-status-place {
+	display: flex;
+    align-items: center;
+}
+#submit-waiting {
+	color: rgb(34, 76, 201);
+}
+#submit-success {
+	color: rgb(19, 92, 19);
+}
+.submit-status {
+	width: 40px;
+	height: 40px;
+}
 .order-data {
 	width: 1200px;
 }
@@ -675,13 +702,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .card {
     text-align: center;
     padding: 5px;
-	background-color: #6AB;
+	background-color: #59A;
 	border-radius: 5px;
 }
 .member-item {
 	display: flex;
 	gap: 10px;
 	padding: 2px 0 2px 0;
+}
+.profile-image-place {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
 .item-highlight {
 	color: #489;
@@ -702,6 +734,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	padding: 10px;
 }
 .member-order-info {
+	display: flex;
+    flex-direction: column;
+    gap: 5px;
 	padding: 10px 15px 0 15px;
 }
 .order-info {

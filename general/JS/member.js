@@ -1,6 +1,13 @@
 const loadingElement = document.getElementById("loading");
 const noneOrderElement = document.getElementById("none-order-content");
 const expandOrdersElement = document.getElementById("expand-all-order");
+const submitImageBtn = document.getElementById("upload-submit");
+const submitSuccessElement = document.getElementById("submit-success");
+const submitWaitingElement = document.getElementById("submit-waiting");
+const fileInputBtn = document.getElementById('fileInput');
+const changeImageElement = document.getElementById('change-image');
+let isAllowSubmit = false;
+let imageFile;
 
 function setMemberInfo() {
 	let element = document.getElementById("member-name");
@@ -139,6 +146,20 @@ function showDefaultUnseen(classname) {
 	}
 }
 
+function disableButton() {
+	submitImageBtn.style.cursor = "not-allowed";
+	submitImageBtn.classList.remove("mouseover");
+	isAllowSubmit = false;
+}
+
+function enableButton() {
+	submitImageBtn.style.cursor = "pointer";
+	submitImageBtn.classList.add("mouseover");
+	submitWaitingElement.classList.add("unseen");
+	submitSuccessElement.classList.add("unseen");
+	isAllowSubmit = true;
+}
+
 async function initMember() {
 	await getUser();
 
@@ -149,6 +170,7 @@ async function initMember() {
 		setMemberInfo();
 		await getAllBookingInfo();
 		showDefaultUnseen("member-info-part");
+		disableButton();
 		loadingElement.style.display = 'none';
 	}
 }
@@ -179,6 +201,30 @@ async function getAllBookingInfo() {
 	}
 }
 
+async function sendImageFile() {
+	let token = localStorage.getItem('token');
+	let formData = new FormData();
+	formData.append('photo', imageFile);
+	let response = await fetch("../api/update/profile/image", {
+			method: "POST",
+			body: formData,
+			headers: {
+				'Authorization':`Bearer ${token}`,
+			}
+	});
+	let result = await response.json();
+
+	if(response.ok) {
+		submitWaitingElement.classList.add("unseen");
+		submitSuccessElement.classList.remove("unseen");
+	}
+	else {
+		alert(result["message"]);
+		submitWaitingElement.classList.add("unseen");
+		disableButton();
+	}
+}
+
 expandOrdersElement.addEventListener('click', ()=>{
 	let orderHeadlineList = document.getElementsByClassName("order-id");
 	let expandHintElement;
@@ -189,4 +235,19 @@ expandOrdersElement.addEventListener('click', ()=>{
 			orderHeadlineList[orderIndex].click();
 		}
 	}
+});
+
+submitImageBtn.addEventListener('click', ()=>{
+	if(isAllowSubmit == true) {
+		submitWaitingElement.classList.remove("unseen");
+		disableButton();
+		sendImageFile();
+	}
+});
+
+fileInputBtn.addEventListener('change', ()=>{
+	imageFile = fileInputBtn.files[0];
+
+	enableButton();
+	changeImageElement.src = URL.createObjectURL(imageFile);
 });

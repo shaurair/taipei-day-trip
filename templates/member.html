@@ -16,8 +16,26 @@
 				<div id="member-email" class="form-description"></div>
 			</div>
 			<div class="member-item">
-				<div class="form-headline">大頭照：</div>
-				<div id="member-image"></div>
+				<div class="profile-image-place">
+					<div class="form-headline">大頭照：</div>
+					<div id="member-image"></div>
+				</div>
+				<div class="profile-image-place">
+					<div class="form-headline">更新大頭照：</div>
+					<img id="change-image"></img>
+					<div class="upload-image">
+						<input type="file" id="fileInput">
+					</div>
+					<div id="upload-submit" class="upload-submit">提交</div>
+					<div id="submit-waiting" class="submit-status-place unseen">
+						<img class="submit-status" src="/loading.gif"></img>
+						<span>上傳中</span>
+					</div>
+					<div id="submit-success" class="submit-status-place unseen">
+						<img class="submit-status" src="/checked.png"></img>
+						<span>上傳成功，請重新整理</span>
+					</div>
+				</div>
 			</div>
 		</div>
     </div>
