@@ -191,6 +191,7 @@ async function getAllBookingInfo() {
 			setOrderDetail(result["data"]);
 		}
 		else {
+			expandOrdersElement.style.display = 'none';
 			noneOrderElement.textContent = "無歷史訂單"
 			noneOrderElement.classList.add("form-description")
 		}
