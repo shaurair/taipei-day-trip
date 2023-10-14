@@ -28,5 +28,5 @@ def update_image():
 			return jsonify(rsp), 200
 	
 	rsp["error"] = True
-	rsp["message"] = "請確認檔案"
+	rsp["message"] = "請確認檔案格式須為： .png, .jpg, .jpeg, .bmp, .gif 其中一種"
 	return jsonify(rsp), 400
