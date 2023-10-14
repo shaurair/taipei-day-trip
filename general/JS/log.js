@@ -133,7 +133,7 @@ async function updateUserImage(updateElement) {
 		updateElement.style.backgroundImage = "url(" + imgSrc + ")";
 	}
 	else {
-		updateElement.style.backgroundImage = "url(./user.png)";
+		updateElement.style.backgroundImage = "url(\"./user.png\")";
 	}
 }
 
