@@ -129,7 +129,7 @@ async function updateUserImage(updateElement) {
 			method: "HEAD"
 		});
 
-	if(response.ok) { 
+	if(response.ok && response.status == 200) { 
 		updateElement.style.backgroundImage = "url(" + imgSrc + ")";
 	}
 	else {
