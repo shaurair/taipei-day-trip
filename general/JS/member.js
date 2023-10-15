@@ -2,11 +2,21 @@ const loadingElement = document.getElementById("loading");
 const noneOrderElement = document.getElementById("none-order-content");
 const expandOrdersElement = document.getElementById("expand-all-order");
 const submitImageBtn = document.getElementById("upload-submit");
+const submitDataBtn = document.getElementById("upload-member-data-submit");
 const submitSuccessElement = document.getElementById("submit-success");
 const submitWaitingElement = document.getElementById("submit-waiting");
+const submitDataSuccessElement = document.getElementById("update-success");
+const submitDataWaitingElement = document.getElementById("update-waiting");
+const submitDataSameElement = document.getElementById("update-same");
+const submitStopTextElement = document.getElementById("update-same-txt");
+const changeNameElement = document.getElementById("change-name-txt");
 const fileInputBtn = document.getElementById('fileInput');
 const changeImageElement = document.getElementById('change-image');
+const editMenberBtn = document.getElementById('edit-member');
+const editAreaElement = document.getElementById('edit-area');
+const memberInfoAreaElement = document.getElementById('member-info-area');
 let isAllowSubmit = false;
+let isAllowDataSubmit = true;
 let imageFile;
 
 function setMemberInfo() {
@@ -152,12 +162,24 @@ function disableButton() {
 	isAllowSubmit = false;
 }
 
+function disableDataButton() {
+	submitDataBtn.style.cursor = "not-allowed";
+	submitDataBtn.classList.remove("mouseover");
+	isAllowDataSubmit = false;
+}
+
 function enableButton() {
 	submitImageBtn.style.cursor = "pointer";
 	submitImageBtn.classList.add("mouseover");
 	submitWaitingElement.classList.add("unseen");
 	submitSuccessElement.classList.add("unseen");
 	isAllowSubmit = true;
+}
+
+function enableDataButton() {
+	submitDataBtn.style.cursor = "pointer";
+	submitDataBtn.classList.add("mouseover");
+	isAllowDataSubmit = true;
 }
 
 async function initMember() {
@@ -218,11 +240,41 @@ async function sendImageFile() {
 	if(response.ok) {
 		submitWaitingElement.classList.add("unseen");
 		submitSuccessElement.classList.remove("unseen");
+		alert("更新成功！頁面將自動跳轉");
+		location.href = "/member";
 	}
 	else {
 		alert(result["message"]);
 		submitWaitingElement.classList.add("unseen");
 		disableButton();
+	}
+}
+
+async function updateData(name) {
+	let token = localStorage.getItem('token');
+	let response = await fetch("../api/update/profile/name", {
+			method: "POST",
+			body: JSON.stringify({
+				"name":name          
+			}),
+			headers: {
+				'Authorization':`Bearer ${token}`,
+				'Content-Type':'application/json'
+			}
+	});
+	let result = await response.json();
+
+	if(response.ok) {
+		submitDataWaitingElement.classList.add("unseen");
+		submitDataSuccessElement.classList.remove("unseen");
+		localStorage.setItem('token', result["token"]);
+		alert("更新成功！頁面將自動跳轉");
+		location.href = "/member";
+	}
+	else {
+		alert("發生錯誤，請重新整理再試一次");
+		submitDataWaitingElement.classList.add("unseen");
+		enableDataButton();
 	}
 }
 
@@ -246,9 +298,45 @@ submitImageBtn.addEventListener('click', ()=>{
 	}
 });
 
+submitDataBtn.addEventListener('click', ()=>{
+	if(isAllowDataSubmit == true) {
+		if(changeNameElement.value == "") {
+			submitDataSameElement.classList.remove("unseen");
+			submitStopTextElement.textContent = "請輸入姓名資料";
+			return;
+		}
+		
+		if(changeNameElement.value == signInMember["name"]) {
+			submitDataSameElement.classList.remove("unseen");
+			submitStopTextElement.textContent = "輸入的資料與現有資料相同";
+			return;
+		}
+
+		submitDataSameElement.classList.add("unseen");
+		submitDataWaitingElement.classList.remove("unseen");
+		disableDataButton();
+		updateData(changeNameElement.value);
+	}
+});
+
 fileInputBtn.addEventListener('change', ()=>{
 	imageFile = fileInputBtn.files[0];
 
 	enableButton();
 	changeImageElement.src = URL.createObjectURL(imageFile);
+	changeImageElement.classList.remove("unseen");
+});
+
+editMenberBtn.addEventListener('click', ()=>{
+	if(editMenberBtn.textContent == "取消編輯") {
+		editAreaElement.classList.add("unseen");
+		memberInfoAreaElement.classList.remove("unseen");
+		editMenberBtn.textContent = "編輯";
+	}
+	else {
+		editAreaElement.classList.remove("unseen");
+		memberInfoAreaElement.classList.add("unseen");
+		changeNameElement.value = signInMember["name"];
+		editMenberBtn.textContent = "取消編輯";
+	}
 });

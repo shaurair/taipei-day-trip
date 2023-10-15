@@ -96,7 +96,7 @@ def check_signin_on_db(email, password):
 			return rsp, 400
 		else:
 			expiration_time = datetime.datetime.utcnow() + datetime.timedelta(days = 7)
-			payload = {"id":user_result["id"], "name": user_result["name"] , "email": email, 'exp': expiration_time}
+			payload = {"id":user_result["id"], "name": user_result["name"], "email": email, 'exp': expiration_time}
 			token = token_encode(payload)
 			rsp["token"] = token
 			return rsp, 200

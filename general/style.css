@@ -651,18 +651,32 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .member-data {
 	width: 1200px;
 }
+.member-info {
+	display: flex;
+}
+#edit-area:hover {
+	border-color: blue;
+	background-color: #ddddff3b;
+}
 #member-image {
 	width: 100px;
 	height: 100px;
 	background-image: url(./user.png);
 	background-position: center;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
+	border-radius: 50%;
+	margin-left: 20px;
 }
 #change-image {
 	width: 100px;
 	height: 100px;
-	object-fit: contain;
+	border-radius: 50%;
+	object-fit: cover;
+}
+#fileInput {
+	font-size: 16px;
+	line-height: 2.5;
 }
 .upload-submit {
 	line-height: 2;
@@ -677,20 +691,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	display: flex;
     align-items: center;
 }
-#submit-waiting {
-	color: rgb(34, 76, 201);
+#submit-waiting, #update-waiting {
+	gap: 5px;
+	color: rgb(34 120 201);
 }
-#submit-success {
+#submit-success, #update-success {
 	color: rgb(19, 92, 19);
 }
 .submit-status {
 	width: 40px;
 	height: 40px;
 }
+#update-same-txt {
+	color: rgb(150, 30, 30)
+}
 .order-data {
 	width: 1200px;
 }
-.history-order-headline {
+.member-order-headline {
 	display: flex;
 }
 .card-place {
@@ -701,19 +719,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .card {
     text-align: center;
-    padding: 5px;
-	background-color: #59A;
+	box-sizing: border-box;
+    padding: 5px 10px;
+	background-color: #489;
 	border-radius: 5px;
+}
+.member-info-item {
+	display: flex;
 }
 .member-item {
 	display: flex;
-	gap: 10px;
 	padding: 2px 0 2px 0;
+	gap: 10px;
 }
 .profile-image-place {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
+	gap: 15px;
 }
 .item-highlight {
 	color: #489;
@@ -738,6 +760,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex-direction: column;
     gap: 5px;
 	padding: 10px 15px 0 15px;
+}
+.member-change-area {
+	padding: 15px;
+    border-radius: 10px;
+    border-style: solid;
+    margin-top: 10px;
+	background-color: #ccccdd3b;
 }
 .order-info {
 	padding: 10px;
@@ -822,6 +851,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .sign-input-text {
 	width: 100%;
 	border: none;
+	box-sizing: border-box;
 	padding: 15px;
 	color: var(--secondary-color-gray-50, #757575);
 	font-family: Noto Sans TC;

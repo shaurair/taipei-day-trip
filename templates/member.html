@@ -5,43 +5,70 @@
 <hr class="separator"/>
 <div class="member-area member-info-part">
     <div class="member-data">
-        <div class="head-title">會員資料</div>
-		<div class="member-order-info">
-			<div class="member-item">
-				<div class="form-headline">姓名：</div>
-				<div id="member-name" class="form-description"></div>
+		<div class="member-order-headline">
+			<div class="head-title">會員資料</div>
+			<div class="card-place">
+				<div id="edit-member" class="card mouseover"><div>編輯</div></div>
 			</div>
-			<div class="member-item">
-				<div class="form-headline">email：</div>
-				<div id="member-email" class="form-description"></div>
-			</div>
-			<div class="member-item">
-				<div class="profile-image-place">
-					<div class="form-headline">大頭照：</div>
-					<div id="member-image"></div>
+		</div>
+		<div id="member-info-area">
+			<div class="member-order-info">
+				<div class="member-info-item">
+					<div class="form-headline">姓名：</div>
+					<div id="member-name" class="form-description"></div>
 				</div>
-				<div class="profile-image-place">
-					<div class="form-headline">更新大頭照：</div>
-					<img id="change-image"></img>
-					<div class="upload-image">
-						<input type="file" id="fileInput">
+				<div class="member-info-item">
+					<div class="form-headline">email：</div>
+					<div id="member-email" class="form-description"></div>
+				</div>
+				<div class="member-info-item">
+					<div class="profile-image-place">
+						<div class="member-info">
+							<div class="form-headline">大頭照：</div>
+						</div>
+						<div id="member-image"></div>
 					</div>
-					<div id="upload-submit" class="upload-submit">提交</div>
-					<div id="submit-waiting" class="submit-status-place unseen">
-						<img class="submit-status" src="/loading.gif"></img>
-						<span>上傳中</span>
-					</div>
-					<div id="submit-success" class="submit-status-place unseen">
-						<img class="submit-status" src="/checked.png"></img>
-						<span>上傳成功，請重新整理</span>
-					</div>
+				</div>
+			</div>
+		</div>
+		<div id="edit-area" class="member-order-info member-change-area unseen">
+			<div id="change-image-area" class="profile-image-place">
+				<div class="form-headline">姓名：</div>
+				<div class="form-description">
+					<input type="text" id="change-name-txt" class="sign-input-text" placeholder="輸入姓名"/>
+				</div>
+				<div id="update-same" class="submit-status-place unseen">
+					<span id="update-same-txt"></span>
+				</div>
+				<div id="upload-member-data-submit" class="upload-submit mouseover">儲存</div>
+				<div id="update-waiting" class="submit-status-place unseen">
+					<span>上傳中</span>
+					<img class="submit-status" src="/waiting.gif"></img>
+				</div>
+				<div id="update-success" class="submit-status-place unseen">
+					<img class="submit-status" src="/checked.png"></img>
+					<span>更新成功，請重新整理</span>
+				</div>
+				<div class="form-headline">更新大頭照：</div>
+				<img id="change-image" class="unseen"></img>
+				<div class="upload-image">
+					<input type="file" id="fileInput" class="mouseover">
+				</div>
+				<div id="upload-submit" class="upload-submit">提交</div>
+				<div id="submit-waiting" class="submit-status-place unseen">
+					<span>上傳中</span>
+					<img class="submit-status" src="/waiting.gif"></img>
+				</div>
+				<div id="submit-success" class="submit-status-place unseen">
+					<img class="submit-status" src="/checked.png"></img>
+					<span>上傳成功，請重新整理</span>
 				</div>
 			</div>
 		</div>
     </div>
     <hr id="section-separator" class="separator"/>
     <div class="order-data">
-		<div class="history-order-headline">
+		<div class="member-order-headline">
         	<div class="head-title">歷史訂單</div>
 			<div class="card-place">
 				<div id="expand-all-order" class="card mouseover"><div>全部展開 + </div></div>
