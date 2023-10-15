@@ -1,6 +1,7 @@
 const loadingElement = document.getElementById("loading");
 const noneOrderElement = document.getElementById("none-order-content");
 const expandOrdersElement = document.getElementById("expand-all-order");
+const collapseOrdersElement = document.getElementById("collapse-all-order");
 const submitImageBtn = document.getElementById("upload-submit");
 const submitDataBtn = document.getElementById("upload-member-data-submit");
 const submitSuccessElement = document.getElementById("submit-success");
@@ -214,6 +215,7 @@ async function getAllBookingInfo() {
 		}
 		else {
 			expandOrdersElement.style.display = 'none';
+			collapseOrdersElement.style.display = 'none';
 			noneOrderElement.textContent = "無歷史訂單"
 			noneOrderElement.classList.add("form-description")
 		}
@@ -285,6 +287,18 @@ expandOrdersElement.addEventListener('click', ()=>{
 	for(let orderIndex = 0; orderIndex < orderHeadlineList.length; orderIndex++) {
 		expandHintElement = document.getElementById("expand-" + (orderHeadlineList.length - 1 - orderIndex).toString());
 		if(expandHintElement.textContent == "+") {
+			orderHeadlineList[orderIndex].click();
+		}
+	}
+});
+
+collapseOrdersElement.addEventListener('click', ()=>{
+	let orderHeadlineList = document.getElementsByClassName("order-id");
+	let expandHintElement;
+
+	for(let orderIndex = 0; orderIndex < orderHeadlineList.length; orderIndex++) {
+		expandHintElement = document.getElementById("expand-" + (orderHeadlineList.length - 1 - orderIndex).toString());
+		if(expandHintElement.textContent == "-") {
 			orderHeadlineList[orderIndex].click();
 		}
 	}
