@@ -134,6 +134,16 @@ async function bookSchedule() {
 		alert("請選擇日期");
 		return;
 	}
+	else {
+		let dateDateFormat = new Date(date);
+		let today = new Date();
+		dateDateFormat.setHours(0, 0, 0, 0);
+		today.setHours(0, 0, 0, 0);
+		if(dateDateFormat < today) {
+			alert("選擇日期不可早於今日");
+			return;
+		}
+	}
 
 	if(priceSelect == morningFee) {
 		time = "morning";
