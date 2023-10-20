@@ -4,12 +4,17 @@ const expandOrdersElement = document.getElementById("expand-all-order");
 const collapseOrdersElement = document.getElementById("collapse-all-order");
 const submitImageBtn = document.getElementById("upload-submit");
 const submitDataBtn = document.getElementById("upload-member-data-submit");
+const submitPasswordBtn = document.getElementById("upload-password-submit");
 const submitSuccessElement = document.getElementById("submit-success");
 const submitWaitingElement = document.getElementById("submit-waiting");
 const submitDataSuccessElement = document.getElementById("update-success");
 const submitDataWaitingElement = document.getElementById("update-waiting");
-const submitDataSameElement = document.getElementById("update-same");
-const submitStopTextElement = document.getElementById("update-same-txt");
+const submitPasswordSuccessElement = document.getElementById("update-password-success");
+const submitPasswordWaitingElement = document.getElementById("update-password-waiting");
+const submitDataStopElement = document.getElementById("update-stop");
+const submitStopTextElement = document.getElementById("update-stop-txt");
+const submitPasswordStopElement = document.getElementById("update-password-stop");
+const submitPasswordStopTextElement = document.getElementById("update-password-stop-txt");
 const changeNameElement = document.getElementById("change-name-txt");
 const fileInputBtn = document.getElementById('fileInput');
 const changeImageElement = document.getElementById('change-image');
@@ -18,6 +23,7 @@ const editAreaElement = document.getElementById('edit-area');
 const memberInfoAreaElement = document.getElementById('member-info-area');
 let isAllowSubmit = false;
 let isAllowDataSubmit = true;
+let isAllowPasswordSubmit = true;
 let imageFile;
 
 function setMemberInfo() {
@@ -169,6 +175,12 @@ function disableDataButton() {
 	isAllowDataSubmit = false;
 }
 
+function disablePasswordButton() {
+	submitPasswordBtn.style.cursor = "not-allowed";
+	submitPasswordBtn.classList.remove("mouseover");
+	isAllowPasswordSubmit = false;
+}
+
 function enableButton() {
 	submitImageBtn.style.cursor = "pointer";
 	submitImageBtn.classList.add("mouseover");
@@ -181,6 +193,12 @@ function enableDataButton() {
 	submitDataBtn.style.cursor = "pointer";
 	submitDataBtn.classList.add("mouseover");
 	isAllowDataSubmit = true;
+}
+
+function enablePasswordButton() {
+	submitPasswordBtn.style.cursor = "pointer";
+	submitPasswordBtn.classList.add("mouseover");
+	isAllowPasswordSubmit = true;
 }
 
 async function initMember() {
@@ -280,6 +298,41 @@ async function updateData(name) {
 	}
 }
 
+async function updatePassword(oldPassword, newPassword) {
+	let token = localStorage.getItem('token');
+	let response = await fetch("../api/update/profile/password", {
+			method: "POST",
+			body: JSON.stringify({
+				"old-password":oldPassword,
+				"new-password":newPassword
+			}),
+			headers: {
+				'Authorization':`Bearer ${token}`,
+				'Content-Type':'application/json'
+			}
+	});
+	let result = await response.json();
+
+	if(response.ok) {
+		submitPasswordWaitingElement.classList.add("unseen");
+		submitPasswordSuccessElement.classList.remove("unseen");
+		alert("更新成功！頁面將自動跳轉，稍後請重新登入");
+		localStorage.removeItem('token');
+		location.href = "/";
+	}
+	else {
+		if(response.status >= 500) {
+			alert("發生錯誤，請重新整理再試一次");
+		}
+		else {
+			alert(result["message"]);
+		}
+		
+		submitPasswordWaitingElement.classList.add("unseen");
+		enablePasswordButton();
+	}
+}
+
 expandOrdersElement.addEventListener('click', ()=>{
 	let orderHeadlineList = document.getElementsByClassName("order-id");
 	let expandHintElement;
@@ -315,21 +368,52 @@ submitImageBtn.addEventListener('click', ()=>{
 submitDataBtn.addEventListener('click', ()=>{
 	if(isAllowDataSubmit == true) {
 		if(changeNameElement.value == "") {
-			submitDataSameElement.classList.remove("unseen");
+			submitDataStopElement.classList.remove("unseen");
 			submitStopTextElement.textContent = "請輸入姓名資料";
 			return;
 		}
 		
 		if(changeNameElement.value == signInMember["name"]) {
-			submitDataSameElement.classList.remove("unseen");
+			submitDataStopElement.classList.remove("unseen");
 			submitStopTextElement.textContent = "輸入的資料與現有資料相同";
 			return;
 		}
 
-		submitDataSameElement.classList.add("unseen");
+		submitDataStopElement.classList.add("unseen");
 		submitDataWaitingElement.classList.remove("unseen");
 		disableDataButton();
 		updateData(changeNameElement.value);
+	}
+});
+
+submitPasswordBtn.addEventListener('click', ()=> {
+	let oldPasswordElement = document.getElementById("old-password-txt");
+	let newPasswordElement = document.getElementById("new-password-txt");
+	let confirmPasswordElement = document.getElementById("confirm-new-password-txt");
+
+	if(isAllowPasswordSubmit == true) {
+		if(oldPasswordElement.value == "" || newPasswordElement.value == "" || confirmPasswordElement.value == "") {
+			submitPasswordStopElement.classList.remove("unseen");
+			submitPasswordStopTextElement.textContent = "請確認舊密碼、新密碼、新密碼確認均已輸入";
+			return;
+		}
+
+		if(newPasswordElement.value == oldPasswordElement.value) {
+			submitPasswordStopElement.classList.remove("unseen");
+			submitPasswordStopTextElement.textContent = "新密碼與舊密碼不可相同";
+			return;
+		}
+
+		if(newPasswordElement.value != confirmPasswordElement.value) {
+			submitPasswordStopElement.classList.remove("unseen");
+			submitPasswordStopTextElement.textContent = "新密碼與新密碼確認輸入內容不一致";
+			return;
+		}
+
+		submitPasswordStopElement.classList.add("unseen");
+		submitPasswordWaitingElement.classList.remove("unseen");
+		disablePasswordButton();
+		updatePassword(oldPasswordElement.value, newPasswordElement.value)
 	}
 });
 

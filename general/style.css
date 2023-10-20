@@ -674,17 +674,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	border-radius: 50%;
 	object-fit: cover;
 }
+.txt-lg {
+	font-size: large;
+}
 #fileInput {
 	font-size: 16px;
 	line-height: 2.5;
 }
 .upload-submit {
 	line-height: 2;
-    width: 60px;
+	width: fit-content;
     height: 30px;
-    text-align: center;
+    padding: 0 10px;
+	text-align: center;
     border-radius: 10px;
-	background-color: #378;
+	background-color: #37a;
 	color: white;
 }
 .submit-status-place {
@@ -702,7 +706,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	width: 40px;
 	height: 40px;
 }
-#update-same-txt {
+#update-stop-txt, #update-password-stop-txt {
 	color: rgb(150, 30, 30)
 }
 .order-data {

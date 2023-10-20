@@ -32,13 +32,13 @@
 			</div>
 		</div>
 		<div id="edit-area" class="member-order-info member-change-area unseen">
-			<div id="change-image-area" class="profile-image-place">
-				<div class="form-headline">姓名：</div>
+			<div class="profile-image-place">
+				<div class="form-headline txt-lg">姓名：</div>
 				<div class="form-description">
 					<input type="text" id="change-name-txt" class="sign-input-text" placeholder="輸入姓名"/>
 				</div>
-				<div id="update-same" class="submit-status-place unseen">
-					<span id="update-same-txt"></span>
+				<div id="update-stop" class="submit-status-place unseen">
+					<span id="update-stop-txt"></span>
 				</div>
 				<div id="upload-member-data-submit" class="upload-submit mouseover">儲存</div>
 				<div id="update-waiting" class="submit-status-place unseen">
@@ -49,7 +49,35 @@
 					<img class="submit-status" src="/checked.png"></img>
 					<span>更新成功，請重新整理</span>
 				</div>
-				<div class="form-headline">更新大頭照：</div>
+			</div>
+			<hr/>
+			<div class="profile-image-place">
+				<div class="form-headline txt-lg">修改密碼：</div>
+				<div class="form-description">
+					<input type="password" id="old-password-txt" class="sign-input-text" placeholder="請輸入舊密碼"/>
+				</div>
+				<div class="form-description">
+					<input type="password" id="new-password-txt" class="sign-input-text" placeholder="請輸入新密碼"/>
+				</div>
+				<div class="form-description">
+					<input type="password" id="confirm-new-password-txt" class="sign-input-text" placeholder="請再次輸入新密碼"/>
+				</div>
+				<div id="update-password-stop" class="submit-status-place unseen">
+					<span id="update-password-stop-txt"></span>
+				</div>
+				<div id="upload-password-submit" class="upload-submit mouseover">更新密碼</div>
+				<div id="update-password-waiting" class="submit-status-place unseen">
+					<span>上傳中</span>
+					<img class="submit-status" src="/waiting.gif"></img>
+				</div>
+				<div id="update-password-success" class="submit-status-place unseen">
+					<img class="submit-status" src="/checked.png"></img>
+					<span>更新成功，請重新整理</span>
+				</div>
+			</div>
+			<hr/>
+			<div class="profile-image-place">
+				<div class="form-headline txt-lg">更新大頭照：</div>
 				<img id="change-image" class="unseen"></img>
 				<div class="upload-image">
 					<input type="file" id="fileInput" class="mouseover">
@@ -65,7 +93,7 @@
 				</div>
 			</div>
 		</div>
-    </div>
+	</div>
     <hr id="section-separator" class="separator"/>
     <div class="order-data">
 		<div class="member-order-headline">
