@@ -42,7 +42,7 @@ def update_name():
 		try:
 			decoded_data = token_decode(token)
 			member_id = decoded_data["id"]
-			email = decoded_data["email"]
+			member_email = decoded_data["email"]
 		except Exception as e:
 			rsp["error"] = True
 			rsp["message"] = "未登入系統，拒絕存取"
@@ -51,12 +51,13 @@ def update_name():
 	request_data = request.get_json()
 	try:
 		name = request_data["name"]
+		email = request_data["email"]
 	except Exception as e:
 		rsp["error"] = True
 		rsp["message"] = "請確認request內容: " + str(e)
 		return jsonify(rsp), 400
 
-	(rsp, rsp_code) = change_name_on_db(member_id, name, email)
+	(rsp, rsp_code) = change_data_on_db(member_id, name, email, member_email)
 	return jsonify(rsp), rsp_code
 
 @update.route("/api/update/profile/password", methods = ["POST"])
@@ -85,13 +86,26 @@ def update_password():
 	(rsp, rsp_code) = change_password_on_db(member_id, old_password, new_password)
 	return jsonify(rsp), rsp_code
 
-def change_name_on_db(member_id, name, email):
+def change_data_on_db(member_id, name, email, member_email):
 	rsp = {}
 	try:
 		con = connection_pool.get_connection()
 		cursor = con.cursor()
-		cursor.execute("UPDATE member SET name = %s WHERE id = %s;",(name, member_id))
-		con.commit()
+		if email != member_email:
+			cursor.execute("SELECT * FROM member WHERE email = %s && id != %s COLLATE utf8mb4_bin",(email, member_id))
+			existed_emails = cursor.fetchone()
+			if existed_emails is None:
+				cursor.execute("UPDATE member SET name = %s, email=%s WHERE id = %s;",(name, email, member_id))
+				con.commit()
+			else:
+				rsp["error"] = True
+				rsp["message"] = "輸入的 Email 已被使用"
+				return rsp, 400
+		else:
+			email = member_email
+			cursor.execute("UPDATE member SET name = %s WHERE id = %s;",(name, member_id))
+			con.commit()
+
 		expiration_time = datetime.datetime.utcnow() + datetime.timedelta(days = 7)
 		payload = {"id":member_id, "name": name, "email": email, 'exp': expiration_time}
 		token = token_encode(payload)

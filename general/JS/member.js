@@ -16,6 +16,7 @@ const submitStopTextElement = document.getElementById("update-stop-txt");
 const submitPasswordStopElement = document.getElementById("update-password-stop");
 const submitPasswordStopTextElement = document.getElementById("update-password-stop-txt");
 const changeNameElement = document.getElementById("change-name-txt");
+const changeEmailElement = document.getElementById("change-email-txt");
 const fileInputBtn = document.getElementById('fileInput');
 const changeImageElement = document.getElementById('change-image');
 const editMenberBtn = document.getElementById('edit-member');
@@ -270,12 +271,13 @@ async function sendImageFile() {
 	}
 }
 
-async function updateData(name) {
+async function updateData(name, email) {
 	let token = localStorage.getItem('token');
 	let response = await fetch("../api/update/profile/name", {
 			method: "POST",
 			body: JSON.stringify({
-				"name":name          
+				"name":name,
+				"email":email          
 			}),
 			headers: {
 				'Authorization':`Bearer ${token}`,
@@ -292,7 +294,13 @@ async function updateData(name) {
 		location.href = "/member";
 	}
 	else {
-		alert("發生錯誤，請重新整理再試一次");
+		if(response.status >= 500) {
+			alert("發生錯誤，請重新整理再試一次");
+		}
+		else {
+			alert(result["message"]);
+		}
+
 		submitDataWaitingElement.classList.add("unseen");
 		enableDataButton();
 	}
@@ -367,22 +375,30 @@ submitImageBtn.addEventListener('click', ()=>{
 
 submitDataBtn.addEventListener('click', ()=>{
 	if(isAllowDataSubmit == true) {
-		if(changeNameElement.value == "") {
+		if(changeNameElement.value == "" || changeEmailElement.value == "") {
 			submitDataStopElement.classList.remove("unseen");
-			submitStopTextElement.textContent = "請輸入姓名資料";
+			submitStopTextElement.textContent = "請輸入姓名/Email資料";
 			return;
 		}
 		
-		if(changeNameElement.value == signInMember["name"]) {
+		if(changeNameElement.value == signInMember["name"] && changeEmailElement.value == signInMember["email"]) {
 			submitDataStopElement.classList.remove("unseen");
 			submitStopTextElement.textContent = "輸入的資料與現有資料相同";
+			return;
+		}
+
+		let emailRule = /^[A-Za-z0-9_.-]+\@[A-Za-z0-9_.-]+$/;
+
+		if(emailRule.test(changeEmailElement.value) == false) {
+			submitDataStopElement.classList.remove("unseen");
+			submitStopTextElement.textContent = "Email格式不正確";
 			return;
 		}
 
 		submitDataStopElement.classList.add("unseen");
 		submitDataWaitingElement.classList.remove("unseen");
 		disableDataButton();
-		updateData(changeNameElement.value);
+		updateData(changeNameElement.value, changeEmailElement.value);
 	}
 });
 
@@ -435,6 +451,7 @@ editMenberBtn.addEventListener('click', ()=>{
 		editAreaElement.classList.remove("unseen");
 		memberInfoAreaElement.classList.add("unseen");
 		changeNameElement.value = signInMember["name"];
+		changeEmailElement.value = signInMember["email"];
 		editMenberBtn.textContent = "取消編輯";
 	}
 });
