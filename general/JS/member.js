@@ -19,8 +19,12 @@ const changeNameElement = document.getElementById("change-name-txt");
 const changeEmailElement = document.getElementById("change-email-txt");
 const fileInputBtn = document.getElementById('fileInput');
 const changeImageElement = document.getElementById('change-image');
-const editMenberBtn = document.getElementById('edit-member');
-const editAreaElement = document.getElementById('edit-area');
+const editDataBtn = document.getElementById('edit-data');
+const editDataElement = document.getElementById('edit-data-area');
+const editPasswordBtn = document.getElementById('edit-password');
+const editPasswordElement = document.getElementById('edit-password-area');
+const editImageBtn = document.getElementById('edit-image');
+const editImageElement = document.getElementById('edit-image-area');
 const memberInfoAreaElement = document.getElementById('member-info-area');
 let isAllowSubmit = false;
 let isAllowDataSubmit = true;
@@ -441,17 +445,55 @@ fileInputBtn.addEventListener('change', ()=>{
 	changeImageElement.classList.remove("unseen");
 });
 
-editMenberBtn.addEventListener('click', ()=>{
-	if(editMenberBtn.textContent == "取消編輯") {
-		editAreaElement.classList.add("unseen");
+editImageBtn.addEventListener('click', ()=>{
+	if(editImageBtn.textContent == "取消編輯") {
+		editImageElement.classList.add("unseen");
 		memberInfoAreaElement.classList.remove("unseen");
-		editMenberBtn.textContent = "編輯";
+		editDataBtn.classList.remove("unseen");
+		editPasswordBtn.classList.remove("unseen");
+		editImageBtn.textContent = "修改大頭貼";
 	}
 	else {
-		editAreaElement.classList.remove("unseen");
+		editImageElement.classList.remove("unseen");
+		memberInfoAreaElement.classList.add("unseen");
+		editDataBtn.classList.add("unseen");
+		editPasswordBtn.classList.add("unseen");
+		editImageBtn.textContent = "取消編輯";
+	}
+});
+
+editPasswordBtn.addEventListener('click', ()=>{
+	if(editPasswordBtn.textContent == "取消編輯") {
+		editPasswordElement.classList.add("unseen");
+		memberInfoAreaElement.classList.remove("unseen");
+		editDataBtn.classList.remove("unseen");
+		editImageBtn.classList.remove("unseen");
+		editPasswordBtn.textContent = "修改密碼";
+	}
+	else {
+		editPasswordElement.classList.remove("unseen");
+		memberInfoAreaElement.classList.add("unseen");
+		editDataBtn.classList.add("unseen");
+		editImageBtn.classList.add("unseen");
+		editPasswordBtn.textContent = "取消編輯";
+	}
+});
+
+editDataBtn.addEventListener('click', ()=>{
+	if(editDataBtn.textContent == "取消編輯") {
+		editDataElement.classList.add("unseen");
+		memberInfoAreaElement.classList.remove("unseen");
+		editPasswordBtn.classList.remove("unseen");
+		editImageBtn.classList.remove("unseen");
+		editDataBtn.textContent = "修改資本資料";
+	}
+	else {
+		editDataElement.classList.remove("unseen");
 		memberInfoAreaElement.classList.add("unseen");
 		changeNameElement.value = signInMember["name"];
 		changeEmailElement.value = signInMember["email"];
-		editMenberBtn.textContent = "取消編輯";
+		editPasswordBtn.classList.add("unseen");
+		editImageBtn.classList.add("unseen");
+		editDataBtn.textContent = "取消編輯";
 	}
 });

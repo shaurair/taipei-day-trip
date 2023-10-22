@@ -654,7 +654,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .member-info {
 	display: flex;
 }
-#edit-area:hover {
+.edit-area:hover {
 	border-color: blue;
 	background-color: #ddddff3b;
 }
@@ -726,7 +726,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: center;
 	box-sizing: border-box;
     padding: 5px 10px;
-	background-color: #489;
+	background-color: #489e;
 	border-radius: 5px;
 }
 .member-info-item {
@@ -1378,6 +1378,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	}
 	.notice-text {
 		margin-top: 5px;
+	}
+	.member-order-headline {
+		flex-direction: column;
 	}
 }
 /* defult unseen */
