@@ -22,7 +22,6 @@ def order_info():
 			return jsonify(rsp), 403
 		
 	if request.method == "GET":
-		# TODO
 		(rsp, rsp_code) = get_order_on_db(member_id)
 		return jsonify(rsp), rsp_code
 

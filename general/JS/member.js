@@ -277,7 +277,7 @@ async function sendImageFile() {
 
 async function updateData(name, email) {
 	let token = localStorage.getItem('token');
-	let response = await fetch("../api/update/profile/name", {
+	let response = await fetch("../api/update/profile/data", {
 			method: "POST",
 			body: JSON.stringify({
 				"name":name,

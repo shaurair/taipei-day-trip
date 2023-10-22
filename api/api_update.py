@@ -33,8 +33,8 @@ def update_image():
 	rsp["message"] = "請確認檔案格式須為： .png, .jpg, .jpeg, .bmp, .gif 其中一種"
 	return jsonify(rsp), 400
 
-@update.route("/api/update/profile/name", methods = ["POST"])
-def update_name():
+@update.route("/api/update/profile/data", methods = ["POST"])
+def update_data():
 	rsp = {}
 	bearer_token = request.headers.get("Authorization")
 	if bearer_token.startswith('Bearer '):
