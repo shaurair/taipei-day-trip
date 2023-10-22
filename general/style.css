@@ -1178,6 +1178,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 #order-number {
 	color: rgb(60, 152, 155);
 }
+.href-text {
+	text-decoration: none;
+}
 /* 600 < screen size <= 1200 */
 @media (max-width: 1200px) {
 	#nav-content {
