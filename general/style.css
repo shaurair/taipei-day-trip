@@ -87,14 +87,14 @@ html,body {
 	height: 14px;
 	padding: 10px;
 	margin-right: 5px;
-	background-image: url("./loading.gif");
+	background-image: url(./loading.gif);
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
 }
 #hero {
 	height: 320px;
-	background-image: url("/welcome_image.png"), linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
+	background-image: url(/welcome_image.png), linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
 	background-size: cover;
 	background-position: top;
 	display: flex;
@@ -176,7 +176,7 @@ html,body {
 #icon-search {
 	width: 30px;
 	height: 30px;
-	background-image: url("/icon_search.png");
+	background-image: url(/icon_search.png);
 }
 #main {
 	/* height: auto; */
@@ -202,7 +202,7 @@ html,body {
 #left-button {
 	height: 32px;
 	width: 32px;
-	background-image: url("/Arrow_left.png");
+	background-image: url(/Arrow_left.png);
 }
 #right-container {
 	display: flex;
@@ -215,7 +215,7 @@ html,body {
 #right-button {
 	height: 32px;
 	width: 32px;
-	background-image: url("/Arrow_right.png");
+	background-image: url(/Arrow_right.png);
 }
 #container {
 	width: 1106px;
@@ -661,7 +661,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 #member-image {
 	width: 100px;
 	height: 100px;
-	background-image: url(./user.png);
+	background-image: url(./loading.gif);
 	background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
