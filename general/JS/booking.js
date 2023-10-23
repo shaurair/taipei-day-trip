@@ -1,7 +1,9 @@
 // variables
 const deleteScheduleIcon = document.querySelector(".booking-delete-icon");
 const submitOrderBtn = document.getElementById("pay-button");
+const loadingElement = document.getElementById("loading");
 let scheduleData;
+let submitOrderNotFinished = false;
 // Tap Pay infos
 const tapPayAppId = 137096;
 const tapPayKey = "app_Tv7tRFXPSw5jHQTbcISpcmLOOYvDKIPMAMCEr2AtGtoWuYvHaQJfeY8Qkrhc";
@@ -13,13 +15,8 @@ function setMemberInfo() {
 }
 
 function setNoneSchedulePage() {
-	let bookedInfoElement = document.getElementsByClassName("booked-info-part");
 	let noneBookedElement = document.getElementsByClassName("none-booked-info-part");
 	let elementIndex;
-
-	for(elementIndex = 0; elementIndex < bookedInfoElement.length; elementIndex++) {
-		bookedInfoElement[elementIndex].style.display = 'none';
-	}
 
 	for(elementIndex = 0; elementIndex < noneBookedElement.length; elementIndex++) {
 		noneBookedElement[elementIndex].style.display = 'block';
@@ -140,6 +137,26 @@ function getContact() {
 	return contact;
 }
 
+function disableButton() {
+	submitOrderBtn.style.cursor = "not-allowed";
+	submitOrderBtn.style.opacity = 0.75;
+	submitOrderNotFinished = true;
+}
+
+function enableButton() {
+	submitOrderBtn.style.cursor = "pointer";
+	submitOrderBtn.style.opacity = 1;
+	submitOrderNotFinished = false;
+}
+
+function showDefaultUnseen(classname) {
+	let defaultUnseenElement = document.getElementsByClassName(classname);
+	
+	for(let elementIndex = 0; elementIndex < defaultUnseenElement.length; elementIndex++) {
+		defaultUnseenElement[elementIndex].classList.remove(classname);
+	}
+}
+
 async function getBookingInfo() {
 	let token = localStorage.getItem('token');
 	let response = await fetch("../api/booking", {
@@ -153,9 +170,12 @@ async function getBookingInfo() {
 		setNoneSchedulePage();
 	}
 	else {
-		scheduleData = result["data"]
+		scheduleData = result["data"];
+		showDefaultUnseen("booked-info-part");
 		setSchedulePage();
 	}
+
+	showDefaultUnseen("common-info-part");
 }
 
 async function initBooking() {
@@ -168,6 +188,7 @@ async function initBooking() {
 		setMemberInfo();
 		await getBookingInfo();
 		setTapPay();
+		loadingElement.style.display = 'none';
 	}
 }
 
@@ -212,12 +233,14 @@ async function sendOrder(tapPayPrime, contact) {
 	});
 	let result = await response.json();
 
+	enableButton();
+
 	if(response.ok) {
 		if(result["data"]["payment"]["message"] == "付款成功") {
 			location.href = "/thankyou?number=" + result["data"]["number"];
 		}
 		else {
-			alert("付款失敗，請確認信用卡")
+			alert("付款失敗，請確認信用卡");
 		}
 	}
 	else {
@@ -232,6 +255,10 @@ deleteScheduleIcon.addEventListener('click',()=>{
 });
 
 submitOrderBtn.addEventListener('click',()=>{
+	if(submitOrderNotFinished == true) {
+		return;
+	}
+
 	let contact = getContact();
 	if(contact == null) {
 		alert("請確認聯絡資訊均已填入");
@@ -239,6 +266,7 @@ submitOrderBtn.addEventListener('click',()=>{
 	}
 
 	if(isOkGetPrime) {
+		disableButton();
 		setOrderByTapPay(contact);
 	}
 	else {

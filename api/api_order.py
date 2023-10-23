@@ -1,7 +1,7 @@
 from flask import *
 from model.database_conn import connection_pool
-from model.token import token_decode
-from model.tappay import tap_pay_request, TAPPAYSTATUSOK
+from utility.token import token_decode
+from utility.tappay import tap_pay_request, TAPPAYSTATUSOK
 import datetime
 
 order = Blueprint("order",__name__)
@@ -22,8 +22,8 @@ def order_info():
 			return jsonify(rsp), 403
 		
 	if request.method == "GET":
-		# TODO
-		return jsonify(rsp), 200
+		(rsp, rsp_code) = get_order_on_db(member_id)
+		return jsonify(rsp), rsp_code
 
 	elif request.method == "POST":
 		request_data = request.get_json()
@@ -78,6 +78,13 @@ def pay_by_prime(member_id, prime, price, trip, contact):
 		rsp["data"] = data
 		return rsp, 200
 
+def convert_to_json(data):
+	for item in data:
+		item["trip"] = json.loads(item["trip"])
+		item["contact"] = json.loads(item["contact"])
+
+	return data
+
 def add_order_on_db(member_id, trip, contact, price):
 	rsp = {}
 
@@ -115,6 +122,29 @@ def update_order_on_db(order_no, status, member_id):
 		rsp["error"] = True
 		rsp["message"] = str(e)
 		return str(e)
+	finally:
+		cursor.close()
+		con.close()
+
+def get_order_on_db(member_id):
+	rsp = {}
+	rsp["data"] = None
+	try:
+		con = connection_pool.get_connection()
+		cursor = con.cursor(dictionary = True)
+		cursor.execute("SELECT order_no, trip, contact, price FROM order_table WHERE member_id=%s AND status = \"已付款\";",(member_id,))
+		order_results = cursor.fetchall()
+		if len(order_results) == 0:
+			rsp["data"] = None
+		else:
+			order_results = convert_to_json(order_results)
+			rsp["data"] = order_results
+		
+		return rsp, 200
+	except Exception as e:
+		rsp["error"] = True
+		rsp["message"] = str(e)
+		return rsp, 500
 	finally:
 		cursor.close()
 		con.close()

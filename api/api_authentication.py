@@ -2,7 +2,7 @@ from flask import *
 import json
 import datetime
 from model.database_conn import connection_pool
-from model.token import token_decode, token_encode
+from utility.token import token_decode, token_encode
 
 authentication = Blueprint("authentication",__name__)
 
@@ -96,7 +96,7 @@ def check_signin_on_db(email, password):
 			return rsp, 400
 		else:
 			expiration_time = datetime.datetime.utcnow() + datetime.timedelta(days = 7)
-			payload = {"id":user_result["id"], "name": user_result["name"] , "email": email, 'exp': expiration_time}
+			payload = {"id":user_result["id"], "name": user_result["name"], "email": email, 'exp': expiration_time}
 			token = token_encode(payload)
 			rsp["token"] = token
 			return rsp, 200

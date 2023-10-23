@@ -9,6 +9,7 @@ const morningSelect = document.getElementById("morning-select");
 const afternoonSelect = document.getElementById("afternoon-select");
 const priceContent = document.getElementById("price-description");
 const bookingButton = document.getElementById("booking-button");
+const loadingElement = document.getElementById("loading");
 const morningFee = "新台幣 2000 元";
 const afternoonFee = "新台幣 2500 元";
 
@@ -22,8 +23,10 @@ function initAllData(){
 			createNameAndInformation(data["data"]);
 		}
 		else {
-			cleanMainPage();
+			location.href = "/";
 		}
+
+		loadingElement.style.display = 'none';
 	})
 }
 
@@ -92,18 +95,6 @@ function createNameAndInformation(data) {
 	element.textContent = data["transport"];
 }
 
-function cleanMainPage() {
-	let mainElement = document.getElementById("section-area");
-	let sectionElement = document.getElementById("section");
-	let sectionSeparatorElement = document.getElementById("section-separator");
-	let infoElement = document.getElementById("infors-area");
-	mainElement.textContent = '\n無此景點頁面\n';
-	mainElement.style.height = "100px";
-	sectionElement.style.display = 'none';
-	sectionSeparatorElement.style.display = 'none';
-	infoElement.style.display = "none";
-}
-
 function pushImageSlide(deltaIdx) {
 	let tmpImageIdx = (currentImageIdx + deltaIdx + imageSet.length) % imageSet.length;
 
@@ -142,6 +133,16 @@ async function bookSchedule() {
 	if(date == "") {
 		alert("請選擇日期");
 		return;
+	}
+	else {
+		let dateDateFormat = new Date(date);
+		let today = new Date();
+		dateDateFormat.setHours(0, 0, 0, 0);
+		today.setHours(0, 0, 0, 0);
+		if(dateDateFormat < today) {
+			alert("選擇日期不可早於今日");
+			return;
+		}
 	}
 
 	if(priceSelect == morningFee) {

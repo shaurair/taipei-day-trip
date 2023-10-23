@@ -1,0 +1,125 @@
+{% extends "common.html" %}
+{% block title %}會員中心{% endblock %}
+
+{% block mainbody %}
+<hr class="separator"/>
+<div class="member-area member-info-part">
+    <div class="member-data">
+		<div class="member-order-headline">
+			<div class="head-title">會員資料</div>
+			<div class="card-place">
+				<div id="edit-data" class="card mouseover"><div>修改基本資料</div></div>
+				<div id="edit-password" class="card mouseover"><div>修改密碼</div></div>
+				<div id="edit-image" class="card mouseover"><div>修改大頭貼</div></div>
+			</div>
+		</div>
+		<div id="member-info-area">
+			<div class="member-order-info">
+				<div class="member-info-item">
+					<div class="form-headline">姓名：</div>
+					<div id="member-name" class="form-description"></div>
+				</div>
+				<div class="member-info-item">
+					<div class="form-headline">email：</div>
+					<div id="member-email" class="form-description"></div>
+				</div>
+				<div class="member-info-item">
+					<div class="profile-image-place">
+						<div class="member-info">
+							<div class="form-headline">大頭照：</div>
+						</div>
+						<div id="member-image"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="edit-data-area" class="edit-area member-order-info member-change-area unseen">
+			<div class="profile-image-place">
+				<div class="form-headline txt-lg">姓名：</div>
+				<div class="form-description">
+					<input type="text" id="change-name-txt" class="sign-input-text" placeholder="輸入姓名"/>
+				</div>
+				<div class="form-headline txt-lg">Email：</div>
+				<div class="form-description">
+					<input type="text" id="change-email-txt" class="sign-input-text" placeholder="輸入email"/>
+				</div>
+				<div id="update-stop" class="submit-status-place unseen">
+					<span id="update-stop-txt"></span>
+				</div>
+				<div id="upload-member-data-submit" class="upload-submit mouseover">儲存</div>
+				<div id="update-waiting" class="submit-status-place unseen">
+					<span>上傳中</span>
+					<img class="submit-status" src="/waiting.gif"></img>
+				</div>
+				<div id="update-success" class="submit-status-place unseen">
+					<img class="submit-status" src="/checked.png"></img>
+					<span>更新成功，請重新整理</span>
+				</div>
+			</div>
+		</div>
+		<div id="edit-password-area" class="edit-area member-order-info member-change-area unseen">
+			<div class="profile-image-place">
+				<div class="form-headline txt-lg">修改密碼：</div>
+				<div class="form-description">
+					<input type="password" id="old-password-txt" class="sign-input-text" placeholder="請輸入舊密碼"/>
+				</div>
+				<div class="form-description">
+					<input type="password" id="new-password-txt" class="sign-input-text" placeholder="請輸入新密碼"/>
+				</div>
+				<div class="form-description">
+					<input type="password" id="confirm-new-password-txt" class="sign-input-text" placeholder="請再次輸入新密碼"/>
+				</div>
+				<div id="update-password-stop" class="submit-status-place unseen">
+					<span id="update-password-stop-txt"></span>
+				</div>
+				<div id="upload-password-submit" class="upload-submit mouseover">更新密碼</div>
+				<div id="update-password-waiting" class="submit-status-place unseen">
+					<span>上傳中</span>
+					<img class="submit-status" src="/waiting.gif"></img>
+				</div>
+				<div id="update-password-success" class="submit-status-place unseen">
+					<img class="submit-status" src="/checked.png"></img>
+					<span>更新成功，請重新整理</span>
+				</div>
+			</div>
+		</div>
+		<div id="edit-image-area" class="edit-area member-order-info member-change-area unseen">
+			<div class="profile-image-place">
+				<div class="form-headline txt-lg">更新大頭照：</div>
+				<img id="change-image" class="unseen"></img>
+				<div class="upload-image">
+					<input type="file" id="fileInput" class="mouseover">
+				</div>
+				<div id="upload-submit" class="upload-submit">提交</div>
+				<div id="submit-waiting" class="submit-status-place unseen">
+					<span>上傳中</span>
+					<img class="submit-status" src="/waiting.gif"></img>
+				</div>
+				<div id="submit-success" class="submit-status-place unseen">
+					<img class="submit-status" src="/checked.png"></img>
+					<span>上傳成功，請重新整理</span>
+				</div>
+			</div>
+		</div>
+	</div>
+    <hr id="section-separator" class="separator"/>
+    <div class="order-data">
+		<div class="member-order-headline">
+        	<div class="head-title">歷史訂單</div>
+			<div class="card-place">
+				<div id="expand-all-order" class="card mouseover"><div>全部展開 + </div></div>
+				<div id="collapse-all-order" class="card mouseover"><div>全部收起 - </div></div>
+			</div>
+		</div>
+		<div id="none-order-content" class="member-order-info"></div>
+    </div>
+</div>
+<div id="loading">
+	<img id="loading-picture" src="/loading2.gif" />
+</div>
+{% endblock %}
+
+{% block scripsetting %}
+<script src="/JS/member.js"></script>
+<script>initMember()</script>
+{% endblock %}
