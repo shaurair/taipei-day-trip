@@ -2,7 +2,7 @@
 - Website URL: https://trip.shaurair.online/
 - Test account / password: test@test.com / test123
 - Test Credit Card Number: 4242-4242-4242-4242 | Date: 12/34 | CVV: 123
-<img src='https://github.com/shaurair/taipei-day-trip/blob/main/doc/TaipeiIndex.png' width=80%>
+<img src='https://github.com/shaurair/taipei-day-trip/blob/main/doc/TaipeiIndex.png' width=50%>
 
 ## Catalog
 * [Main Feature](#Main-Feature)
@@ -14,10 +14,10 @@
 * Booking & Payment
 * Member System
 * Member Center
-
+<img src='https://github.com/shaurair/taipei-day-trip/blob/main/doc/demo_2.gif' width=50%>
 
 ## Backend Architecture
-<img src='https://github.com/shaurair/taipei-day-trip/blob/main/doc/BackendArchTaipeiTrip_3rdAPI.png' width=70%>
+
 
 - ### a. Users send HTTPS requests to NGINX
   -  Users search attractions, book tours, send prime which is made from TapPay server, manage member data, upload profile images, etc.
@@ -39,7 +39,6 @@
 - HTML
 - CSS
 - Javascript
-- TapPay SDK
 ### Back-end
 - Flask (Python)
 - RESTful API
