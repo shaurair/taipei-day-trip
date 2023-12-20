@@ -39,9 +39,11 @@
 - HTML
 - CSS
 - Javascript
+- Third-Party Payment SDK
 ### Back-end
 - Flask (Python)
 - RESTful API
+- Third-Party Payment API
 ### Database
 - MySQL
 ### Infrastructure
