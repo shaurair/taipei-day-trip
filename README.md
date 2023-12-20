@@ -11,9 +11,9 @@
 
 ## Main Feature
 * Search attractions
-* Booking & Payment
-* Member System
-* Member Center
+* Booking tours
+* Pay by credit card through third-party payment
+* Member system management
 <img src='https://github.com/shaurair/taipei-day-trip/blob/main/doc/demo_2.gif' width=50%>
 
 ## Backend Architecture
