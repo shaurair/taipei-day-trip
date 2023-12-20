@@ -45,7 +45,6 @@
 ### Database
 - MySQL
 ### Infrastructure
-- Docker
 - DNS
 - SSL
 - NGINX
