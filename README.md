@@ -17,7 +17,7 @@
 <img src='https://github.com/shaurair/taipei-day-trip/blob/main/doc/demo_2.gif' width=50%>
 
 ## Backend Architecture
-
+<img src='https://github.com/shaurair/taipei-day-trip/blob/main/doc/BackendArchTaipeiTrip_3rdAPI.png' width=55%>
 
 - ### a. Users send HTTPS requests to NGINX
   -  Users search attractions, book tours, send prime which is made from TapPay server, manage member data, upload profile images, etc.
