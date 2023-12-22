@@ -17,27 +17,34 @@ const signUpMain = document.querySelector(".sign-up-main");
 const bookedScheduleElement = document.getElementById("opt-sche");
 let signInMember = null;
 let isMemberDialogueShowing = false;
+const FORMAT_CHECK = {
+	OK: 'ok',
+	NAME_EMPTY: '姓名未輸入',
+	EMAIL_EMPTY: 'Email未輸入',
+	PASSWORD_EMPTY: '密碼未輸入',
+	EMAIL_WRONG: 'Email格式不正確'
+}
 
 // functions
 function checkInputFormat(name, email, password) {
 	let emailRule = /^[A-Za-z0-9_.-]+\@[A-Za-z0-9_.-]+$/;
 
 	if(name == "") {
-		return "姓名未輸入";
+		return FORMAT_CHECK.NAME_EMPTY;
 	}
 	
 	if(email == "") {
-		return "Email未輸入";
+		return FORMAT_CHECK.EMAIL_EMPTY;
 	}
 	else if(emailRule.test(email) == false) {
-		return "Email格式不正確";
+		return FORMAT_CHECK.EMAIL_WRONG;
 	}
 
 	if(password == "") {
-		return "密碼未輸入";
+		return FORMAT_CHECK.PASSWORD_EMPTY;
 	}
 
-	return true;
+	return FORMAT_CHECK.OK;
 }
 
 async function signIn(email, password){
@@ -46,7 +53,7 @@ async function signIn(email, password){
 
 	messageElement.style.display = 'block';
 
-	if(checkInputResult == true) {
+	if(checkInputResult === FORMAT_CHECK.OK) {
 		let response = await fetch("../api/user/auth", {
 				method: "PUT",
 				body: JSON.stringify({"email":email,
@@ -78,7 +85,7 @@ async function signUp(name, email, password){
 	messageElement.style.display = 'block';
 	messageElement.style.color = alertColor;
 
-	if(checkInputResult == true) {
+	if(checkInputResult == FORMAT_CHECK.OK) {
 		let response = await fetch("../api/user", {
 				method:"POST",
 				body:JSON.stringify({"name":name,
