@@ -7,7 +7,7 @@ from model.database_conn import connection_pool
 update = Blueprint("update",__name__)
 
 # api
-@update.route("/api/update/profile/image", methods = ["POST"])
+@update.route("/api/profile/image", methods = ["PUT"])
 def update_image():
 	rsp = {}
 	bearer_token = request.headers.get("Authorization")
@@ -33,7 +33,7 @@ def update_image():
 	rsp["message"] = "請確認檔案格式須為： .png, .jpg, .jpeg, .bmp, .gif 其中一種"
 	return jsonify(rsp), 400
 
-@update.route("/api/update/profile/data", methods = ["POST"])
+@update.route("/api/profile/data", methods = ["PUT"])
 def update_data():
 	rsp = {}
 	bearer_token = request.headers.get("Authorization")
@@ -60,7 +60,7 @@ def update_data():
 	(rsp, rsp_code) = change_data_on_db(member_id, name, email, member_email)
 	return jsonify(rsp), rsp_code
 
-@update.route("/api/update/profile/password", methods = ["POST"])
+@update.route("/api/profile/password", methods = ["PUT"])
 def update_password():
 	rsp = {}
 	bearer_token = request.headers.get("Authorization")
