@@ -253,8 +253,8 @@ async function sendImageFile() {
 	let token = localStorage.getItem('token');
 	let formData = new FormData();
 	formData.append('photo', imageFile);
-	let response = await fetch("../api/update/profile/image", {
-			method: "POST",
+	let response = await fetch("../api/profile/image", {
+			method: "PUT",
 			body: formData,
 			headers: {
 				'Authorization':`Bearer ${token}`,
@@ -277,8 +277,8 @@ async function sendImageFile() {
 
 async function updateData(name, email) {
 	let token = localStorage.getItem('token');
-	let response = await fetch("../api/update/profile/data", {
-			method: "POST",
+	let response = await fetch("../api/profile/data", {
+			method: "PUT",
 			body: JSON.stringify({
 				"name":name,
 				"email":email          
@@ -312,8 +312,8 @@ async function updateData(name, email) {
 
 async function updatePassword(oldPassword, newPassword) {
 	let token = localStorage.getItem('token');
-	let response = await fetch("../api/update/profile/password", {
-			method: "POST",
+	let response = await fetch("../api/profile/password", {
+			method: "PUT",
 			body: JSON.stringify({
 				"old-password":oldPassword,
 				"new-password":newPassword
