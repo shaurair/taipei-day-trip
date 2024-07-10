@@ -1,5 +1,5 @@
 {% extends "common.html" %}
-{% block title %}景點介紹{% endblock %}
+{% block title %}Attraction{% endblock %}
 
 {% block mainbody %}
 <hr class="separator"/>
@@ -16,16 +16,17 @@
 			<div id="name" class="head-title"></div>
 			<div id="cate-mrt"></div>
 			<div id="booking-form">
-				<div id="order-headline" class="form-headline">訂購導覽行程</div>
-				<div id="order-description" class="form-description">以此景點為中心的一日行程，帶您探索城市角落故事</div>
+				<div id="order-headline" class="form-headline">Booking a tour</div>
+				<div id="order-description" class="form-description">
+					A day trip centered around this landmark</div>
 				<div id="date-field">
-					<div id="date-headline" class="form-headline">選擇日期：</div>
+					<div id="date-headline" class="form-headline">Date</div>
 					<div id="date-input-area">
 						<input type="date" id="calendar" name="date">
 					</div>
 				</div>
 				<div id="time-field">
-					<div id="time-headline" class="form-headline">選擇時間：</div>
+					<div id="time-headline" class="form-headline">Time</div>
 					<div id="morning" class="radio-select-area">
 						<div id="morning-button" class="time-button">
 							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -40,7 +41,7 @@
 								</defs>
 							</svg>
 						</div>
-						<div class="form-headline">上半天</div>
+						<div class="form-headline">Morning</div>
 					</div>
 					<div id="afternoon" class="radio-select-area">
 						<div id="afternoon-button" class="time-button">
@@ -56,16 +57,16 @@
 								</defs>
 							</svg>
 						</div>
-						<div class="form-headline">下半天</div>
+						<div class="form-headline">Afternoon</div>
 					</div>
 				</div>
 				<div id="price-field">
-					<div id="price-headline" class="form-headline">導覽費用：</div>
+					<div id="price-headline" class="form-headline">Fee</div>
 					<div id="price-description" class="form-description"></div>
 				</div>
 				<div id="booking-field">
 					<div id="booking-button" class="mouseover">
-						<div class="button-text">開始預約行程</div>
+						<div class="button-text">Book</div>
 					</div>
 					<div id="booking-button-remain"></div>
 				</div>
@@ -77,9 +78,9 @@
 <div id="infors-area">
 	<div id="infors">
 		<div id="description" class="infors-description"></div>
-		<div id="address" class="infor-headline">景點地址：</div>
+		<div id="address" class="infor-headline">Address </div>
 		<div id="address-content" class="infors-description"></div>
-		<div id="transport" class="infor-headline">交通方式：</div>
+		<div id="transport" class="infor-headline">Transportation </div>
 		<div id="transport-content" class="infors-description"></div>
 	</div>
 </div>

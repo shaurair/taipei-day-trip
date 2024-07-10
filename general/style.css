@@ -32,8 +32,8 @@ html,body {
 	height: 34px;
 
 	color: var(--primary-color-cyan-70, #489);
-	font-family: Noto Sans TC;
-	font-size: 25px;
+	font-family: system-ui;
+	font-size: 26px;
 	font-style: normal;
 	font-weight: 700;
 	line-height: 34px; /* 113.333% */
@@ -133,7 +133,7 @@ html,body {
 	color: var(--secondary-color-gray-10, #F8F8F8);
 	/* Body - Bold 16(13.3) */
 	font-family: Noto Sans TC;
-	font-size: 16px;
+	font-size: 18px;
 	font-style: normal;
 	font-weight: 700;
 	line-height: 13.3px; /* 83.125% */
@@ -613,8 +613,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .infor-headline {
 	color: var(--secondary-color-gray-70, #666);
 	/* Body - Bold 16(13.3) */
-	font-family: Noto Sans TC;
-	font-size: 16px;
+	font-family: infor-headline;
+	font-size: 18px;
 	font-style: normal;
 	font-weight: 700;
 	line-height: 32px;

@@ -10,8 +10,8 @@ const afternoonSelect = document.getElementById("afternoon-select");
 const priceContent = document.getElementById("price-description");
 const bookingButton = document.getElementById("booking-button");
 const loadingElement = document.getElementById("loading");
-const morningFee = "新台幣 2000 元";
-const afternoonFee = "新台幣 2500 元";
+const morningFee = "NTD 2000";
+const afternoonFee = "NTD 2500";
 
 // functions
 function initAllData(){
@@ -131,7 +131,7 @@ async function bookSchedule() {
 	let price;
 
 	if(date == "") {
-		alert("請選擇日期");
+		alert("Please select a date");
 		return;
 	}
 	else {
@@ -140,7 +140,7 @@ async function bookSchedule() {
 		dateDateFormat.setHours(0, 0, 0, 0);
 		today.setHours(0, 0, 0, 0);
 		if(dateDateFormat < today) {
-			alert("選擇日期不可早於今日");
+			alert("The selected date can't be earlier than today");
 			return;
 		}
 	}
