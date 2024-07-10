@@ -19,10 +19,10 @@ let signInMember = null;
 let isMemberDialogueShowing = false;
 const FORMAT_CHECK = {
 	OK: 'ok',
-	NAME_EMPTY: '姓名未輸入',
-	EMAIL_EMPTY: 'Email未輸入',
-	PASSWORD_EMPTY: '密碼未輸入',
-	EMAIL_WRONG: 'Email格式不正確'
+	NAME_EMPTY: 'Name is required',
+	EMAIL_EMPTY: 'Email is required',
+	PASSWORD_EMPTY: 'Password is required',
+	EMAIL_WRONG: 'Email format is incorrect'
 }
 
 // functions
@@ -68,7 +68,7 @@ async function signIn(email, password){
 			location.reload();
 		}
 		else {
-			messageElement.textContent = (response.status >= 500) ? "伺服器錯誤，請重新整理再試一次。" : result["message"];
+			messageElement.textContent = (response.status >= 500) ? "Something went wrong with server, please redirect and try again" : result["message"];
 		}
 	}
 	else {
@@ -97,11 +97,11 @@ async function signUp(name, email, password){
 		let result = await response.json();
 		
 		if(response.ok) {
-			messageElement.textContent = "註冊成功，請登入系統";
+			messageElement.textContent = "Registration successful!";
 			messageElement.style.color = confirmedColor;
 		}
 		else {
-			messageElement.textContent = (response.status >= 500) ? "伺服器錯誤，請重新整理再試一次。" : result["message"];
+			messageElement.textContent = (response.status >= 500) ? "Something went wrong with server, please redirect and try again" : result["message"];
 		}
 	}
 	else {
@@ -181,6 +181,8 @@ signCloseElement.addEventListener('click',()=>{
 	signMaskElement.style.display = 'none';
 	signInMain.style.display = 'flex';
 	signUpMain.style.display = 'none';
+	document.getElementById("sign-in-message").style.display = 'none';
+	document.getElementById("sign-up-message").style.display = 'none';
 });
 
 signInBtn.addEventListener('click', ()=>{

@@ -32,9 +32,8 @@ html,body {
 	height: 34px;
 
 	color: var(--primary-color-cyan-70, #489);
-	/* Header 2 - Bold 30(34) */
 	font-family: Noto Sans TC;
-	font-size: 30px;
+	font-size: 25px;
 	font-style: normal;
 	font-weight: 700;
 	line-height: 34px; /* 113.333% */
