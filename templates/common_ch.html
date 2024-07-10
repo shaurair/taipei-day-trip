@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale = 1.0" />
+		<meta charset="utf-8" />
+		<title>{% block title %}{% endblock %}</title>
+		<link rel="stylesheet" type="text/css" href="/style.css"/>
+	</head>
+	<body>
+		<div class="sign-mask"></div>
+		<div id="navigation">
+			<div id="nav-content">
+				<a href="/" class="hyperlink mouseover"><div id="headline">台北一日遊</div></a>
+				<div id="opt-menu">
+					<div id="opt-sche" class="mouseover">預定行程</div>
+					<div id="opt-sign" class="mouseover">登入/註冊</div>
+					<div id="opt-member" class="mouseover"></div>
+					<div id="opt-sign-loading"></div>
+				</div>
+			</div>
+		</div>
+		<div class="sign-area">
+			<div class="sign-area-position">
+				<div class="sign-decorator"></div>
+				<div class="sign-in-main">
+					<div class="sign-main-title">登入會員帳號</div>
+					<div class="sign-box">
+						<input type="text" id="email" class="sign-input-text" placeholder="輸入電子信箱"/>
+					</div>
+					<div class="sign-box">
+						<input type="password" id="password" class="sign-input-text" placeholder="輸入密碼"/>
+					</div>
+					<div class="sign-btn" id="sign-in-btn" >
+						<div class="sign-btn-text">登入帳戶</div>
+					</div>
+					<div class="sign-message" id="sign-in-message"></div>
+					<div class="sign-switch" id="go-sign-up-btn">還沒有帳戶？點此註冊</div>
+				</div>
+				<div class="sign-up-main">
+					<div class="sign-main-title">註冊會員帳號</div>
+					<div class="sign-box">
+						<input type="text" id="sign-name" class="sign-input-text" placeholder="輸入姓名"/>
+					</div>
+					<div class="sign-box">
+						<input type="text" id="sign-email" class="sign-input-text" placeholder="輸入電子信箱"/>
+					</div>
+					<div class="sign-box">
+						<input type="password" id="sign-password" class="sign-input-text" placeholder="輸入密碼"/>
+					</div>
+					<div class="sign-btn" id="sign-up-btn" >
+						<div class="sign-btn-text">註冊新帳戶</div>
+					</div>
+					<div class="sign-message" id="sign-up-message"></div>
+					<div class="sign-switch" id="go-sign-in-btn">已經有帳戶了？點此登入</div>
+				</div>
+				<div class="sign-close">
+					<div class="close-icon"></div>
+				</div>
+			</div>
+		</div>
+		<div class="member-selection">
+			<div class="member-position">
+				<div id="opt-member-center" class="member-selection-item mouseover">
+					<div class="selection-item-text">會員中心</div>
+				</div>
+				<hr class="separator"/>
+				<div id="opt-sign-out" class="member-selection-item mouseover">
+					<div class="selection-item-text">登出</div>
+				</div>
+			</div>
+		</div>
+		{% block mainbody %}{% endblock %}
+		<div id="footer">
+			<div id="footer-content">
+				<div id="footer-text">COPYRIGHT © 2021 台北一日遊</div>
+			</div>
+		</div>
+		<script src="/JS/log.js"></script>
+		{% block scripsetting %}{% endblock %}
+	</body>
+</html>
