@@ -1,16 +1,16 @@
 {% extends "common.html" %}
-{% block title %}Booked{% endblock %}
+{% block title %}成功訂購{% endblock %}
 
 {% block mainbody %}
 <hr class="separator"/>
 <div id="section-area">
 	<div id="thankyou-section-area" class="booking-section-area">
-		<div class="greeting">Successfully booked. The Order number is </div>
+		<div class="greeting">行程預定成功，您的訂單編號如下</div>
 		<div id="loading">
 			<img id="loading-picture" src="/loading2.gif" />
 		</div>
 		<div id="order-number" class="greeting"></div>
-		<div class="sub-content">Please remember this number or find it in  <a href="/member" class="href-text mouseover">Member center</a></div>
+		<div class="sub-content">請記住此編號！或至 <a href="/member" class="href-text mouseover">會員中心</a> 查詢</div>
 	</div>
 </div>
 <hr id="section-separator" class="separator booked-info-part"/>
