@@ -446,46 +446,46 @@ fileInputBtn.addEventListener('change', ()=>{
 });
 
 editImageBtn.addEventListener('click', ()=>{
-	if(editImageBtn.textContent == "取消編輯") {
+	if(editImageBtn.textContent == "Cancel") {
 		editImageElement.classList.add("unseen");
 		memberInfoAreaElement.classList.remove("unseen");
 		editDataBtn.classList.remove("unseen");
 		editPasswordBtn.classList.remove("unseen");
-		editImageBtn.textContent = "修改大頭貼";
+		editImageBtn.textContent = "Update photo";
 	}
 	else {
 		editImageElement.classList.remove("unseen");
 		memberInfoAreaElement.classList.add("unseen");
 		editDataBtn.classList.add("unseen");
 		editPasswordBtn.classList.add("unseen");
-		editImageBtn.textContent = "取消編輯";
+		editImageBtn.textContent = "Cancel";
 	}
 });
 
 editPasswordBtn.addEventListener('click', ()=>{
-	if(editPasswordBtn.textContent == "取消編輯") {
+	if(editPasswordBtn.textContent == "Cancel") {
 		editPasswordElement.classList.add("unseen");
 		memberInfoAreaElement.classList.remove("unseen");
 		editDataBtn.classList.remove("unseen");
 		editImageBtn.classList.remove("unseen");
-		editPasswordBtn.textContent = "修改密碼";
+		editPasswordBtn.textContent = "Change password";
 	}
 	else {
 		editPasswordElement.classList.remove("unseen");
 		memberInfoAreaElement.classList.add("unseen");
 		editDataBtn.classList.add("unseen");
 		editImageBtn.classList.add("unseen");
-		editPasswordBtn.textContent = "取消編輯";
+		editPasswordBtn.textContent = "Cancel";
 	}
 });
 
 editDataBtn.addEventListener('click', ()=>{
-	if(editDataBtn.textContent == "取消編輯") {
+	if(editDataBtn.textContent == "Cancel") {
 		editDataElement.classList.add("unseen");
 		memberInfoAreaElement.classList.remove("unseen");
 		editPasswordBtn.classList.remove("unseen");
 		editImageBtn.classList.remove("unseen");
-		editDataBtn.textContent = "修改資本資料";
+		editDataBtn.textContent = "Update profile";
 	}
 	else {
 		editDataElement.classList.remove("unseen");
@@ -494,6 +494,6 @@ editDataBtn.addEventListener('click', ()=>{
 		changeEmailElement.value = signInMember["email"];
 		editPasswordBtn.classList.add("unseen");
 		editImageBtn.classList.add("unseen");
-		editDataBtn.textContent = "取消編輯";
+		editDataBtn.textContent = "Cancel";
 	}
 });
