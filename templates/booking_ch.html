@@ -1,14 +1,14 @@
 {% extends "common.html" %}
-{% block title %}Booking{% endblock %}
+{% block title %}預定行程{% endblock %}
 
 {% block mainbody %}
 <hr class="separator"/>
 <div id="section-area">
 	<div class="booking-section-area">
 		<div class="book-headline common-info-part">
-			<span class="greeting">Hello </span><span class="greeting" id="book-name"></span><span class="greeting">, the tour to be booked is as follows:</span>
+			<span class="greeting">您好，</span><span class="greeting" id="book-name"></span><span class="greeting">，待預訂的行程如下：</span>
 		</div>
-		<div class="sub-content none-booked-info-part">There is no tour to be booked.</div>
+		<div class="sub-content none-booked-info-part">目前沒有任何待預訂的行程</div>
 		<div class="booking-section booked-info-part">
 			<div class="booking-picture">
 				<img class="booking-image"></img>
@@ -17,19 +17,19 @@
 				<div class="booking-content">
 						<div class="content-frame"></div>
 						<div class="sub-frame">
-							<div class="sub-item">Date: </div>
+							<div class="sub-item">日期：</div>
 							<div class="sub-content" id="sub-content-date"></div>
 						</div>
 						<div class="sub-frame">
-							<div class="sub-item">Time: </div>
+							<div class="sub-item">時間：</div>
 							<div class="sub-content" id="sub-content-time"></div>
 						</div>
 						<div class="sub-frame">
-							<div class="sub-item">Fee: </div>
+							<div class="sub-item">費用：</div>
 							<div class="sub-content" id="sub-content-price"></div>
 						</div>
 						<div class="sub-frame">
-							<div class="sub-item">Address: </div>
+							<div class="sub-item">地點：</div>
 							<div class="sub-content" id="sub-content-address"></div>
 						</div>
 				</div>
@@ -41,41 +41,41 @@
 <hr id="section-separator" class="separator booked-info-part"/>
 <div class="contact-pay-area booked-info-part">
 	<div class="contact-pay-form">
-		<div class="contact-pay-frame">Contact Info.</div>
+		<div class="contact-pay-frame">您的聯絡資訊</div>
 		<div class="contact-pay-field">
 			<div class="field-item-area">
-				<div class="field-item">Name</div>
+				<div class="field-item">聯絡姓名：</div>
 			</div>
 			<div class="field-box">
-				<input type="text" id="booking-name" class="booking-input-text" placeholder="Name"/>
+				<input type="text" id="booking-name" class="booking-input-text" placeholder="輸入姓名"/>
 			</div>
 		</div>
 		<div class="contact-pay-field">
 			<div class="field-item-area">
-				<div class="field-item">Email</div>
+				<div class="field-item">聯絡信箱：</div>
 			</div>
 			<div class="field-box">
-				<input type="text" id="booking-email" class="booking-input-text" placeholder="Email"/>
+				<input type="text" id="booking-email" class="booking-input-text" placeholder="輸入信箱"/>
 			</div>
 		</div>
 		<div class="contact-pay-field">
 			<div class="field-item-area">
-				<div class="field-item">Phone</div>
+				<div class="field-item">手機號碼：</div>
 			</div>
 			<div class="field-box">
-				<input type="text" id="booking-mobile" class="booking-input-text" placeholder="Mobile phone"/>
+				<input type="text" id="booking-mobile" class="booking-input-text" placeholder="輸入手機"/>
 			</div>
 		</div>
-		<div class="notice-text">Please keep your phone available and arrive on time. The tour guide will contact you via phone.</div>
+		<div class="notice-text">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
 	</div>
 </div>
 <hr id="section-separator" class="separator booked-info-part"/>
 <div class="contact-pay-area booked-info-part">
 	<div class="payment-form">
-		<div class="contact-pay-frame">Pay by credit card</div>
+		<div class="contact-pay-frame">信用卡付款資訊</div>
 		<div class="contact-pay-field">
 			<div class="field-item-area">
-				<div class="field-item">Card number</div>
+				<div class="field-item">卡片號碼：</div>
 			</div>
 			<div class="field-box">
 				<div id="card-number" class="booking-input-text"></div>
@@ -83,7 +83,7 @@
 		</div>
 		<div class="contact-pay-field">
 			<div class="field-item-area">
-				<div class="field-item">Expiry date</div>
+				<div class="field-item">過期時間：</div>
 			</div>
 			<div class="field-box">
 				<div id="exp-date" class="booking-input-text"></div>
@@ -91,7 +91,7 @@
 		</div>
 		<div class="contact-pay-field">
 			<div class="field-item-area">
-				<div class="field-item">CVV</div>
+				<div class="field-item">驗證密碼：</div>
 			</div>
 			<div class="field-box">
 				<div id="card-verify" class="booking-input-text"></div>
@@ -104,7 +104,7 @@
 	<div class="pay-content">
 		<div class="confirm-price"></div>
 		<div id="pay-button" class="mouseover">
-			<div class="button-text">Confirm and pay</div>
+			<div class="button-text">確認訂購並付款</div>
 		</div>
 	</div>
 </div>

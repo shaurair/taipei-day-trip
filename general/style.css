@@ -593,7 +593,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	font-family: Noto Sans TC;
 	font-size: 19px;
 	font-style: normal;
-	font-weight: 400;
+	font-weight: 600;
 	line-height: 16px; /* 84.211% */
 }
 #section-separator {
