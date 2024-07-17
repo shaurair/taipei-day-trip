@@ -18,7 +18,7 @@ def update_image():
 			member_id = decoded_data["id"]
 		except Exception as e:
 			rsp["error"] = True
-			rsp["message"] = "未登入系統，拒絕存取"
+			rsp["message"] = "Please sign in first."
 			return jsonify(rsp), 403
 
 	if 'photo' in request.files:
@@ -30,7 +30,7 @@ def update_image():
 			return jsonify(rsp), 200
 	
 	rsp["error"] = True
-	rsp["message"] = "請確認檔案格式須為： .png, .jpg, .jpeg, .bmp, .gif 其中一種"
+	rsp["message"] = "Only png, jpg, jpeg, bmp, and gif files are allowed."
 	return jsonify(rsp), 400
 
 @update.route("/api/profile/data", methods = ["PUT"])
@@ -45,7 +45,7 @@ def update_data():
 			member_email = decoded_data["email"]
 		except Exception as e:
 			rsp["error"] = True
-			rsp["message"] = "未登入系統，拒絕存取"
+			rsp["message"] = "Please sign in first."
 			return jsonify(rsp), 403
 
 	request_data = request.get_json()
@@ -54,7 +54,7 @@ def update_data():
 		email = request_data["email"]
 	except Exception as e:
 		rsp["error"] = True
-		rsp["message"] = "請確認request內容: " + str(e)
+		rsp["message"] = "Please check the request: " + str(e)
 		return jsonify(rsp), 400
 
 	(rsp, rsp_code) = change_data_on_db(member_id, name, email, member_email)
@@ -71,7 +71,7 @@ def update_password():
 			member_id = decoded_data["id"]
 		except Exception as e:
 			rsp["error"] = True
-			rsp["message"] = "未登入系統，拒絕存取"
+			rsp["message"] = "Please sign in first."
 			return jsonify(rsp), 403
 
 	request_data = request.get_json()
@@ -80,7 +80,7 @@ def update_password():
 		new_password = request_data["new-password"]
 	except Exception as e:
 		rsp["error"] = True
-		rsp["message"] = "請確認request內容: " + str(e)
+		rsp["message"] = "Please check the request: " + str(e)
 		return jsonify(rsp), 400
 
 	(rsp, rsp_code) = change_password_on_db(member_id, old_password, new_password)
@@ -129,7 +129,7 @@ def change_password_on_db(member_id, old_password, new_password):
 		existed_password = cursor.fetchone()[0]
 		if old_password != existed_password:
 			rsp["error"] = True
-			rsp["message"] = "舊密碼輸入錯誤"
+			rsp["message"] = "The old password entered is incorrect."
 			return rsp, 400
 		
 		cursor.execute("UPDATE member SET password = %s WHERE id = %s;",(new_password, member_id))

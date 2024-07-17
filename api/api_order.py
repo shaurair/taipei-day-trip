@@ -18,7 +18,7 @@ def order_info():
 			member_id = decoded_data["id"]
 		except Exception as e:
 			rsp["error"] = True
-			rsp["message"] = "未登入系統，拒絕存取"
+			rsp["message"] = "Please sign in first."
 			return jsonify(rsp), 403
 		
 	if request.method == "GET":
@@ -34,7 +34,7 @@ def order_info():
 			contact = request_data["order"]["contact"]
 		except Exception as e:
 			rsp["error"] = True
-			rsp["message"] = "請確認request內容: " + str(e)
+			rsp["message"] = "Please check the request: " + str(e)
 			return jsonify(rsp), 400
 
 		(rsp, rsp_code) = pay_by_prime(member_id, prime, price, trip, contact)
@@ -52,15 +52,15 @@ def pay_by_prime(member_id, prime, price, trip, contact):
 		tap_pay_response = tap_pay_request(prime, price, contact)
 	else:
 		rsp["error"] = True
-		rsp["message"] = "尚未付款，發生其他錯誤。" + add_order_msg
+		rsp["message"] = "Payment has not been made yet. Some errors occurred. " + add_order_msg
 		return rsp, 500
 
 	if tap_pay_response["status"] == TAPPAYSTATUSOK:
-		update_order_on_db_result = update_order_on_db(add_order_msg, "已付款", member_id)
+		update_order_on_db_result = update_order_on_db(add_order_msg, "Payment confirmed", member_id)
 
 		if update_order_on_db_result is True:
 			payment["status"] = tap_pay_response["status"]
-			payment["message"] = "付款成功"
+			payment["message"] = "Payment successful"
 			data["payment"] = payment
 			data["number"] = add_order_msg
 			rsp["data"] = data
@@ -68,11 +68,11 @@ def pay_by_prime(member_id, prime, price, trip, contact):
 
 		else:
 			rsp["error"] = True
-			rsp["message"] = "付款成功，但發生其他錯誤。" + update_order_on_db_result
+			rsp["message"] = "Payment successful but some errors occurred." + update_order_on_db_result
 			return rsp, 500
 	else:
 		payment["status"] = tap_pay_response["status"]
-		payment["message"] = "付款失敗"
+		payment["message"] = "Payment failed"
 		data["payment"] = payment
 		data["number"] = add_order_msg
 		rsp["data"] = data
@@ -96,7 +96,7 @@ def add_order_on_db(member_id, trip, contact, price):
 		con = connection_pool.get_connection()
 		cursor = con.cursor()
 		cursor.execute("INSERT INTO order_table (member_id, trip, contact, price, status, order_no) VALUES (%s, %s, %s, %s, %s, %s);",
-						(member_id, trip, contact, price, "未付款", order_no))
+						(member_id, trip, contact, price, "Payment not made", order_no))
 		con.commit()
 		return True, order_no
 	except Exception as e:
@@ -132,7 +132,7 @@ def get_order_on_db(member_id):
 	try:
 		con = connection_pool.get_connection()
 		cursor = con.cursor(dictionary = True)
-		cursor.execute("SELECT order_no, trip, contact, price FROM order_table WHERE member_id=%s AND status = \"已付款\";",(member_id,))
+		cursor.execute("SELECT order_no, trip, contact, price FROM order_table WHERE member_id=%s AND status = \"Payment confirmed\";",(member_id,))
 		order_results = cursor.fetchall()
 		if len(order_results) == 0:
 			rsp["data"] = None

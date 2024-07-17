@@ -16,7 +16,7 @@ def get_booking_info():
 			member_id = decoded_data["id"]
 		except Exception as e:
 			rsp["error"] = True
-			rsp["message"] = "未登入系統，拒絕存取"
+			rsp["message"] = "Please sign in first."
 			return jsonify(rsp), 403
 		
 	if request.method == "GET":
@@ -32,7 +32,7 @@ def get_booking_info():
 			price = request_data["price"]
 		except Exception as e:
 			rsp["error"] = True
-			rsp["message"] = "請確認request內容: " + str(e)
+			rsp["message"] = "Please check the request: " + str(e)
 			return jsonify(rsp), 400
 
 		(rsp, rsp_code) = add_booking_on_db(member_id, attraction_id, date, time, price)

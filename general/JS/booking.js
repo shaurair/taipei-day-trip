@@ -236,7 +236,7 @@ async function sendOrder(tapPayPrime, contact) {
 	enableButton();
 
 	if(response.ok) {
-		if(result["data"]["payment"]["message"] == "付款成功") {
+		if(result["data"]["payment"]["message"] == "Payment successful") {
 			location.href = "/thankyou?number=" + result["data"]["number"];
 		}
 		else {
