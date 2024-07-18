@@ -28,13 +28,13 @@ function setSchedulePage() {
 	element.src = scheduleData["attraction"]["image"];
 
 	element = document.querySelector(".content-frame");
-	element.textContent = "台北一日遊：" + scheduleData["attraction"]["name"];
+	element.textContent = "Taipei trip: " + scheduleData["attraction"]["name"];
 
 	element = document.getElementById("sub-content-date");
 	element.textContent = scheduleData["date"];
 
 	element = document.getElementById("sub-content-time");
-	element.textContent = (scheduleData["time"] == "morning") ? "早上 9 點到下午 4 點" : "下午 2 點到晚上 9 點";
+	element.textContent = (scheduleData["time"] == "morning") ? "9 am to 4 pm" : "2 pm to 9 pm";
 
 	element = document.getElementById("sub-content-price");
 	element.textContent = scheduleData["price"];
@@ -49,7 +49,7 @@ function setSchedulePage() {
 	element.value = signInMember["email"];
 
 	element = document.querySelector(".confirm-price");
-	element.textContent = "總價：新台幣 " + scheduleData["price"] + " 元";
+	element.textContent = "Total: " + scheduleData["price"] + " NTD";
 }
 
 function setTapPay() {
@@ -103,14 +103,14 @@ function setOrderByTapPay(contact) {
 	const tappayStatus = TPDirect.card.getTappayFieldsStatus();
 
 	if(tappayStatus.canGetPrime === false) {
-		alert("信用卡確認異常");
+		alert("Credir card error.");
 		console.log('can not get prime');
 		return;
 	}
 
 	TPDirect.card.getPrime((result) => {
 		if(result.status !== 0) {
-			alert("信用卡確認異常");
+			alert("Credir card error.");
 			console.log('get prime error ' + result.msg);
 			return;
 		}
@@ -240,11 +240,11 @@ async function sendOrder(tapPayPrime, contact) {
 			location.href = "/thankyou?number=" + result["data"]["number"];
 		}
 		else {
-			alert("付款失敗，請確認信用卡");
+			alert("Payment failed, please check the credit card.");
 		}
 	}
 	else {
-		let alertMessage = (response.status >= 500) ? "伺服器錯誤，請重新整理再試一次。" : result["message"];
+		let alertMessage = (response.status >= 500) ? "Something went wrong with server, please redirect and try again" : result["message"];
 		alert(alertMessage);
 	}
 }
@@ -261,7 +261,7 @@ submitOrderBtn.addEventListener('click',()=>{
 
 	let contact = getContact();
 	if(contact == null) {
-		alert("請確認聯絡資訊均已填入");
+		alert("Contact information is needed.");
 		return;
 	}
 
@@ -270,6 +270,6 @@ submitOrderBtn.addEventListener('click',()=>{
 		setOrderByTapPay(contact);
 	}
 	else {
-		alert("信用卡資訊有誤");
+		alert("Credir card error.");
 	}
 })

@@ -99,7 +99,7 @@ function setOrderHeadline(newOrder, orderIndex, orderNumber, newOrderHeadline, n
 	newOrderHeadline.appendChild(newOrderExpandId);
 
 	newOrderTitle.className = "form-headline";
-	newOrderTitle.textContent = "訂單編號：";
+	newOrderTitle.textContent = "Order number: ";
 	newOrderHeadline.appendChild(newOrderTitle);
 
 	newOrderNo.className = "form-description item-highlight";
@@ -131,17 +131,17 @@ function setScheduleAndPrice(newOrderContent, trip, price) {
 	let scheduleAndPriceContainer = document.createElement('div');
 
 	newOrderContentDetail.className = "member-item item-highlight";
-	newOrderContentDetail.textContent = "行程";
+	newOrderContentDetail.textContent = "Tour";
 	newOrderContent.appendChild(newOrderContentDetail);
 
 	scheduleAndPriceContainer.className = "order-info";
 	newOrderContent.appendChild(scheduleAndPriceContainer);
 
-	setDetailInfo(scheduleAndPriceContainer, "景點名稱", trip["attraction"]["name"]);
-	setDetailInfo(scheduleAndPriceContainer, "景點地址", trip["attraction"]["address"]);
-	setDetailInfo(scheduleAndPriceContainer, "日期", trip["date"]);
-	setDetailInfo(scheduleAndPriceContainer, "時間", (trip["time"] == "morning" ? "早上 9 點到下午 4 點" : "下午 2 點到晚上 9 點"));
-	setDetailInfo(scheduleAndPriceContainer, "費用", price);
+	setDetailInfo(scheduleAndPriceContainer, "Site", trip["attraction"]["name"]);
+	setDetailInfo(scheduleAndPriceContainer, "Address", trip["attraction"]["address"]);
+	setDetailInfo(scheduleAndPriceContainer, "Date", trip["date"]);
+	setDetailInfo(scheduleAndPriceContainer, "Time", (trip["time"] == "morning" ? "9 am to 4 pm" : "2 pm to 9 pm"));
+	setDetailInfo(scheduleAndPriceContainer, "Fee", price);
 }
 
 function setContact(newOrderContent, contact) {
@@ -149,15 +149,15 @@ function setContact(newOrderContent, contact) {
 	let contactContainer = document.createElement('div');
 
 	newOrderContentDetail.className = "member-item item-highlight";
-	newOrderContentDetail.textContent = "聯絡資訊";
+	newOrderContentDetail.textContent = "Contact info.";
 	newOrderContent.appendChild(newOrderContentDetail);
 
 	contactContainer.className = "order-info";
 	newOrderContent.appendChild(contactContainer);
 
-	setDetailInfo(contactContainer, "姓名", contact["name"]);
-	setDetailInfo(contactContainer, "email", contact["email"]);
-	setDetailInfo(contactContainer, "手機", contact["phone"]);
+	setDetailInfo(contactContainer, "Name", contact["name"]);
+	setDetailInfo(contactContainer, "Email", contact["email"]);
+	setDetailInfo(contactContainer, "Phone", contact["phone"]);
 }
 
 function showDefaultUnseen(classname) {
@@ -239,12 +239,12 @@ async function getAllBookingInfo() {
 		else {
 			expandOrdersElement.style.display = 'none';
 			collapseOrdersElement.style.display = 'none';
-			noneOrderElement.textContent = "無歷史訂單"
+			noneOrderElement.textContent = "Nothing in order history."
 			noneOrderElement.classList.add("form-description")
 		}
 	}
 	else {
-		let alertMessage = (response.status >= 500) ? "伺服器錯誤，請重新整理再試一次。" : result["message"];
+		let alertMessage = (response.status >= 500) ? "Something went wrong with server, please redirect and try again" : result["message"];
 		alert(alertMessage);
 	}
 }
@@ -265,7 +265,7 @@ async function sendImageFile() {
 	if(response.ok) {
 		submitWaitingElement.classList.add("unseen");
 		submitSuccessElement.classList.remove("unseen");
-		alert("更新成功！頁面將自動跳轉");
+		alert("Successfully updated! This page will automatically redirect.");
 		location.href = "/member";
 	}
 	else {
@@ -294,12 +294,12 @@ async function updateData(name, email) {
 		submitDataWaitingElement.classList.add("unseen");
 		submitDataSuccessElement.classList.remove("unseen");
 		localStorage.setItem('token', result["token"]);
-		alert("更新成功！頁面將自動跳轉");
+		alert("Successfully updated! This page will automatically redirect.");
 		location.href = "/member";
 	}
 	else {
 		if(response.status >= 500) {
-			alert("發生錯誤，請重新整理再試一次");
+			alert("Something went wrong with server, please redirect and try again");
 		}
 		else {
 			alert(result["message"]);
@@ -328,13 +328,13 @@ async function updatePassword(oldPassword, newPassword) {
 	if(response.ok) {
 		submitPasswordWaitingElement.classList.add("unseen");
 		submitPasswordSuccessElement.classList.remove("unseen");
-		alert("更新成功！頁面將自動跳轉，稍後請重新登入");
+		alert("Successfully updated! This page will automatically redirect. Please sign in again later.");
 		localStorage.removeItem('token');
 		location.href = "/";
 	}
 	else {
 		if(response.status >= 500) {
-			alert("發生錯誤，請重新整理再試一次");
+			alert("Something went wrong with server, please redirect and try again");
 		}
 		else {
 			alert(result["message"]);
@@ -381,13 +381,13 @@ submitDataBtn.addEventListener('click', ()=>{
 	if(isAllowDataSubmit == true) {
 		if(changeNameElement.value == "" || changeEmailElement.value == "") {
 			submitDataStopElement.classList.remove("unseen");
-			submitStopTextElement.textContent = "請輸入姓名/Email資料";
+			submitStopTextElement.textContent = "Name and email are required";
 			return;
 		}
 		
 		if(changeNameElement.value == signInMember["name"] && changeEmailElement.value == signInMember["email"]) {
 			submitDataStopElement.classList.remove("unseen");
-			submitStopTextElement.textContent = "輸入的資料與現有資料相同";
+			submitStopTextElement.textContent = "Input data is the same as the existing one.";
 			return;
 		}
 
@@ -395,7 +395,7 @@ submitDataBtn.addEventListener('click', ()=>{
 
 		if(emailRule.test(changeEmailElement.value) == false) {
 			submitDataStopElement.classList.remove("unseen");
-			submitStopTextElement.textContent = "Email格式不正確";
+			submitStopTextElement.textContent = "Email format is incorrect";
 			return;
 		}
 
@@ -414,19 +414,19 @@ submitPasswordBtn.addEventListener('click', ()=> {
 	if(isAllowPasswordSubmit == true) {
 		if(oldPasswordElement.value == "" || newPasswordElement.value == "" || confirmPasswordElement.value == "") {
 			submitPasswordStopElement.classList.remove("unseen");
-			submitPasswordStopTextElement.textContent = "請確認舊密碼、新密碼、新密碼確認均已輸入";
+			submitPasswordStopTextElement.textContent = "Old, new and confirm password are required.";
 			return;
 		}
 
 		if(newPasswordElement.value == oldPasswordElement.value) {
 			submitPasswordStopElement.classList.remove("unseen");
-			submitPasswordStopTextElement.textContent = "新密碼與舊密碼不可相同";
+			submitPasswordStopTextElement.textContent = "New password is the same as the old one.";
 			return;
 		}
 
 		if(newPasswordElement.value != confirmPasswordElement.value) {
 			submitPasswordStopElement.classList.remove("unseen");
-			submitPasswordStopTextElement.textContent = "新密碼與新密碼確認輸入內容不一致";
+			submitPasswordStopTextElement.textContent = "New password is different from the confirm password!";
 			return;
 		}
 
