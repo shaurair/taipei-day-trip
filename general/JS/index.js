@@ -102,7 +102,7 @@ function createAttrElement(attrData, attrIdx){
 
 	let newTxtCateDiv = document.createElement('div');
 	newTxtCateDiv.className= 'txt-cate';
-	newTxtCateDiv.textContent = attrData["category"];
+	newTxtCateDiv.textContent = '# ' + attrData["category"];
 	newInfosDiv.appendChild(newTxtCateDiv);
 }
 

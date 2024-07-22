@@ -190,6 +190,14 @@ html,body {
 	justify-content: space-around;
 	padding-bottom: 20px;
 }
+#mrt-logo {
+	height: 50px;
+	width: 50px;
+	background-image: url(/mrt-2.png);
+	background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 #left-container {
 	display: flex;
 	align-items: center;
@@ -217,14 +225,17 @@ html,body {
 	background-image: url(/Arrow_right.png);
 }
 #container {
-	width: 1106px;
+	width: 1056px;
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-top: 13px;
 	padding-bottom: 13px;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 #listItems {
-	width: 1086px;
+	width: 1036px;
 	height: 24px;
 	grid-template-rows: 24px;
 	overflow-x: hidden;
@@ -333,7 +344,7 @@ html,body {
 	line-height: 13.3px; /* 83.125% */
 }
 .txt-cate {
-	color: var(--secondary-color-gray-50, #757575);
+	color: var(--secondary-color-gray-50, #555);
 	text-align: right;
 	flex: auto;
 	justify-content: flex-end;
@@ -1205,7 +1216,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 		width: 100%;
 	}
 	#container {
-		width: calc(100% - 114px); /* ( 114 = 47 * 2 + 10 * 2 )*/
+		width: calc(100% - 184px); /* ( 114 = 47 * 2 + 10 * 2 )*/
 	}
 	#listItems {
 		width: calc(100% - 20px);
