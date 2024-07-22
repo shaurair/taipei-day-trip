@@ -639,6 +639,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	font-weight: 400;
 	line-height: normal;
 }
+#description {
+	white-space: pre-wrap;
+}
 #address {
 	margin-top: 20px;
 	height: 32px;
@@ -649,6 +652,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 #transport-content {
 	margin-bottom: 80px;
+	white-space: pre-wrap;
 }
 /* for member.html */
 .member-area {
