@@ -8,6 +8,7 @@ const signLoadingElement = document.getElementById("opt-sign-loading");
 const signAreaElement = document.querySelector(".sign-area");
 const signMaskElement = document.querySelector(".sign-mask");
 const signCloseElement = document.querySelector(".close-icon");
+const demoBtn = document.getElementById("demo-btn");
 const signInBtn = document.getElementById("sign-in-btn");
 const signUpBtn = document.getElementById("sign-up-btn");
 const goSignUpElement = document.getElementById("go-sign-up-btn");
@@ -183,6 +184,12 @@ signCloseElement.addEventListener('click',()=>{
 	signUpMain.style.display = 'none';
 	document.getElementById("sign-in-message").style.display = 'none';
 	document.getElementById("sign-up-message").style.display = 'none';
+});
+
+demoBtn.addEventListener('click', ()=>{
+	let email = document.getElementById("email").value = 'test@test.com';
+	let password = document.getElementById("password").value = 'test123';
+	signIn(email, password);
 });
 
 signInBtn.addEventListener('click', ()=>{
