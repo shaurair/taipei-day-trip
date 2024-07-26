@@ -103,14 +103,14 @@ function setOrderByTapPay(contact) {
 	const tappayStatus = TPDirect.card.getTappayFieldsStatus();
 
 	if(tappayStatus.canGetPrime === false) {
-		alert("Credir card error.");
+		alert("Credit card error.");
 		console.log('can not get prime');
 		return;
 	}
 
 	TPDirect.card.getPrime((result) => {
 		if(result.status !== 0) {
-			alert("Credir card error.");
+			alert("Credit card error.");
 			console.log('get prime error ' + result.msg);
 			return;
 		}
@@ -270,6 +270,6 @@ submitOrderBtn.addEventListener('click',()=>{
 		setOrderByTapPay(contact);
 	}
 	else {
-		alert("Credir card error.");
+		alert("Credit card error.");
 	}
 })
